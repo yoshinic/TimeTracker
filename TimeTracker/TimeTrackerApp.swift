@@ -1,10 +1,3 @@
-//
-//  TimeTrackerApp.swift
-//  TimeTracker
-//
-//  Created by YOSHI on 2023/08/25.
-//
-
 import SwiftUI
 
 @main

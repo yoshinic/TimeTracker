@@ -1,10 +1,3 @@
-//
-//  TimeTrackerUITests.swift
-//  TimeTrackerUITests
-//
-//  Created by YOSHI on 2023/08/25.
-//
-
 import XCTest
 
 final class TimeTrackerUITests: XCTestCase {
