@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */; };
+		92A7F2F22A97BE67003802E5 /* TimeTrackerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */; };
 		92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */; };
 		92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */; };
 		92BFDA622A97B5ED00AE95D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92BFDA612A97B5ED00AE95D8 /* Assets.xcassets */; };
@@ -14,6 +16,14 @@
 		92BFDA702A97B5ED00AE95D8 /* TimeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA6F2A97B5ED00AE95D8 /* TimeTrackerTests.swift */; };
 		92BFDA7A2A97B5ED00AE95D8 /* TimeTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA792A97B5ED00AE95D8 /* TimeTrackerUITests.swift */; };
 		92BFDA7C2A97B5ED00AE95D8 /* TimeTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA7B2A97B5ED00AE95D8 /* TimeTrackerUITestsLaunchTests.swift */; };
+		92C1D8272A9B0152000061B6 /* RecordGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D8262A9B0152000061B6 /* RecordGraphView.swift */; };
+		92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82A2A9B201E000061B6 /* Theme.swift */; };
+		92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82D2A9B2070000061B6 /* SettingsView.swift */; };
+		92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */; };
+		92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */; };
+		92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */; };
+		92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E62A9A78F600B8B76E /* RecordListView.swift */; };
+		92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFormView.swift; sourceTree = "<group>"; };
 		92BFDA5A2A97B5E600AE95D8 /* TimeTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTrackerApp.swift; sourceTree = "<group>"; };
 		92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -45,6 +56,14 @@
 		92BFDA752A97B5ED00AE95D8 /* TimeTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BFDA792A97B5ED00AE95D8 /* TimeTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTrackerUITests.swift; sourceTree = "<group>"; };
 		92BFDA7B2A97B5ED00AE95D8 /* TimeTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		92C1D8262A9B0152000061B6 /* RecordGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordGraphView.swift; sourceTree = "<group>"; };
+		92C1D82A2A9B201E000061B6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		92C1D82D2A9B2070000061B6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
+		92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
+		92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
+		92D2B3E62A9A78F600B8B76E /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
+		92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92A7F2F22A97BE67003802E5 /* TimeTrackerAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +115,9 @@
 		92BFDA5C2A97B5E600AE95D8 /* TimeTracker */ = {
 			isa = PBXGroup;
 			children = (
+				92D2B3E42A9A78F600B8B76E /* Views */,
+				92D2B3DF2A9A78E700B8B76E /* ViewModels */,
+				92C1D8282A9B1FF9000061B6 /* Utilities */,
 				92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */,
 				92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */,
 				92BFDA612A97B5ED00AE95D8 /* Assets.xcassets */,
@@ -129,6 +152,76 @@
 			path = TimeTrackerUITests;
 			sourceTree = "<group>";
 		};
+		92C1D8282A9B1FF9000061B6 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				92C1D82F2A9B2281000061B6 /* Color */,
+				92C1D8292A9B200D000061B6 /* Theme */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		92C1D8292A9B200D000061B6 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				92C1D82A2A9B201E000061B6 /* Theme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		92C1D82C2A9B2047000061B6 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				92C1D82D2A9B2070000061B6 /* SettingsView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		92C1D82F2A9B2281000061B6 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		92D2B3DF2A9A78E700B8B76E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */,
+				92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		92D2B3E42A9A78F600B8B76E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92D2B3E52A9A78F600B8B76E /* Record */,
+				92D2B3E72A9A78F600B8B76E /* Activity */,
+				92C1D82C2A9B2047000061B6 /* Setting */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92D2B3E52A9A78F600B8B76E /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				92D2B3E62A9A78F600B8B76E /* RecordListView.swift */,
+				92C1D8262A9B0152000061B6 /* RecordGraphView.swift */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		92D2B3E72A9A78F600B8B76E /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */,
+				920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,6 +238,9 @@
 			dependencies = (
 			);
 			name = TimeTracker;
+			packageProductDependencies = (
+				92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */,
+			);
 			productName = TimeTracker;
 			productReference = 92BFDA5A2A97B5E600AE95D8 /* TimeTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +313,9 @@
 				Base,
 			);
 			mainGroup = 92BFDA512A97B5E600AE95D8;
+			packageReferences = (
+				92A7F2F02A97BE67003802E5 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */,
+			);
 			productRefGroup = 92BFDA5B2A97B5E600AE95D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,8 +358,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */,
+				92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */,
+				92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */,
+				92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */,
+				92C1D8272A9B0152000061B6 /* RecordGraphView.swift in Sources */,
 				92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */,
 				92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */,
+				92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */,
+				92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */,
+				920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */,
+				92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +720,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		92A7F2F02A97BE67003802E5 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///users/yoshi/Developments/Projects/TimeTracker/TimeTrackerAPI/";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92A7F2F02A97BE67003802E5 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */;
+			productName = TimeTrackerAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 92BFDA522A97B5E600AE95D8 /* Project object */;
 }

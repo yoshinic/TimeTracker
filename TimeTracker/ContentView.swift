@@ -2,13 +2,26 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            NavigationView {
+                RecordListView()
+            }
+            .tabItem {
+                Label("Record", systemImage: "chart.bar")
+            }
+            NavigationView {
+                ActivityListView()
+            }
+            .tabItem {
+                Label("Activity", systemImage: "list.bullet")
+            }
+            NavigationView {
+                SettingsView()
+            }
+            .tabItem {
+                Label("Setting", systemImage: "gear")
+            }
         }
-        .padding()
     }
 }
 
