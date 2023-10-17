@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */; };
+		9232FFB92AD646E40097C954 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9232FFB82AD646E40097C954 /* GeneralSettingsView.swift */; };
+		927006602AD4C8C40089884B /* CategoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9270065E2AD4C8C30089884B /* CategoryFormView.swift */; };
+		927006612AD4C8C40089884B /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9270065F2AD4C8C30089884B /* CategoryListView.swift */; };
+		927006642AD4C8EA0089884B /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927006622AD4C8EA0089884B /* CategoryViewModel.swift */; };
+		927006652AD4C8EA0089884B /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927006632AD4C8EA0089884B /* SettingViewModel.swift */; };
+		92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A112A02ADB5FB800BFAD19 /* RecordView.swift */; };
 		92A7F2F22A97BE67003802E5 /* TimeTrackerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */; };
 		92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */; };
 		92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */; };
@@ -45,6 +51,13 @@
 
 /* Begin PBXFileReference section */
 		920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFormView.swift; sourceTree = "<group>"; };
+		9214722F2ADE704D00A9F89C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9232FFB82AD646E40097C954 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		9270065E2AD4C8C30089884B /* CategoryFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFormView.swift; sourceTree = "<group>"; };
+		9270065F2AD4C8C30089884B /* CategoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
+		927006622AD4C8EA0089884B /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		927006632AD4C8EA0089884B /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		92A112A02ADB5FB800BFAD19 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		92BFDA5A2A97B5E600AE95D8 /* TimeTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTrackerApp.swift; sourceTree = "<group>"; };
 		92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,6 +105,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9270065D2AD4C8C30089884B /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				9270065F2AD4C8C30089884B /* CategoryListView.swift */,
+				9270065E2AD4C8C30089884B /* CategoryFormView.swift */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		92BFDA512A97B5E600AE95D8 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +137,7 @@
 		92BFDA5C2A97B5E600AE95D8 /* TimeTracker */ = {
 			isa = PBXGroup;
 			children = (
+				9214722F2ADE704D00A9F89C /* Info.plist */,
 				92D2B3E42A9A78F600B8B76E /* Views */,
 				92D2B3DF2A9A78E700B8B76E /* ViewModels */,
 				92C1D8282A9B1FF9000061B6 /* Utilities */,
@@ -173,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				92C1D82D2A9B2070000061B6 /* SettingsView.swift */,
+				9232FFB82AD646E40097C954 /* GeneralSettingsView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -188,6 +212,8 @@
 		92D2B3DF2A9A78E700B8B76E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				927006622AD4C8EA0089884B /* CategoryViewModel.swift */,
+				927006632AD4C8EA0089884B /* SettingViewModel.swift */,
 				92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */,
 				92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */,
 			);
@@ -197,6 +223,7 @@
 		92D2B3E42A9A78F600B8B76E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9270065D2AD4C8C30089884B /* Category */,
 				92D2B3E52A9A78F600B8B76E /* Record */,
 				92D2B3E72A9A78F600B8B76E /* Activity */,
 				92C1D82C2A9B2047000061B6 /* Setting */,
@@ -207,6 +234,7 @@
 		92D2B3E52A9A78F600B8B76E /* Record */ = {
 			isa = PBXGroup;
 			children = (
+				92A112A02ADB5FB800BFAD19 /* RecordView.swift */,
 				92D2B3E62A9A78F600B8B76E /* RecordListView.swift */,
 				92C1D8262A9B0152000061B6 /* RecordGraphView.swift */,
 			);
@@ -358,16 +386,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				927006642AD4C8EA0089884B /* CategoryViewModel.swift in Sources */,
 				92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */,
 				92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */,
+				92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */,
 				92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */,
 				92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */,
 				92C1D8272A9B0152000061B6 /* RecordGraphView.swift in Sources */,
+				927006612AD4C8C40089884B /* CategoryListView.swift in Sources */,
 				92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */,
 				92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */,
 				92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */,
+				927006652AD4C8EA0089884B /* SettingViewModel.swift in Sources */,
 				92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */,
 				920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */,
+				927006602AD4C8C40089884B /* CategoryFormView.swift in Sources */,
+				9232FFB92AD646E40097C954 /* GeneralSettingsView.swift in Sources */,
 				92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,6 +561,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeTracker/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -565,6 +600,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeTracker/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

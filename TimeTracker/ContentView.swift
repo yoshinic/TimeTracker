@@ -1,22 +1,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var activityviewModel: ActivityViewModel = .init()
+    @StateObject private var categoryViewModel: CategoryViewModel = .init()
+    @StateObject private var recordViewModel: RecordViewModel = .init()
+
     var body: some View {
         TabView {
             NavigationView {
-                RecordListView()
+                RecordView(
+                    categoryViewModel: categoryViewModel,
+                    activityViewModel: activityviewModel,
+                    recordViewModel: recordViewModel
+                )
+            }
+            .tabItem {
+                Label("記録", systemImage: "figure.run")
+            }
+            NavigationView {
+                RecordListView(recordViewModel: recordViewModel)
             }
             .tabItem {
                 Label("Record", systemImage: "chart.bar")
             }
             NavigationView {
-                ActivityListView()
-            }
-            .tabItem {
-                Label("Activity", systemImage: "list.bullet")
-            }
-            NavigationView {
-                SettingsView()
+                SettingsView(
+                    activityViewModel: activityviewModel,
+                    categoryViewModel: categoryViewModel
+                )
             }
             .tabItem {
                 Label("Setting", systemImage: "gear")

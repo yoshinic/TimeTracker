@@ -1,13 +1,12 @@
 import SwiftUI
 import TimeTrackerAPI
 
-struct ActivityFormView: View {
-    @ObservedObject var activityViewModel: ActivityViewModel
-    @ObservedObject var categoryViewModel: CategoryViewModel
-    let activity: ActivityData!
-    let mode: ActivityFormMode
+struct CategoryFormView: View {
+    @ObservedObject var viewModel: CategoryViewModel
 
-    @State private var selectedCategory: UUID!
+    let category: CategoryData!
+    let mode: CategoryFormMode
+
     @State private var name: String = ""
     @State private var selectedColor: Color = .white
     @State private var color: String = "#FFFFFF"
@@ -17,13 +16,8 @@ struct ActivityFormView: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("アクティビティ作成項目")) {
-                    Picker("カテゴリー名", selection: $selectedCategory) {
-                        ForEach(categoryViewModel.categories) { category in
-                            Text(category.name).tag(category.id as UUID?)
-                        }
-                    }
-                    TextField("アクティビティ名", text: $name)
+                Section(header: Text("カテゴリー作成項目")) {
+                    TextField("カテゴリー名", text: $name)
                     ColorPicker("カラー選択", selection: $selectedColor)
                 }
 
@@ -33,16 +27,14 @@ struct ActivityFormView: View {
                         Button {
                             switch mode {
                             case .add:
-                                activityViewModel.addActivity(
+                                viewModel.addCategory(
                                     id: UUID(),
-                                    categoryId: selectedCategory,
                                     name: name,
                                     color: color
                                 )
                             case .edit:
-                                activityViewModel.updateActivity(
-                                    id: activity.id,
-                                    categoryId: selectedCategory,
+                                viewModel.updateCategory(
+                                    id: category.id,
                                     name: name,
                                     color: color
                                 )
@@ -57,16 +49,12 @@ struct ActivityFormView: View {
                 }
             }
         }
-        .navigationTitle("")
-        .navigationBarTitle("アクティビティ\(mode == .add ? "作成" : "更新")", displayMode: .inline)
+        .navigationBarTitle("カテゴリー\(mode == .add ? "作成" : "更新")", displayMode: .inline)
         .onAppear {
-            selectedCategory = categoryViewModel.defaultId
-            categoryViewModel.fetchCategories()
             guard mode == .edit else { return }
-            selectedCategory = activity.category.id
-            name = activity.name
-            selectedColor = Color(hex: activity.color)
-            color = activity.color
+            name = category.name
+            selectedColor = Color(hex: category.color)
+            color = category.color
         }
         .onChange(of: selectedColor) { newColor in
             color = newColor.toHex()
@@ -74,6 +62,6 @@ struct ActivityFormView: View {
     }
 }
 
-enum ActivityFormMode {
+enum CategoryFormMode {
     case add, edit
 }

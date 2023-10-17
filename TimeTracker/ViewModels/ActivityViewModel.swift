@@ -3,25 +3,38 @@ import TimeTrackerAPI
 
 class ActivityViewModel: ObservableObject {
     @Published var activities: [ActivityData] = []
-
+    let defaultId: UUID = ActivityService.defaultId
+    
     private let service = DefaultServiceFactory.shared.activity
 
     var count: Int = 0
 
-    func fetchActivities() {
+    func fetchActivities(
+        id: UUID? = nil,
+        categoryId: UUID? = nil,
+        name: String? = nil
+    ) {
         Task.detached { @MainActor in
-            self.activities = try await self.service.fetch()
+            self.activities = try await self.service.fetch(
+                id: id, categoryId: categoryId, name: name
+            )
             self.count = self.activities.count
         }
     }
 
     func addActivity(
         id: UUID? = nil,
+        categoryId: UUID,
         name: String,
         color: String
     ) {
         Task.detached { @MainActor in
-            let newActivity = try await self.service.create(id: id, name: name, color: color)
+            let newActivity = try await self.service.create(
+                id: id,
+                categoryId: categoryId,
+                name: name,
+                color: color
+            )
             self.activities.append(newActivity)
             self.count += 1
         }
@@ -29,11 +42,17 @@ class ActivityViewModel: ObservableObject {
 
     func updateActivity(
         id: UUID,
+        categoryId: UUID,
         name: String,
         color: String
     ) {
         Task.detached { @MainActor in
-            try await self.service.update(id: id, name: name, color: color)
+            try await self.service.update(
+                id: id,
+                categoryId: categoryId,
+                name: name,
+                color: color
+            )
         }
     }
 

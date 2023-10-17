@@ -1,85 +1,78 @@
 import SwiftUI
 import TimeTrackerAPI
 
-struct ActivityListView: View {
-    @ObservedObject var activityViewModel: ActivityViewModel
-    @ObservedObject var categoryViewModel: CategoryViewModel
-
+struct CategoryListView: View {
+    @ObservedObject var viewModel: CategoryViewModel
+    
     @State private var isModalPresented: Bool = false
-    @State private var newActivityName: String = ""
-    @State private var newActivityColor: Color = .white
+    @State private var newCategoryName: String = ""
+    @State private var newCategoryColor: Color = .white
     @State private var isEditMode: Bool = false
-    @State private var selectedActivity: ActivityData! = nil
-    @State private var selectedMode: ActivityFormMode = .add
+    @State private var selectedCategory: CategoryData! = nil
+    @State private var selectedMode: CategoryFormMode = .add
 
     var body: some View {
         VStack {
             addButton
             List {
-                ForEach(activityViewModel.activities) { activity in
+                ForEach(viewModel.categories) { category in
                     NavigationLink {
-                        ActivityFormView(
-                            activityViewModel: activityViewModel,
-                            categoryViewModel: categoryViewModel,
-                            activity: activity, mode: .edit
-                        )
+                        CategoryFormView(viewModel: viewModel, category: category, mode: .edit)
                     } label: {
                         HStack {
-                            Text(activity.category.name)
-                            Text(activity.name)
+                            Text(category.name)
                             Spacer()
                             Circle()
-                                .fill(Color(hex: activity.color))
+                                .fill(Color(hex: category.color))
                                 .frame(width: 24, height: 24)
                         }
                     }
                     .contextMenu {
                         Button {
-                            selectedActivity = activity
+                            selectedCategory = category
                             selectedMode = .edit
                             isModalPresented = true
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
                         Button {
-                            activityViewModel.deleteActivity(id: activity.id)
+                            viewModel.deleteCategory(id: category.id)
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
                     }
                 }
-                .onDelete(perform: activityViewModel.deleteActivities)
-                .onMove(perform: activityViewModel.moveActivities)
+                .onDelete(perform: viewModel.deleteCategories)
+                .onMove(perform: viewModel.moveCategories)
             }
             .listStyle(PlainListStyle())
             .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
         }
-        .navigationBarTitle("アクティビティ一覧", displayMode: .inline)
+        .navigationBarTitle("カテゴリー一覧", displayMode: .inline)
         .navigationBarItems(trailing: Button {
             isEditMode.toggle()
         } label: {
             Text(isEditMode ? "Done" : "Edit")
         })
         .sheet(isPresented: $isModalPresented) {
-            ActivityFormView(
-                activityViewModel: activityViewModel,
-                categoryViewModel: categoryViewModel,
-                activity: selectedActivity,
+            CategoryFormView(
+                viewModel: viewModel,
+                category: selectedCategory,
                 mode: selectedMode
             )
         }
-        .onAppear { activityViewModel.fetchActivities() }
+        .onAppear { viewModel.fetchCategories() }
     }
 
     private var addButton: some View {
         Button {
-            selectedActivity = nil
+            selectedCategory = nil
             selectedMode = .add
             isModalPresented = true
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")
-                Text("Add Activity")
+                Text("Add Category")
             }
             .padding()
             .foregroundColor(.blue)
@@ -87,11 +80,8 @@ struct ActivityListView: View {
     }
 }
 
-struct ActivityListView_Previews: PreviewProvider {
+struct CategoryListView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityListView(
-            activityViewModel: .init(),
-            categoryViewModel: .init()
-        )
+        CategoryListView(viewModel: .init())
     }
 }
