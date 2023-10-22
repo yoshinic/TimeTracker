@@ -48,7 +48,7 @@ struct SettingsView: View {
                 }
             }
         }
-        .navigationBarTitle("設定", displayMode: .inline)
+//        .navigationBarTitle("設定", displayMode: .inline)
     }
 }
 

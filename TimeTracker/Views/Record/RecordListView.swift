@@ -26,9 +26,9 @@ struct RecordListView: View {
                 }
             }
         }
-        .navigationBarTitle("記録一覧", displayMode: .inline)
+//        .navigationBarTitle("記録一覧", displayMode: .inline)
         .onAppear {
-            recordViewModel.fetchRecords()
+            recordViewModel.fetch()
         }
     }
 }

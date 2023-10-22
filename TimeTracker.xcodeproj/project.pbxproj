@@ -14,7 +14,6 @@
 		927006642AD4C8EA0089884B /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927006622AD4C8EA0089884B /* CategoryViewModel.swift */; };
 		927006652AD4C8EA0089884B /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927006632AD4C8EA0089884B /* SettingViewModel.swift */; };
 		92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A112A02ADB5FB800BFAD19 /* RecordView.swift */; };
-		92A7F2F22A97BE67003802E5 /* TimeTrackerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */; };
 		92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */; };
 		92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */; };
 		92BFDA622A97B5ED00AE95D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92BFDA612A97B5ED00AE95D8 /* Assets.xcassets */; };
@@ -26,10 +25,14 @@
 		92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82A2A9B201E000061B6 /* Theme.swift */; };
 		92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82D2A9B2070000061B6 /* SettingsView.swift */; };
 		92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */; };
+		92C28B1B2ADF2283009E23E1 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 92C28B1A2ADF2283009E23E1 /* KeychainAccess */; };
+		92C28B1E2ADF22E9009E23E1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C28B1D2ADF22E9009E23E1 /* KeychainHelper.swift */; };
+		92C28B212ADF2380009E23E1 /* DatabasePathPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */; };
 		92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */; };
 		92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */; };
 		92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E62A9A78F600B8B76E /* RecordListView.swift */; };
 		92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */; };
+		92F9B6B62AE4EC030038C6D4 /* TimeTrackerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,8 @@
 		92C1D82A2A9B201E000061B6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		92C1D82D2A9B2070000061B6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
+		92C28B1D2ADF22E9009E23E1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePathPicker.swift; sourceTree = "<group>"; };
 		92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		92D2B3E62A9A78F600B8B76E /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
@@ -84,7 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92A7F2F22A97BE67003802E5 /* TimeTrackerAPI in Frameworks */,
+				92F9B6B62AE4EC030038C6D4 /* TimeTrackerAPI in Frameworks */,
+				92C28B1B2ADF2283009E23E1 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +184,7 @@
 		92C1D8282A9B1FF9000061B6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				92C28B1C2ADF22BA009E23E1 /* Database */,
 				92C1D82F2A9B2281000061B6 /* Color */,
 				92C1D8292A9B200D000061B6 /* Theme */,
 			);
@@ -209,6 +216,22 @@
 			path = Color;
 			sourceTree = "<group>";
 		};
+		92C28B1C2ADF22BA009E23E1 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				92C28B1D2ADF22E9009E23E1 /* KeychainHelper.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		92C28B1F2ADF2366009E23E1 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		92D2B3DF2A9A78E700B8B76E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +246,7 @@
 		92D2B3E42A9A78F600B8B76E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				92C28B1F2ADF2366009E23E1 /* Database */,
 				9270065D2AD4C8C30089884B /* Category */,
 				92D2B3E52A9A78F600B8B76E /* Record */,
 				92D2B3E72A9A78F600B8B76E /* Activity */,
@@ -267,7 +291,8 @@
 			);
 			name = TimeTracker;
 			packageProductDependencies = (
-				92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */,
+				92C28B1A2ADF2283009E23E1 /* KeychainAccess */,
+				92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */,
 			);
 			productName = TimeTracker;
 			productReference = 92BFDA5A2A97B5E600AE95D8 /* TimeTracker.app */;
@@ -317,7 +342,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					92BFDA592A97B5E600AE95D8 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -342,7 +367,8 @@
 			);
 			mainGroup = 92BFDA512A97B5E600AE95D8;
 			packageReferences = (
-				92A7F2F02A97BE67003802E5 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */,
+				92C28B192ADF2283009E23E1 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				92F9B6B42AE4EC020038C6D4 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */,
 			);
 			productRefGroup = 92BFDA5B2A97B5E600AE95D8 /* Products */;
 			projectDirPath = "";
@@ -390,6 +416,7 @@
 				92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */,
 				92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */,
 				92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */,
+				92C28B212ADF2380009E23E1 /* DatabasePathPicker.swift in Sources */,
 				92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */,
 				92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */,
 				92C1D8272A9B0152000061B6 /* RecordGraphView.swift in Sources */,
@@ -399,6 +426,7 @@
 				92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */,
 				927006652AD4C8EA0089884B /* SettingViewModel.swift in Sources */,
 				92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */,
+				92C28B1E2ADF22E9009E23E1 /* KeychainHelper.swift in Sources */,
 				920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */,
 				927006602AD4C8C40089884B /* CategoryFormView.swift in Sources */,
 				9232FFB92AD646E40097C954 /* GeneralSettingsView.swift in Sources */,
@@ -472,9 +500,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -530,9 +560,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -556,6 +588,7 @@
 				CODE_SIGN_ENTITLEMENTS = TimeTracker/TimeTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"TimeTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = 3NWPT3598Z;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -595,6 +628,7 @@
 				CODE_SIGN_ENTITLEMENTS = TimeTracker/TimeTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"TimeTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = 3NWPT3598Z;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -633,6 +667,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 3NWPT3598Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -656,6 +691,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 3NWPT3598Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -678,6 +714,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 3NWPT3598Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -700,6 +737,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 3NWPT3598Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -758,7 +796,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		92A7F2F02A97BE67003802E5 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */ = {
+		92C28B192ADF2283009E23E1 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		92F9B6B42AE4EC020038C6D4 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "file:///users/yoshi/Developments/Projects/TimeTracker/TimeTrackerAPI/";
 			requirement = {
@@ -769,9 +815,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		92A7F2F12A97BE67003802E5 /* TimeTrackerAPI */ = {
+		92C28B1A2ADF2283009E23E1 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 92A7F2F02A97BE67003802E5 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */;
+			package = 92C28B192ADF2283009E23E1 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92F9B6B42AE4EC020038C6D4 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */;
 			productName = TimeTrackerAPI;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -27,13 +27,13 @@ struct CategoryFormView: View {
                         Button {
                             switch mode {
                             case .add:
-                                viewModel.addCategory(
+                                viewModel.create(
                                     id: UUID(),
                                     name: name,
                                     color: color
                                 )
                             case .edit:
-                                viewModel.updateCategory(
+                                viewModel.update(
                                     id: category.id,
                                     name: name,
                                     color: color
@@ -49,7 +49,7 @@ struct CategoryFormView: View {
                 }
             }
         }
-        .navigationBarTitle("カテゴリー\(mode == .add ? "作成" : "更新")", displayMode: .inline)
+//        .navigationBarTitle("カテゴリー\(mode == .add ? "作成" : "更新")", displayMode: .inline)
         .onAppear {
             guard mode == .edit else { return }
             name = category.name

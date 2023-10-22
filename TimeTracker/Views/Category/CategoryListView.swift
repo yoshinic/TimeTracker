@@ -3,7 +3,7 @@ import TimeTrackerAPI
 
 struct CategoryListView: View {
     @ObservedObject var viewModel: CategoryViewModel
-    
+
     @State private var isModalPresented: Bool = false
     @State private var newCategoryName: String = ""
     @State private var newCategoryColor: Color = .white
@@ -36,24 +36,24 @@ struct CategoryListView: View {
                             Label("Edit", systemImage: "pencil")
                         }
                         Button {
-                            viewModel.deleteCategory(id: category.id)
+                            viewModel.delete(id: category.id)
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
                     }
                 }
-                .onDelete(perform: viewModel.deleteCategories)
-                .onMove(perform: viewModel.moveCategories)
+                .onDelete(perform: viewModel.delete)
+                .onMove(perform: viewModel.move)
             }
             .listStyle(PlainListStyle())
-            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+//            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
         }
-        .navigationBarTitle("カテゴリー一覧", displayMode: .inline)
-        .navigationBarItems(trailing: Button {
-            isEditMode.toggle()
-        } label: {
-            Text(isEditMode ? "Done" : "Edit")
-        })
+//        .navigationBarTitle("カテゴリー一覧", displayMode: .inline)
+//        .navigationBarItems(trailing: Button {
+//            isEditMode.toggle()
+//        } label: {
+//            Text(isEditMode ? "Done" : "Edit")
+//        })
         .sheet(isPresented: $isModalPresented) {
             CategoryFormView(
                 viewModel: viewModel,
@@ -61,7 +61,7 @@ struct CategoryListView: View {
                 mode: selectedMode
             )
         }
-        .onAppear { viewModel.fetchCategories() }
+        .onAppear { viewModel.fetch() }
     }
 
     private var addButton: some View {

@@ -42,24 +42,24 @@ struct ActivityListView: View {
                             Label("Edit", systemImage: "pencil")
                         }
                         Button {
-                            activityViewModel.deleteActivity(id: activity.id)
+                            activityViewModel.delete(id: activity.id)
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
                     }
                 }
-                .onDelete(perform: activityViewModel.deleteActivities)
-                .onMove(perform: activityViewModel.moveActivities)
+                .onDelete(perform: activityViewModel.delete)
+                .onMove(perform: activityViewModel.move)
             }
             .listStyle(PlainListStyle())
-            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+//            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
         }
-        .navigationBarTitle("アクティビティ一覧", displayMode: .inline)
-        .navigationBarItems(trailing: Button {
-            isEditMode.toggle()
-        } label: {
-            Text(isEditMode ? "Done" : "Edit")
-        })
+//        .navigationBarTitle("アクティビティ一覧", displayMode: .inline)
+//        .navigationBarItems(trailing: Button {
+//            isEditMode.toggle()
+//        } label: {
+//            Text(isEditMode ? "Done" : "Edit")
+//        })
         .sheet(isPresented: $isModalPresented) {
             ActivityFormView(
                 activityViewModel: activityViewModel,
@@ -68,7 +68,7 @@ struct ActivityListView: View {
                 mode: selectedMode
             )
         }
-        .onAppear { activityViewModel.fetchActivities() }
+        .onAppear { activityViewModel.fetch() }
     }
 
     private var addButton: some View {

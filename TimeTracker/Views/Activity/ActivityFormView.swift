@@ -33,14 +33,14 @@ struct ActivityFormView: View {
                         Button {
                             switch mode {
                             case .add:
-                                activityViewModel.addActivity(
+                                activityViewModel.create(
                                     id: UUID(),
                                     categoryId: selectedCategory,
                                     name: name,
                                     color: color
                                 )
                             case .edit:
-                                activityViewModel.updateActivity(
+                                activityViewModel.update(
                                     id: activity.id,
                                     categoryId: selectedCategory,
                                     name: name,
@@ -58,10 +58,10 @@ struct ActivityFormView: View {
             }
         }
         .navigationTitle("")
-        .navigationBarTitle("アクティビティ\(mode == .add ? "作成" : "更新")", displayMode: .inline)
+//        .navigationBarTitle("アクティビティ\(mode == .add ? "作成" : "更新")", displayMode: .inline)
         .onAppear {
             selectedCategory = categoryViewModel.defaultId
-            categoryViewModel.fetchCategories()
+            categoryViewModel.fetch()
             guard mode == .edit else { return }
             selectedCategory = activity.category.id
             name = activity.name
