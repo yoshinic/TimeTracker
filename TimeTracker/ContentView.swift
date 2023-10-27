@@ -3,44 +3,33 @@ import TimeTrackerAPI
 
 struct ContentView: View {
     @State private var isReady: Bool = false
-
-//    var filePath: String {
-//        let fileName = "records.sqlite3"
-//
-//        let fm = FileManager.default
-//        let url: URL?
-//        #if os(macOS)
-//        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
-//        #elseif os(iOS)
-//        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
-//        #else
-//        url = nil
-//        #endif
-//
-//        guard let url = url else { return "" }
-//        let path = url.appendingPathComponent(fileName)
-//        return path.absoluteString
-//    }
-
-    @State private var filePath: String! = nil
+    @State private var filePath: String = {
+        let fm = FileManager.default
+        let url = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let path = url.appendingPathComponent("records.sqlite3")
+        return path.absoluteString
+    }()
 
     var body: some View {
+        #if os(macOS)
         if isReady {
             _ContentView(filePath: filePath)
         } else {
-            DatabasePathPicker { result in
-                do {
-                    let url = try result.get()
-                    filePath = url
-                        .appendingPathComponent("records.sqlite3")
-                        .absoluteString
-                        .removingPercentEncoding
+            DatabasePathPicker {
+                switch $0 {
+                case let .success(url):
+                    filePath = url.absoluteString
                     isReady = true
-                } catch {
-                    print(error)
+                case let .failure(error):
+                    print("Error selecting file: \(error.localizedDescription)")
                 }
             }
         }
+        #elseif os(iOS)
+        _ContentView(filePath: filePath)
+        #else
+        EmptyView()
+        #endif
     }
 }
 
@@ -60,7 +49,9 @@ struct _ContentView: View {
         .onAppear {
             Task { @MainActor in
                 do {
-                    try await DatabaseServiceManager.shared.setDatabase(filePath: filePath)
+                    try await DatabaseServiceManager
+                        .shared
+                        .setDatabase(filePath: filePath)
                     isReady = true
                 } catch {
                     print(error.localizedDescription)

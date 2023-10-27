@@ -31,6 +31,7 @@
 		92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E62A9A78F600B8B76E /* RecordListView.swift */; };
 		92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */; };
 		92F9B6B62AE4EC030038C6D4 /* TimeTrackerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */; };
+		92FABEF32AEB8DB600833B1A /* CustomUTType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FABEF22AEB8DB600833B1A /* CustomUTType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		92D2B3E62A9A78F600B8B76E /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
 		92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListView.swift; sourceTree = "<group>"; };
+		92FABEF22AEB8DB600833B1A /* CustomUTType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUTType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 		92C1D8282A9B1FF9000061B6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				92FABEF12AEB8D9700833B1A /* UTType */,
 				92C1D82F2A9B2281000061B6 /* Color */,
 				92C1D8292A9B200D000061B6 /* Theme */,
 			);
@@ -259,6 +262,14 @@
 				920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */,
 			);
 			path = Activity;
+			sourceTree = "<group>";
+		};
+		92FABEF12AEB8D9700833B1A /* UTType */ = {
+			isa = PBXGroup;
+			children = (
+				92FABEF22AEB8DB600833B1A /* CustomUTType.swift */,
+			);
+			path = UTType;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,6 +411,7 @@
 				927006642AD4C8EA0089884B /* CategoryViewModel.swift in Sources */,
 				92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */,
 				92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */,
+				92FABEF32AEB8DB600833B1A /* CustomUTType.swift in Sources */,
 				92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */,
 				92C28B212ADF2380009E23E1 /* DatabasePathPicker.swift in Sources */,
 				92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */,
