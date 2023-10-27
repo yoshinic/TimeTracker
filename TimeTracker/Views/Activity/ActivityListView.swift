@@ -52,46 +52,14 @@ private struct _ActivityListView: View {
     var body: some View {
         VStack {
             addButton
-            List {
-                ForEach(activityViewModel.activities) { activity in
-                    NavigationLink {
-                        ActivityFormView(
-                            activityViewModel: activityViewModel,
-                            activity: activity,
-                            mode: .edit,
-                            categories: categories,
-                            defaultCategoryId: defaultCategoryId
-                        )
-                    } label: {
-                        HStack {
-                            Text(activity.category.name)
-                            Text(activity.name)
-                            Spacer()
-                            Circle()
-                                .fill(Color(hex: activity.color))
-                                .frame(width: 24, height: 24)
-                        }
-                    }
-                    .contextMenu {
-                        Button {
-                            selectedActivity = activity
-                            selectedMode = .edit
-                            isModalPresented = true
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        Button {
-                            activityViewModel.delete(id: activity.id)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
-                }
-                .onDelete(perform: activityViewModel.delete)
-                .onMove(perform: activityViewModel.move)
-            }
-            .listStyle(PlainListStyle())
-            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+            #if os(macOS)
+            DataList
+            #elseif os(iOS)
+            DataList
+                .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+            #else
+            EmptyView()
+            #endif
         }
         .sheet(isPresented: $isModalPresented) {
             ActivityFormView(
@@ -103,6 +71,48 @@ private struct _ActivityListView: View {
             )
         }
         .onAppear { activityViewModel.fetch() }
+    }
+
+    private var DataList: some View {
+        List {
+            ForEach(activityViewModel.activities) { activity in
+                NavigationLink {
+                    ActivityFormView(
+                        activityViewModel: activityViewModel,
+                        activity: activity,
+                        mode: .edit,
+                        categories: categories,
+                        defaultCategoryId: defaultCategoryId
+                    )
+                } label: {
+                    HStack {
+                        Text(activity.category.name)
+                        Text(activity.name)
+                        Spacer()
+                        Circle()
+                            .fill(Color(hex: activity.color))
+                            .frame(width: 24, height: 24)
+                    }
+                }
+                .contextMenu {
+                    Button {
+                        selectedActivity = activity
+                        selectedMode = .edit
+                        isModalPresented = true
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                    Button {
+                        activityViewModel.delete(id: activity.id)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            }
+            .onDelete(perform: activityViewModel.delete)
+            .onMove(perform: activityViewModel.move)
+        }
+        .listStyle(PlainListStyle())
     }
 
     private var addButton: some View {

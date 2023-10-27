@@ -34,39 +34,14 @@ struct _CategoryListView: View {
     var body: some View {
         VStack {
             addButton
-            List {
-                ForEach(viewModel.categories) { category in
-                    NavigationLink {
-                        CategoryFormView(viewModel: viewModel, category: category, mode: .edit)
-                    } label: {
-                        HStack {
-                            Text(category.name)
-                            Spacer()
-                            Circle()
-                                .fill(Color(hex: category.color))
-                                .frame(width: 24, height: 24)
-                        }
-                    }
-                    .contextMenu {
-                        Button {
-                            selectedCategory = category
-                            selectedMode = .edit
-                            isModalPresented = true
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        Button {
-                            viewModel.delete(id: category.id)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
-                }
-                .onDelete(perform: viewModel.delete)
-                .onMove(perform: viewModel.move)
-            }
-            .listStyle(PlainListStyle())
-            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+            #if os(macOS)
+            DataList
+            #elseif os(iOS)
+            DataList
+                .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+            #else
+            EmptyView()
+            #endif
         }
         .sheet(isPresented: $isModalPresented) {
             CategoryFormView(
@@ -76,6 +51,41 @@ struct _CategoryListView: View {
             )
         }
         .onAppear { viewModel.fetch() }
+    }
+
+    private var DataList: some View {
+        List {
+            ForEach(viewModel.categories) { category in
+                NavigationLink {
+                    CategoryFormView(viewModel: viewModel, category: category, mode: .edit)
+                } label: {
+                    HStack {
+                        Text(category.name)
+                        Spacer()
+                        Circle()
+                            .fill(Color(hex: category.color))
+                            .frame(width: 24, height: 24)
+                    }
+                }
+                .contextMenu {
+                    Button {
+                        selectedCategory = category
+                        selectedMode = .edit
+                        isModalPresented = true
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                    Button {
+                        viewModel.delete(id: category.id)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            }
+            .onDelete(perform: viewModel.delete)
+            .onMove(perform: viewModel.move)
+        }
+        .listStyle(PlainListStyle())
     }
 
     private var addButton: some View {
