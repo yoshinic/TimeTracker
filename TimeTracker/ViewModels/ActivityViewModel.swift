@@ -3,9 +3,9 @@ import TimeTrackerAPI
 
 class ActivityViewModel: ObservableObject {
     @Published var activities: [ActivityData] = []
-    
+
     let defaultId: UUID = ActivityService.defaultId
-    private let service = DefaultServiceFactory.shared.activity
+    private let service: ActivityService? = DatabaseServiceManager.shared.activity
     var count: Int = 0
 
     func fetch(
@@ -13,8 +13,9 @@ class ActivityViewModel: ObservableObject {
         categoryId: UUID? = nil,
         name: String? = nil
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            self.activities = try await self.service.fetch(
+            self.activities = try await service.fetch(
                 id: id, categoryId: categoryId, name: name
             )
             self.count = self.activities.count
@@ -27,8 +28,9 @@ class ActivityViewModel: ObservableObject {
         name: String,
         color: String
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            let new = try await self.service.create(
+            let new = try await service.create(
                 id: id,
                 categoryId: categoryId,
                 name: name,
@@ -45,8 +47,9 @@ class ActivityViewModel: ObservableObject {
         name: String,
         color: String
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            try await self.service.update(
+            try await service.update(
                 id: id,
                 categoryId: categoryId,
                 name: name,
@@ -63,20 +66,22 @@ class ActivityViewModel: ObservableObject {
     }
 
     func delete(at offsets: IndexSet) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
             for i in offsets {
-                try await self.service.delete(id: self.activities[i].id)
+                try await service.delete(id: self.activities[i].id)
             }
             self.activities.remove(atOffsets: offsets)
-            try await self.service.updateOrder(ids: self.activities.map { $0.id })
+            try await service.updateOrder(ids: self.activities.map { $0.id })
             self.fetch()
         }
     }
 
     func move(from source: IndexSet, to destination: Int) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
             self.activities.move(fromOffsets: source, toOffset: destination)
-            try await self.service.updateOrder(ids: self.activities.map { $0.id })
+            try await service.updateOrder(ids: self.activities.map { $0.id })
             self.fetch()
         }
     }

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct DatabasePathPicker: View {
     @State private var showPicker = false
-    @Binding var isPathChosen: Bool
 
     let complition: (Result<URL, Error>) -> Void
 

@@ -5,12 +5,13 @@ class CategoryViewModel: ObservableObject {
     @Published var categories: [CategoryData] = []
 
     let defaultId: UUID = CategoryService.defaultId
-    private let service = DefaultServiceFactory.shared.category
+    private let service: CategoryService? = DatabaseServiceManager.shared.category
     var count: Int = 0
 
     func fetch() {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            self.categories = try await self.service.fetch()
+            self.categories = try await service.fetch()
             self.count = self.categories.count
         }
     }
@@ -20,9 +21,10 @@ class CategoryViewModel: ObservableObject {
         name: String,
         color: String
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
             guard
-                let new = try await self.service.create(
+                let new = try await service.create(
                     id: id,
                     name: name,
                     color: color
@@ -38,8 +40,9 @@ class CategoryViewModel: ObservableObject {
         name: String,
         color: String
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            try await self.service.update(
+            try await service.update(
                 id: id,
                 name: name,
                 color: color
@@ -55,20 +58,22 @@ class CategoryViewModel: ObservableObject {
     }
 
     func delete(at offsets: IndexSet) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
             for i in offsets {
-                try await self.service.delete(id: self.categories[i].id)
+                try await service.delete(id: self.categories[i].id)
             }
             self.categories.remove(atOffsets: offsets)
-            try await self.service.updateOrder(ids: self.categories.map { $0.id })
+            try await service.updateOrder(ids: self.categories.map { $0.id })
             self.fetch()
         }
     }
 
     func move(from source: IndexSet, to destination: Int) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
             self.categories.move(fromOffsets: source, toOffset: destination)
-            try await self.service.updateOrder(ids: self.categories.map { $0.id })
+            try await service.updateOrder(ids: self.categories.map { $0.id })
             self.fetch()
         }
     }

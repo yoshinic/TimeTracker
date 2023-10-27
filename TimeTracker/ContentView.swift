@@ -2,58 +2,78 @@ import SwiftUI
 import TimeTrackerAPI
 
 struct ContentView: View {
-    @State private var isPathChosen = false
+    @State private var isReady: Bool = false
 
-    let keychainHelper = KeychainHelper()
+    var filePath: String {
+        let fileName = "records.sqlite3"
+
+        let fm = FileManager.default
+        let url: URL?
+        #if os(macOS)
+        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
+        #elseif os(iOS)
+        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
+        #else
+        url = nil
+        #endif
+
+        guard let url = url else { return "" }
+        let path = url.appendingPathComponent(fileName)
+        return path.absoluteString
+    }
 
     var body: some View {
-        if let _ = keychainHelper.getDatabasePath() {
-            _ContentView()
-        } else {
-            DatabasePathPicker(isPathChosen: $isPathChosen) { result in
-                Task {
-                    guard let url = try? result.get() else { return }
-                    keychainHelper.saveDatabasePath(path: url.path)
-                    try await DefaultServiceFactory.shared.setDatabase(filePath: url.path + "/sample.sqlite3")
-                    isPathChosen = true
+        TabView {
+            if isReady {
+                MainView()
+            } else {
+                EmptyView()
+            }
+        }
+        .onAppear {
+            Task { @MainActor in
+                do {
+                    guard !filePath.isEmpty else { return }
+                    try await DatabaseServiceManager.shared.setDatabase(filePath: filePath)
+                    isReady = true
+                } catch {
+                    print(error.localizedDescription)
                 }
             }
         }
     }
 }
 
-private struct _ContentView: View {
+struct MainView: View {
     @StateObject private var categoryViewModel: CategoryViewModel = .init()
-    @StateObject private var activityviewModel: ActivityViewModel = .init()
+    @StateObject private var activityViewModel: ActivityViewModel = .init()
     @StateObject private var recordViewModel: RecordViewModel = .init()
 
     var body: some View {
-        TabView {
-            NavigationView {
-                RecordView(
-                    categoryViewModel: categoryViewModel,
-                    activityViewModel: activityviewModel,
-                    recordViewModel: recordViewModel
-                )
-            }
-            .tabItem {
-                Label("記録", systemImage: "figure.run")
-            }
-            NavigationView {
-                RecordListView(recordViewModel: recordViewModel)
-            }
-            .tabItem {
-                Label("Record", systemImage: "chart.bar")
-            }
-            NavigationView {
-                SettingsView(
-                    activityViewModel: activityviewModel,
-                    categoryViewModel: categoryViewModel
-                )
-            }
-            .tabItem {
-                Label("Setting", systemImage: "gear")
-            }
+        NavigationView {
+            RecordView(
+                categoryViewModel: categoryViewModel,
+                activityViewModel: activityViewModel,
+                recordViewModel: recordViewModel
+            )
+        }
+        .tabItem {
+            Label("記録", systemImage: "figure.run")
+        }
+        NavigationView {
+            RecordListView(recordViewModel: recordViewModel)
+        }
+        .tabItem {
+            Label("Record", systemImage: "chart.bar")
+        }
+        NavigationView {
+            SettingsView(
+                activityViewModel: activityViewModel,
+                categoryViewModel: categoryViewModel
+            )
+        }
+        .tabItem {
+            Label("Setting", systemImage: "gear")
         }
     }
 }

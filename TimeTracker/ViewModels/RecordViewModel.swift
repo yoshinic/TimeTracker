@@ -4,7 +4,7 @@ import TimeTrackerAPI
 class RecordViewModel: ObservableObject {
     @Published var records: [RecordData] = []
 
-    private let service = DefaultServiceFactory.shared.record
+    private let service: RecordService? = DatabaseServiceManager.shared.record
     var count: Int = 0
 
     func fetch(
@@ -16,8 +16,9 @@ class RecordViewModel: ObservableObject {
         activityNames: [String] = [],
         activityColors: [String] = []
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            self.records = try await self.service.fetch(
+            self.records = try await service.fetch(
                 recordId: recordId,
                 nullEnd: nullEnd,
                 from: from,
@@ -37,8 +38,9 @@ class RecordViewModel: ObservableObject {
         endedAt: Date? = nil,
         note: String = ""
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            let new = try await self.service.create(
+            let new = try await service.create(
                 activityId: activityId,
                 startedAt: startedAt,
                 endedAt: endedAt,
@@ -56,8 +58,9 @@ class RecordViewModel: ObservableObject {
         endedAt: Date?,
         note: String
     ) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
-            try await self.service.update(
+            try await service.update(
                 recordId: id,
                 activityId: activityId,
                 startedAt: startedAt,
@@ -75,9 +78,10 @@ class RecordViewModel: ObservableObject {
     }
 
     func delete(at offsets: IndexSet) {
+        guard let service = service else { return }
         Task.detached { @MainActor in
             for i in offsets {
-                try await self.service.delete(recordId: self.records[i].id)
+                try await service.delete(recordId: self.records[i].id)
             }
             self.records.remove(atOffsets: offsets)
             self.fetch()

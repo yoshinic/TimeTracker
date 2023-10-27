@@ -25,8 +25,6 @@
 		92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82A2A9B201E000061B6 /* Theme.swift */; };
 		92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82D2A9B2070000061B6 /* SettingsView.swift */; };
 		92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */; };
-		92C28B1B2ADF2283009E23E1 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 92C28B1A2ADF2283009E23E1 /* KeychainAccess */; };
-		92C28B1E2ADF22E9009E23E1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C28B1D2ADF22E9009E23E1 /* KeychainHelper.swift */; };
 		92C28B212ADF2380009E23E1 /* DatabasePathPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */; };
 		92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */; };
 		92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */; };
@@ -76,7 +74,6 @@
 		92C1D82A2A9B201E000061B6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		92C1D82D2A9B2070000061B6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
-		92C28B1D2ADF22E9009E23E1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePathPicker.swift; sourceTree = "<group>"; };
 		92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
@@ -90,7 +87,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				92F9B6B62AE4EC030038C6D4 /* TimeTrackerAPI in Frameworks */,
-				92C28B1B2ADF2283009E23E1 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +180,6 @@
 		92C1D8282A9B1FF9000061B6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				92C28B1C2ADF22BA009E23E1 /* Database */,
 				92C1D82F2A9B2281000061B6 /* Color */,
 				92C1D8292A9B200D000061B6 /* Theme */,
 			);
@@ -214,14 +209,6 @@
 				92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */,
 			);
 			path = Color;
-			sourceTree = "<group>";
-		};
-		92C28B1C2ADF22BA009E23E1 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				92C28B1D2ADF22E9009E23E1 /* KeychainHelper.swift */,
-			);
-			path = Database;
 			sourceTree = "<group>";
 		};
 		92C28B1F2ADF2366009E23E1 /* Database */ = {
@@ -291,7 +278,6 @@
 			);
 			name = TimeTracker;
 			packageProductDependencies = (
-				92C28B1A2ADF2283009E23E1 /* KeychainAccess */,
 				92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */,
 			);
 			productName = TimeTracker;
@@ -367,7 +353,6 @@
 			);
 			mainGroup = 92BFDA512A97B5E600AE95D8;
 			packageReferences = (
-				92C28B192ADF2283009E23E1 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				92F9B6B42AE4EC020038C6D4 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */,
 			);
 			productRefGroup = 92BFDA5B2A97B5E600AE95D8 /* Products */;
@@ -426,7 +411,6 @@
 				92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */,
 				927006652AD4C8EA0089884B /* SettingViewModel.swift in Sources */,
 				92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */,
-				92C28B1E2ADF22E9009E23E1 /* KeychainHelper.swift in Sources */,
 				920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */,
 				927006602AD4C8C40089884B /* CategoryFormView.swift in Sources */,
 				9232FFB92AD646E40097C954 /* GeneralSettingsView.swift in Sources */,
@@ -796,14 +780,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		92C28B192ADF2283009E23E1 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		92F9B6B42AE4EC020038C6D4 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "file:///users/yoshi/Developments/Projects/TimeTracker/TimeTrackerAPI/";
@@ -815,11 +791,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		92C28B1A2ADF2283009E23E1 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 92C28B192ADF2283009E23E1 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
 		92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 92F9B6B42AE4EC020038C6D4 /* XCRemoteSwiftPackageReference "TimeTrackerAPI" */;
