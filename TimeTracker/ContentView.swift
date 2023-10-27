@@ -4,23 +4,50 @@ import TimeTrackerAPI
 struct ContentView: View {
     @State private var isReady: Bool = false
 
-    var filePath: String {
-        let fileName = "records.sqlite3"
+//    var filePath: String {
+//        let fileName = "records.sqlite3"
+//
+//        let fm = FileManager.default
+//        let url: URL?
+//        #if os(macOS)
+//        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
+//        #elseif os(iOS)
+//        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
+//        #else
+//        url = nil
+//        #endif
+//
+//        guard let url = url else { return "" }
+//        let path = url.appendingPathComponent(fileName)
+//        return path.absoluteString
+//    }
 
-        let fm = FileManager.default
-        let url: URL?
-        #if os(macOS)
-        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
-        #elseif os(iOS)
-        url = fm.urls(for: .documentDirectory, in: .userDomainMask).first
-        #else
-        url = nil
-        #endif
+    @State private var filePath: String! = nil
 
-        guard let url = url else { return "" }
-        let path = url.appendingPathComponent(fileName)
-        return path.absoluteString
+    var body: some View {
+        if isReady {
+            _ContentView(filePath: filePath)
+        } else {
+            DatabasePathPicker { result in
+                do {
+                    let url = try result.get()
+                    filePath = url
+                        .appendingPathComponent("records.sqlite3")
+                        .absoluteString
+                        .removingPercentEncoding
+                    isReady = true
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
+}
+
+struct _ContentView: View {
+    @State private var isReady: Bool = false
+
+    let filePath: String
 
     var body: some View {
         TabView {
@@ -33,7 +60,6 @@ struct ContentView: View {
         .onAppear {
             Task { @MainActor in
                 do {
-                    guard !filePath.isEmpty else { return }
                     try await DatabaseServiceManager.shared.setDatabase(filePath: filePath)
                     isReady = true
                 } catch {
