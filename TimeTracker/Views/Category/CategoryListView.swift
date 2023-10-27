@@ -3,11 +3,31 @@ import TimeTrackerAPI
 
 struct CategoryListView: View {
     @ObservedObject var viewModel: CategoryViewModel
+    @State private var isEditMode: Bool = false
 
+    var body: some View {
+        #if os(macOS)
+        _CategoryListView(viewModel: viewModel, isEditMode: $isEditMode)
+        #elseif os(iOS)
+        _CategoryListView(viewModel: viewModel, isEditMode: $isEditMode)
+            .navigationBarTitle("カテゴリ一覧", displayMode: .inline)
+            .navigationBarItems(trailing: Button {
+                isEditMode.toggle()
+            } label: {
+                Text(isEditMode ? "Done" : "Edit")
+            })
+        #else
+        EmptyView()
+        #endif
+    }
+}
+
+struct _CategoryListView: View {
+    @ObservedObject var viewModel: CategoryViewModel
+    @Binding var isEditMode: Bool
     @State private var isModalPresented: Bool = false
     @State private var newCategoryName: String = ""
     @State private var newCategoryColor: Color = .white
-    @State private var isEditMode: Bool = false
     @State private var selectedCategory: CategoryData! = nil
     @State private var selectedMode: CategoryFormMode = .add
 
@@ -46,14 +66,8 @@ struct CategoryListView: View {
                 .onMove(perform: viewModel.move)
             }
             .listStyle(PlainListStyle())
-//            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
+            .environment(\.editMode, isEditMode ? .constant(.active) : .constant(.inactive))
         }
-//        .navigationBarTitle("カテゴリー一覧", displayMode: .inline)
-//        .navigationBarItems(trailing: Button {
-//            isEditMode.toggle()
-//        } label: {
-//            Text(isEditMode ? "Done" : "Edit")
-//        })
         .sheet(isPresented: $isModalPresented) {
             CategoryFormView(
                 viewModel: viewModel,

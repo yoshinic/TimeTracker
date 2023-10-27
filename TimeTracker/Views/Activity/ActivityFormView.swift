@@ -3,9 +3,38 @@ import TimeTrackerAPI
 
 struct ActivityFormView: View {
     @ObservedObject var activityViewModel: ActivityViewModel
-    @ObservedObject var categoryViewModel: CategoryViewModel
+
     let activity: ActivityData!
     let mode: ActivityFormMode
+    let categories: [CategoryData]
+    let defaultCategoryId: UUID
+
+    var body: some View {
+        #if os(macOS)
+        _ActivityFormView(
+            activityViewModel: activityViewModel,
+            activity: activity,
+            mode: mode,
+            categories: categories,
+            defaultCategoryId: defaultCategoryId
+        )
+        #elseif os(iOS)
+        _ActivityFormView(
+            activityViewModel: activityViewModel,
+            activity: activity,
+            mode: mode,
+            categories: categories,
+            defaultCategoryId: defaultCategoryId
+        )
+        .navigationBarTitle("アクティビティ\(mode == .add ? "作成" : "更新")", displayMode: .inline)
+        #else
+        EmptyView()
+        #endif
+    }
+}
+
+struct _ActivityFormView: View {
+    @ObservedObject var activityViewModel: ActivityViewModel
 
     @State private var selectedCategory: UUID!
     @State private var name: String = ""
@@ -14,12 +43,17 @@ struct ActivityFormView: View {
 
     @Environment(\.dismiss) private var dismiss
 
+    let activity: ActivityData!
+    let mode: ActivityFormMode
+    let categories: [CategoryData]
+    let defaultCategoryId: UUID
+
     var body: some View {
         VStack {
             Form {
                 Section(header: Text("アクティビティ作成項目")) {
                     Picker("カテゴリー名", selection: $selectedCategory) {
-                        ForEach(categoryViewModel.categories) { category in
+                        ForEach(categories) { category in
                             Text(category.name).tag(category.id as UUID?)
                         }
                     }
@@ -57,11 +91,8 @@ struct ActivityFormView: View {
                 }
             }
         }
-        .navigationTitle("")
-//        .navigationBarTitle("アクティビティ\(mode == .add ? "作成" : "更新")", displayMode: .inline)
         .onAppear {
-            selectedCategory = categoryViewModel.defaultId
-            categoryViewModel.fetch()
+            selectedCategory = defaultCategoryId
             guard mode == .edit else { return }
             selectedCategory = activity.category.id
             name = activity.name

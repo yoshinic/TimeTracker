@@ -1,13 +1,28 @@
 import SwiftUI
 
 struct RecordListView: View {
-    @ObservedObject var recordViewModel: RecordViewModel
+    @ObservedObject var viewModel: RecordViewModel
+
+    var body: some View {
+        #if os(macOS)
+        _RecordListView(viewModel: viewModel)
+        #elseif os(iOS)
+        _RecordListView(viewModel: viewModel)
+            .navigationBarTitle("記録一覧", displayMode: .inline)
+        #else
+        EmptyView()
+        #endif
+    }
+}
+
+struct _RecordListView: View {
+    @ObservedObject var viewModel: RecordViewModel
 
     var body: some View {
         VStack {
             List {
                 Section(header: HeaderView()) {
-                    ForEach(recordViewModel.records) { record in
+                    ForEach(viewModel.records) { record in
                         HStack {
                             VStack(alignment: .leading, spacing: 12) {
                                 Text(record.activity?.category.name ?? "未登録")
@@ -26,9 +41,8 @@ struct RecordListView: View {
                 }
             }
         }
-//        .navigationBarTitle("記録一覧", displayMode: .inline)
         .onAppear {
-            recordViewModel.fetch()
+            viewModel.fetch()
         }
     }
 }
@@ -103,7 +117,7 @@ private struct DateView: View {
 struct RecordListView_Previews: PreviewProvider {
     static var previews: some View {
         RecordListView(
-            recordViewModel: .init()
+            viewModel: .init()
         )
     }
 }
