@@ -21,8 +21,10 @@ struct RecordMainView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .onAppear {
-            activityViewModel.fetch()
-            recordViewModel.fetch()
+            Task { 
+                try await activityViewModel.fetch()
+                try await recordViewModel.fetch()
+            }
         }
     }
 }

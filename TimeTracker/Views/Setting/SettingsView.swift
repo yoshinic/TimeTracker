@@ -73,7 +73,7 @@ struct _SettingsView: View {
             }
         }
         .onAppear {
-            categoryViewModel.fetch()
+            Task { try await categoryViewModel.fetch() }
         }
     }
 }

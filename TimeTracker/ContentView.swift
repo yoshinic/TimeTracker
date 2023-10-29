@@ -49,7 +49,7 @@ struct _ContentView: View {
             }
         }
         .onAppear {
-            Task { @MainActor in
+            Task {
                 do {
                     try await DatabaseServiceManager
                         .shared

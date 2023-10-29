@@ -67,19 +67,23 @@ struct _ActivityFormView: View {
                         Button {
                             switch mode {
                             case .add:
-                                activityViewModel.create(
-                                    id: UUID(),
-                                    categoryId: selectedCategory,
-                                    name: name,
-                                    color: color
-                                )
+                                Task {
+                                    try await activityViewModel.create(
+                                        id: UUID(),
+                                        categoryId: selectedCategory,
+                                        name: name,
+                                        color: color
+                                    )
+                                }
                             case .edit:
-                                activityViewModel.update(
-                                    id: activity.id,
-                                    categoryId: selectedCategory,
-                                    name: name,
-                                    color: color
-                                )
+                                Task {
+                                    try await activityViewModel.update(
+                                        id: activity.id,
+                                        categoryId: selectedCategory,
+                                        name: name,
+                                        color: color
+                                    )
+                                }
                             }
                             dismiss()
                         } label: {

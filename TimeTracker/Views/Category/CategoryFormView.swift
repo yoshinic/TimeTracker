@@ -47,21 +47,24 @@ struct _CategoryFormView: View {
                     HStack(alignment: .center, spacing: 30) {
                         Spacer()
                         Button {
-                            switch mode {
-                            case .add:
-                                viewModel.create(
-                                    id: UUID(),
-                                    name: name,
-                                    color: color
-                                )
-                            case .edit:
-                                viewModel.update(
-                                    id: category.id,
-                                    name: name,
-                                    color: color
-                                )
+                            Task { 
+                                switch mode {
+                                case .add:
+                                    try await viewModel.create(
+                                        id: UUID(),
+                                        name: name,
+                                        color: color
+                                    )
+                                case .edit:
+                                    try await viewModel.update(
+                                        id: category.id,
+                                        name: name,
+                                        color: color
+                                    )
+                                }
+                                dismiss()
                             }
-                            dismiss()
+                            
                         } label: {
                             Text(mode == .add ? "Add" : "Update")
                         }

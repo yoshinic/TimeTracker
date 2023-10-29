@@ -24,8 +24,11 @@ struct RecordView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                     .font(.system(size: 16))
-                    .onChange(of: selectedCategory) {
-                        activityViewModel.fetch(categoryId: $0)
+                    .onChange(of: selectedCategory) { id in
+                        Task {
+                            try await activityViewModel.fetch(categoryId: id)
+                            selectedActivity = activityViewModel.activities.first?.id
+                        }
                     }
 
                     Picker("アクティビティ", selection: $selectedActivity) {
@@ -41,7 +44,7 @@ struct RecordView: View {
                     HStack {
                         Spacer()
                         Button {
-                            recordViewModel.create(activityId: selectedActivity)
+                            Task { try await recordViewModel.create(activityId: selectedActivity) }
                         } label: {
                             Text("開始")
                         }
@@ -53,11 +56,13 @@ struct RecordView: View {
             }
         }
         .onAppear {
-            categoryViewModel.fetch()
-            selectedCategory = categoryViewModel.defaultId
+            Task {
+                try await categoryViewModel.fetch()
+                selectedCategory = categoryViewModel.defaultId
 
-            activityViewModel.fetch(categoryId: selectedCategory)
-            selectedActivity = nil
+                try await activityViewModel.fetch(categoryId: selectedCategory)
+                selectedActivity = nil
+            }
         }
     }
 }

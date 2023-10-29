@@ -50,7 +50,9 @@ struct _CategoryListView: View {
                 mode: selectedMode
             )
         }
-        .onAppear { viewModel.fetch() }
+        .onAppear {
+            Task { try await viewModel.fetch() }
+        }
     }
 
     private var DataList: some View {
@@ -76,14 +78,14 @@ struct _CategoryListView: View {
                         Label("Edit", systemImage: "pencil")
                     }
                     Button {
-                        viewModel.delete(id: category.id)
+                        Task { try await viewModel.delete(id: category.id) }
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
                 }
             }
-            .onDelete(perform: viewModel.delete)
-            .onMove(perform: viewModel.move)
+            .onDelete { idx in Task { try await viewModel.delete(at: idx) } }
+            .onMove { idx, i in Task { try await viewModel.move(from: idx, to: i) } }
         }
         .listStyle(PlainListStyle())
     }

@@ -16,7 +16,7 @@ struct SearchRecordView: View {
 
     @Binding var activities: [ActivityData]
 
-    let fetchRecords: (UUID?, Bool, Date?, Date?, [UUID], [UUID]) -> Void
+    let fetchRecords: (UUID?, Bool, Date?, Date?, [UUID], [UUID]) async throws -> Void
 
     var body: some View {
         Section("検索") {

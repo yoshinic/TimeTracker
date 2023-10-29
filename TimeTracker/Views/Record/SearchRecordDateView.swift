@@ -15,6 +15,9 @@ struct SearchRecordDateView: View {
         HStack {
             SearchTitleView(title: title)
             Text("\(selectedDate, formatter: dateFormatter)")
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+                .truncationMode(.tail)
                 .padding([.horizontal], 14)
                 .padding([.vertical], 5)
                 .background(RoundedRectangle(cornerRadius: 4).fill(textBgcolor))
@@ -26,6 +29,9 @@ struct SearchRecordDateView: View {
                 }
 
             Text("\(selectedTime, formatter: timeFormatter)")
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+                .truncationMode(.tail)
                 .padding([.horizontal], 14)
                 .padding([.vertical], 5)
                 .background(RoundedRectangle(cornerRadius: 4).fill(textBgcolor))

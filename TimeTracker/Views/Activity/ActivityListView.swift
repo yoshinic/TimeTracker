@@ -70,7 +70,9 @@ private struct _ActivityListView: View {
                 defaultCategoryId: defaultCategoryId
             )
         }
-        .onAppear { activityViewModel.fetch() }
+        .onAppear {
+            Task { try await activityViewModel.fetch() }
+        }
     }
 
     private var DataList: some View {
@@ -103,14 +105,15 @@ private struct _ActivityListView: View {
                         Label("Edit", systemImage: "pencil")
                     }
                     Button {
-                        activityViewModel.delete(id: activity.id)
+                        Task { try await activityViewModel.delete(id: activity.id) }
+
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
                 }
             }
-            .onDelete(perform: activityViewModel.delete)
-            .onMove(perform: activityViewModel.move)
+            .onDelete { idx in Task { try await activityViewModel.delete(at: idx) }}
+            .onMove { idx, i in Task { try await activityViewModel.move(from: idx, to: i) }}
         }
         .listStyle(PlainListStyle())
     }
