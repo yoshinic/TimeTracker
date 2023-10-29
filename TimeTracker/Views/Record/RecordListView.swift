@@ -1,13 +1,14 @@
 import SwiftUI
+import TimeTrackerAPI
 
 struct RecordListView: View {
-    @ObservedObject var viewModel: RecordViewModel
+    @Binding var records: [RecordData]
 
     var body: some View {
         #if os(macOS)
-        _RecordListView(viewModel: viewModel)
+        RecordListDetailView(records: $records)
         #elseif os(iOS)
-        _RecordListView(viewModel: viewModel)
+        RecordListDetailView(records: $records)
             .navigationBarTitle("記録一覧", displayMode: .inline)
         #else
         EmptyView()
@@ -15,34 +16,27 @@ struct RecordListView: View {
     }
 }
 
-struct _RecordListView: View {
-    @ObservedObject var viewModel: RecordViewModel
+struct RecordListDetailView: View {
+    @Binding var records: [RecordData]
 
     var body: some View {
-        VStack {
-            List {
-                Section(header: HeaderView()) {
-                    ForEach(viewModel.records) { record in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text(record.activity?.category.name ?? "未登録")
-                                Text(record.activity?.name ?? "未登録")
-                            }
-                            .font(.system(size: 18))
-                            .minimumScaleFactor(0.6)
-                            .bold()
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            Spacer()
-                            DateView(date: record.startedAt)
-                            DateView(date: record.endedAt)
-                        }
+        Section(header: HeaderView()) {
+            ForEach(records) { record in
+                HStack {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(record.activity?.category.name ?? "未登録")
+                        Text(record.activity?.name ?? "未登録")
                     }
+                    .font(.system(size: 18))
+                    .minimumScaleFactor(0.6)
+                    .bold()
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    Spacer()
+                    DateView(date: record.startedAt)
+                    DateView(date: record.endedAt)
                 }
             }
-        }
-        .onAppear {
-            viewModel.fetch()
         }
     }
 }
@@ -115,9 +109,11 @@ private struct DateView: View {
 }
 
 struct RecordListView_Previews: PreviewProvider {
+    @State var records: [RecordData] = []
+    
     static var previews: some View {
         RecordListView(
-            viewModel: .init()
+            records: .constant([])
         )
     }
 }

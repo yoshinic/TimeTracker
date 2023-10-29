@@ -18,7 +18,10 @@ struct MainView: View {
             Label("記録", systemImage: "figure.run")
         }
         NavigationView {
-            RecordListView(viewModel: recordViewModel)
+            RecordMainView(
+                activityViewModel: activityViewModel,
+                recordViewModel: recordViewModel
+            )
         }
         .tabItem {
             Label("Record", systemImage: "chart.bar")

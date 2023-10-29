@@ -9,12 +9,13 @@ struct RecordView: View {
     @State private var selectedActivity: UUID?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            ClockView()
-
+        VStack {
             Form {
+                Section("") {
+                    ClockView()
+                }
                 Section(header: Text("レコード作成項目")) {
-                    Picker("カテゴリー", selection: $selectedCategory) {
+                    Picker("カテゴリ", selection: $selectedCategory) {
                         ForEach(categoryViewModel.categories) {
                             Text($0.name)
                                 .tag($0.id as UUID?)
@@ -69,21 +70,30 @@ private struct ClockView: View {
     private let HHmmssFormatter: DateFormatter
 
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             Text(verbatim: yyyymmddFormatter.string(from: currentTime))
                 .onReceive(timer) { _ in
                     self.currentTime = Date()
                 }
-                .font(.title2)
+                .font(.system(size: 28))
+                .minimumScaleFactor(0.6)
+//                .bold()
+                .lineLimit(1)
+                .truncationMode(.tail)
                 .padding()
 
             Text(verbatim: HHmmssFormatter.string(from: currentTime))
                 .onReceive(timer) { _ in
                     self.currentTime = Date()
                 }
-                .font(.title)
+                .font(.system(size: 28))
+                .minimumScaleFactor(0.6)
+//                .bold()
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .padding()
         }
-        .background(.clear)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     init() {

@@ -2,7 +2,7 @@ import SwiftUI
 import TimeTrackerAPI
 
 struct RecordGraphView: View {
-    var records: [RecordData]
+    @Binding var records: [RecordData]
 
     var body: some View {
         // グラフ表示の実装

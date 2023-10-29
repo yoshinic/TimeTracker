@@ -12,9 +12,8 @@ class RecordViewModel: ObservableObject {
         nullEnd: Bool = false,
         from: Date? = nil,
         to: Date? = nil,
-        activityIds: [UUID] = [],
-        activityNames: [String] = [],
-        activityColors: [String] = []
+        categoryIds: [UUID] = [],
+        activityIds: [UUID] = []
     ) {
         guard let service = service else { return }
         Task.detached { @MainActor in
@@ -23,9 +22,8 @@ class RecordViewModel: ObservableObject {
                 nullEnd: nullEnd,
                 from: from,
                 to: to,
-                activityIds: activityIds,
-                activityNames: activityNames,
-                activityColors: activityColors
+                categoryIds: categoryIds,
+                activityIds: activityIds
             )
             self.count = self.records.count
         }
