@@ -215,12 +215,6 @@ struct SearchTitleView: View {
     }
 }
 
-struct SearchMasterData {
-    let id: UUID
-    let name: String
-    let color: String
-}
-
 struct SearchRecordView_Previews: PreviewProvider {
     static var previews: some View {
         SearchRecordView(
