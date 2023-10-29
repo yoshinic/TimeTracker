@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */; };
 		9232FFB92AD646E40097C954 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9232FFB82AD646E40097C954 /* GeneralSettingsView.swift */; };
+		925F93912AECBF1A0033EBB2 /* SearchRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925F93902AECBF1A0033EBB2 /* SearchRecordView.swift */; };
+		925F93932AECC1950033EBB2 /* SearchRecordDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925F93922AECC1950033EBB2 /* SearchRecordDateView.swift */; };
+		925F93952AECC3EB0033EBB2 /* RecordMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925F93942AECC3EB0033EBB2 /* RecordMainView.swift */; };
 		927006602AD4C8C40089884B /* CategoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9270065E2AD4C8C30089884B /* CategoryFormView.swift */; };
 		927006612AD4C8C40089884B /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9270065F2AD4C8C30089884B /* CategoryListView.swift */; };
 		927006642AD4C8EA0089884B /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927006622AD4C8EA0089884B /* CategoryViewModel.swift */; };
@@ -26,11 +29,13 @@
 		92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D82D2A9B2070000061B6 /* SettingsView.swift */; };
 		92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */; };
 		92C28B212ADF2380009E23E1 /* DatabasePathPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */; };
+		92CACFE72AEB92AF00F00F2F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CACFE62AEB92AF00F00F2F /* MainView.swift */; };
 		92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */; };
 		92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */; };
 		92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E62A9A78F600B8B76E /* RecordListView.swift */; };
 		92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */; };
 		92F9B6B62AE4EC030038C6D4 /* TimeTrackerAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 92F9B6B52AE4EC020038C6D4 /* TimeTrackerAPI */; };
+		92FABEF32AEB8DB600833B1A /* CustomUTType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FABEF22AEB8DB600833B1A /* CustomUTType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,9 @@
 		920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFormView.swift; sourceTree = "<group>"; };
 		9214722F2ADE704D00A9F89C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9232FFB82AD646E40097C954 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		925F93902AECBF1A0033EBB2 /* SearchRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordView.swift; sourceTree = "<group>"; };
+		925F93922AECC1950033EBB2 /* SearchRecordDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordDateView.swift; sourceTree = "<group>"; };
+		925F93942AECC3EB0033EBB2 /* RecordMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMainView.swift; sourceTree = "<group>"; };
 		9270065E2AD4C8C30089884B /* CategoryFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFormView.swift; sourceTree = "<group>"; };
 		9270065F2AD4C8C30089884B /* CategoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		927006622AD4C8EA0089884B /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
@@ -75,10 +83,12 @@
 		92C1D82D2A9B2070000061B6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		92C1D8302A9B22A8000061B6 /* ColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
 		92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePathPicker.swift; sourceTree = "<group>"; };
+		92CACFE62AEB92AF00F00F2F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		92D2B3E02A9A78E800B8B76E /* ActivityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		92D2B3E12A9A78E800B8B76E /* RecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		92D2B3E62A9A78F600B8B76E /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
 		92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListView.swift; sourceTree = "<group>"; };
+		92FABEF22AEB8DB600833B1A /* CustomUTType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUTType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +153,9 @@
 				92D2B3E42A9A78F600B8B76E /* Views */,
 				92D2B3DF2A9A78E700B8B76E /* ViewModels */,
 				92C1D8282A9B1FF9000061B6 /* Utilities */,
-				92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */,
+				92CACFE62AEB92AF00F00F2F /* MainView.swift */,
 				92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */,
+				92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */,
 				92BFDA612A97B5ED00AE95D8 /* Assets.xcassets */,
 				92BFDA632A97B5ED00AE95D8 /* TimeTracker.entitlements */,
 				92BFDA642A97B5ED00AE95D8 /* Preview Content */,
@@ -180,6 +191,7 @@
 		92C1D8282A9B1FF9000061B6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				92FABEF12AEB8D9700833B1A /* UTType */,
 				92C1D82F2A9B2281000061B6 /* Color */,
 				92C1D8292A9B200D000061B6 /* Theme */,
 			);
@@ -246,8 +258,11 @@
 			isa = PBXGroup;
 			children = (
 				92A112A02ADB5FB800BFAD19 /* RecordView.swift */,
+				925F93942AECC3EB0033EBB2 /* RecordMainView.swift */,
 				92D2B3E62A9A78F600B8B76E /* RecordListView.swift */,
 				92C1D8262A9B0152000061B6 /* RecordGraphView.swift */,
+				925F93902AECBF1A0033EBB2 /* SearchRecordView.swift */,
+				925F93922AECC1950033EBB2 /* SearchRecordDateView.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -259,6 +274,14 @@
 				920C49BC2A9BAF930083FF7A /* ActivityFormView.swift */,
 			);
 			path = Activity;
+			sourceTree = "<group>";
+		};
+		92FABEF12AEB8D9700833B1A /* UTType */ = {
+			isa = PBXGroup;
+			children = (
+				92FABEF22AEB8DB600833B1A /* CustomUTType.swift */,
+			);
+			path = UTType;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,15 +423,20 @@
 				927006642AD4C8EA0089884B /* CategoryViewModel.swift in Sources */,
 				92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */,
 				92C1D82B2A9B201E000061B6 /* Theme.swift in Sources */,
+				92FABEF32AEB8DB600833B1A /* CustomUTType.swift in Sources */,
 				92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */,
 				92C28B212ADF2380009E23E1 /* DatabasePathPicker.swift in Sources */,
+				925F93912AECBF1A0033EBB2 /* SearchRecordView.swift in Sources */,
 				92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */,
 				92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */,
+				925F93952AECC3EB0033EBB2 /* RecordMainView.swift in Sources */,
+				925F93932AECC1950033EBB2 /* SearchRecordDateView.swift in Sources */,
 				92C1D8272A9B0152000061B6 /* RecordGraphView.swift in Sources */,
 				927006612AD4C8C40089884B /* CategoryListView.swift in Sources */,
 				92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */,
 				92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */,
 				92D2B3E22A9A78E800B8B76E /* ActivityViewModel.swift in Sources */,
+				92CACFE72AEB92AF00F00F2F /* MainView.swift in Sources */,
 				927006652AD4C8EA0089884B /* SettingViewModel.swift in Sources */,
 				92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */,
 				920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */,

@@ -5,6 +5,28 @@ struct SettingsView: View {
     @ObservedObject var categoryViewModel: CategoryViewModel
 
     var body: some View {
+        #if os(macOS)
+        _SettingsView(
+            activityViewModel: activityViewModel,
+            categoryViewModel: categoryViewModel
+        )
+        #elseif os(iOS)
+        _SettingsView(
+            activityViewModel: activityViewModel,
+            categoryViewModel: categoryViewModel
+        )
+        .navigationBarTitle("設定", displayMode: .inline)
+        #else
+        EmptyView()
+        #endif
+    }
+}
+
+struct _SettingsView: View {
+    @ObservedObject var activityViewModel: ActivityViewModel
+    @ObservedObject var categoryViewModel: CategoryViewModel
+
+    var body: some View {
         Form {
             Section(header: Text("")) {
                 NavigationLink {
@@ -31,7 +53,8 @@ struct SettingsView: View {
                 NavigationLink {
                     ActivityListView(
                         activityViewModel: activityViewModel,
-                        categoryViewModel: categoryViewModel
+                        categories: categoryViewModel.categories,
+                        defaultCategoryId: categoryViewModel.defaultId
                     )
                 } label: {
                     Text("一覧")
@@ -39,16 +62,19 @@ struct SettingsView: View {
                 NavigationLink {
                     ActivityFormView(
                         activityViewModel: activityViewModel,
-                        categoryViewModel: categoryViewModel,
                         activity: nil,
-                        mode: .add
+                        mode: .add,
+                        categories: categoryViewModel.categories,
+                        defaultCategoryId: categoryViewModel.defaultId
                     )
                 } label: {
                     Text("作成")
                 }
             }
         }
-//        .navigationBarTitle("設定", displayMode: .inline)
+        .onAppear {
+            categoryViewModel.fetch()
+        }
     }
 }
 

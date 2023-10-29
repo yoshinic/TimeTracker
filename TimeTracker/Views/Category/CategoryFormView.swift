@@ -7,6 +7,24 @@ struct CategoryFormView: View {
     let category: CategoryData!
     let mode: CategoryFormMode
 
+    var body: some View {
+        #if os(macOS)
+        _CategoryFormView(viewModel: viewModel, category: category, mode: mode)
+        #elseif os(iOS)
+        _CategoryFormView(viewModel: viewModel, category: category, mode: mode)
+            .navigationBarTitle("カテゴリ\(mode == .add ? "作成" : "更新")", displayMode: .inline)
+        #else
+        EmptyView()
+        #endif
+    }
+}
+
+struct _CategoryFormView: View {
+    @ObservedObject var viewModel: CategoryViewModel
+
+    let category: CategoryData!
+    let mode: CategoryFormMode
+
     @State private var name: String = ""
     @State private var selectedColor: Color = .white
     @State private var color: String = "#FFFFFF"
@@ -16,8 +34,12 @@ struct CategoryFormView: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("カテゴリー作成項目")) {
-                    TextField("カテゴリー名", text: $name)
+                Section(header: Text("カテゴリ作成項目")) {
+                    if let category = category, category.id == viewModel.defaultId {
+                        Text(name)
+                    } else {
+                        TextField("カテゴリ名", text: $name)
+                    }
                     ColorPicker("カラー選択", selection: $selectedColor)
                 }
 
@@ -49,7 +71,6 @@ struct CategoryFormView: View {
                 }
             }
         }
-//        .navigationBarTitle("カテゴリー\(mode == .add ? "作成" : "更新")", displayMode: .inline)
         .onAppear {
             guard mode == .edit else { return }
             name = category.name

@@ -7,13 +7,13 @@ struct DatabasePathPicker: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("データの保存先を選択して下さい:")
+            Text("使用するSQLiteファイルを選択して下さい:")
             Button("選択") {
                 showPicker.toggle()
             }
             .fileImporter(
                 isPresented: $showPicker,
-                allowedContentTypes: [.folder],
+                allowedContentTypes: [.sqlite, .sqlite3],
                 onCompletion: complition
             )
         }
