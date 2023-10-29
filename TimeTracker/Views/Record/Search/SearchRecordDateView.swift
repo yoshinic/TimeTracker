@@ -9,38 +9,17 @@ struct SearchRecordDateView: View {
 
     let title: String
 
-    let textBgcolor: Color = .gray.opacity(0.1)
-
     var body: some View {
         HStack {
             SearchTitleView(title: title)
-            Text("\(selectedDate, formatter: dateFormatter)")
-                .minimumScaleFactor(0.6)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .padding([.horizontal], 14)
-                .padding([.vertical], 5)
-                .background(RoundedRectangle(cornerRadius: 4).fill(textBgcolor))
-                .onTapGesture {
-                    withAnimation {
-                        showDatePicker.toggle()
-                        showTimePicker = false
-                    }
-                }
-
-            Text("\(selectedTime, formatter: timeFormatter)")
-                .minimumScaleFactor(0.6)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .padding([.horizontal], 14)
-                .padding([.vertical], 5)
-                .background(RoundedRectangle(cornerRadius: 4).fill(textBgcolor))
-                .onTapGesture {
-                    withAnimation {
-                        showTimePicker.toggle()
-                        showDatePicker = false
-                    }
-                }
+            RecordDateView(selectedDate, dateFormatter) { _ in
+                showDatePicker.toggle()
+                showTimePicker = false
+            }
+            RecordDateView(selectedTime, timeFormatter) { _ in
+                showTimePicker.toggle()
+                showDatePicker = false
+            }
         }
         if showDatePicker {
             DatePicker("", selection: $selectedDate, displayedComponents: .date)
@@ -51,6 +30,29 @@ struct SearchRecordDateView: View {
             DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(WheelDatePickerStyle())
                 .labelsHidden()
+        }
+    }
+
+    private struct RecordDateView: View {
+        let date: Date
+        let formatter: Formatter
+        let onTapGesture: ((Bool) -> Void)?
+
+        init(
+            _ date: Date,
+            _ formatter: Formatter,
+            _ onTapGesture: ((Bool) -> Void)?
+        ) {
+            self.date = date
+            self.formatter = formatter
+            self.onTapGesture = onTapGesture
+        }
+
+        var body: some View {
+            Text(date, formatter: formatter)
+                .titleProps(.gray, 0.1) { b in
+                    withAnimation { onTapGesture?(b) }
+                }
         }
     }
 
@@ -83,10 +85,12 @@ struct SearchRecordDateView: View {
     }
 }
 
-//struct SearchRecordDateView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SearchRecordDateView(
-//            viewModel: .init()
-//        )
-//    }
-//}
+struct SearchRecordDateView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchRecordDateView(
+            selectedDate: .constant(Date()),
+            selectedTime: .constant(Date()),
+            title: "sample"
+        )
+    }
+}
