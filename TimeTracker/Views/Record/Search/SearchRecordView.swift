@@ -15,6 +15,7 @@ struct SearchRecordView: View {
     @State private var selectedEndTime: Date = .init()
 
     @Binding var activities: [ActivityData]
+    @Binding var records: [RecordData]
 
     let fetchRecords: (UUID?, Bool, Date?, Date?, [UUID], [UUID]) async throws -> Void
 
@@ -31,7 +32,7 @@ struct SearchRecordView: View {
                 selectedTime: $selectedEndTime,
                 title: "終了"
             )
-            SearchRecordSortView()
+            SearchRecordSortView(records: $records)
         }
     }
 }
@@ -51,6 +52,7 @@ struct SearchRecordView_Previews: PreviewProvider {
     static var previews: some View {
         SearchRecordView(
             activities: .constant([]),
+            records: .constant([]),
             fetchRecords: { _, _, _, _, _, _ in }
         )
     }

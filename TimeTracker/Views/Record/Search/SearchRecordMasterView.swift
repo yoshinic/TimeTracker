@@ -2,17 +2,95 @@ import SwiftUI
 import TimeTrackerAPI
 
 struct SearchRecordMasterView: View {
-    @State var selectedMasters: [CategoryData: [ActivityData]] = [:]
-    @State private var showCategory = false
-    @State private var showActivity = false
+    @State private var selectedMasters: [CategoryData: [ActivityData]] = [:]
 
     let masters: [CategoryData: [ActivityData]]
+    let color: Color = .init(hex: "#CCCCCC")
 
-    var selectedCategories: [CategoryData] {
+    var body: some View {
+        ScrollTextTitleCategoryView(
+            $selectedMasters,
+            masters.keys.map { $0 },
+            color
+        )
+        ScrollTextTitleActivityView($selectedMasters, masters, color)
+    }
+}
+
+struct ScrollTextTitleCategoryView: View {
+    @State private var show = false
+    @State private var all = true
+    @Binding var selectedMasters: [CategoryData: [ActivityData]]
+
+    let masters: [CategoryData]
+    let color: Color
+
+    private var selectedCategories: [CategoryData] {
         selectedMasters.keys.sorted { $0.order < $1.order }
     }
 
-    var selectedActivities: [ActivityData] {
+    init(
+        _ selectedMasters: Binding<[CategoryData: [ActivityData]]>,
+        _ masters: [CategoryData],
+        _ color: Color
+    ) {
+        self._selectedMasters = selectedMasters
+        self.masters = masters
+        self.color = color
+    }
+
+    var body: some View {
+        HStack {
+            SearchTitleView("カテゴリ")
+            if all {
+                TextTitle("全て", color: color)
+            } else {
+                ForEach(selectedCategories) {
+                    TextTitle($0.name, color: $0.color)
+                }
+            }
+        }
+        .onTapGesture { withAnimation { show.toggle() }}
+
+        if show {
+            HStack {
+                TextTitle("全て", color: color, active: all)
+                    .onTapGesture {
+                        selectedMasters = [:]
+                        all = true
+                    }
+                ScrollView(.horizontal, showsIndicators: true) {
+                    HStack(spacing: 20) {
+                        ForEach(masters.sorted { $0.order < $1.order }) { m in
+                            TogglableTextTitle(
+                                m.name,
+                                color: m.color,
+                                active: !all,
+                                complition: {
+                                    selectedMasters[m] = $1 ? [] : nil
+                                    all = selectedMasters == [:]
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct ScrollTextTitleActivityView: View {
+    @State private var show = false
+    @Binding var selectedMasters: [CategoryData: [ActivityData]]
+
+    let masters: [CategoryData: [ActivityData]]
+    let color: Color
+
+    private var selectedCategories: [CategoryData] {
+        selectedMasters.keys.sorted { $0.order < $1.order }
+    }
+
+    private var selectedActivities: [ActivityData] {
         selectedCategories
             .compactMap {
                 selectedMasters[$0]?.sorted { $0.order < $1.order }
@@ -20,122 +98,113 @@ struct SearchRecordMasterView: View {
             .flatMap { $0 }
     }
 
-    private func activities(at category: CategoryData) -> [ActivityData] {
-        masters[category]?.sorted { $0.order < $1.order } ?? []
+    init(
+        _ selectedMasters: Binding<[CategoryData: [ActivityData]]>,
+        _ masters: [CategoryData: [ActivityData]],
+        _ color: Color
+    ) {
+        self._selectedMasters = selectedMasters
+        self.masters = masters
+        self.color = color
     }
 
     var body: some View {
         HStack {
-            SearchTitleView(title: "カテゴリ")
-            if selectedMasters.keys.count == 0 {
-                MasterView("全て", Color(hex: "#CCCCCC"))
-            } else {
-                ForEach(selectedCategories) {
-                    MasterView($0.name, Color(hex: $0.color))
-                }
-            }
-        }
-        .onTapGesture { withAnimation { showCategory.toggle() }}
-        if showCategory {
-            HStack {
-                if selectedMasters.keys.first == nil {
-                    MasterView("全て", Color(hex: "#CCCCCC")) { _ in
-                        selectedMasters = [:]
-                    }
-                } else {
-                    MasterView("全て", Color(hex: "#CCCCCC")) { _ in
-                        selectedMasters = [:]
-                    }
-                }
-
-                ScrollView(.horizontal, showsIndicators: true) {
-                    HStack(spacing: 20) {
-                        ForEach(masters.keys.sorted { $0.order < $1.order }) { m in
-                            MasterView(m.name, Color(hex: m.color), true) { isSelected in
-                                selectedMasters[m] = isSelected ? [] : nil
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        HStack {
-            SearchTitleView(title: "アクティビティ")
-            if selectedMasters.keys.count == 0 {
-                MasterView("全て", Color(hex: "#CCCCCC"))
+            SearchTitleView("アクティビティ")
+            if selectedMasters.values.first == nil {
+                TextTitle("全て", color: color)
             } else {
                 ForEach(selectedActivities) {
-                    MasterView($0.name, Color(hex: $0.color))
+                    TextTitle($0.name, color: $0.color)
                 }
             }
         }
-        .onTapGesture {
-            withAnimation {
-                showActivity.toggle()
-            }
-        }
-        if showActivity {
+        .onTapGesture { withAnimation { show.toggle() }}
+        if show {
             ForEach(selectedCategories) { category in
-                HStack {
-                    SearchTitleView(title: category.name)
-                    Spacer()
-                    ScrollView(.horizontal, showsIndicators: true) {
-                        HStack(spacing: 20) {
-                            ForEach(activities(at: category)) {
-                                Rectangle()
-                                    .fill(Color(hex: $0.color).opacity(0.2))
-                                    .overlay(
-                                        Text($0.name)
-                                            .foregroundColor(.white)
-                                            .font(.largeTitle)
-                                    )
-                                    .onTapGesture {}
-                            }
-                        }
-                        .padding()
-                    }
-                }
+                ScrollTextTitleActivityMasterView(
+                    $selectedMasters,
+                    masters,
+                    color,
+                    category
+                )
             }
         }
     }
 }
 
-private extension SearchRecordMasterView {
-    private struct MasterView: View {
-        @State var isSelected: Bool = false
+private struct ScrollTextTitleActivityMasterView: View {
+    @State private var all = true
+    @Binding var selectedMasters: [CategoryData: [ActivityData]]
 
-        let title: String
-        let color: Color
-        let fontSize: CGFloat?
-        let togglable: Bool
-        let onTapGesture: ((Bool) -> Void)?
+    let masters: [CategoryData: [ActivityData]]
+    let color: Color
+    let category: CategoryData
 
-        init(
-            _ title: String,
-            _ color: Color,
-            fontSize: CGFloat? = nil,
-            _ togglable: Bool = false,
-            _ onTapGesture: ((Bool) -> Void)? = nil
-        ) {
-            self.title = title
-            self.color = color
-            self.fontSize = fontSize
-            self.togglable = togglable
-            self.onTapGesture = onTapGesture
+    private func activities(at category: CategoryData) -> [ActivityData] {
+        masters[category]?.sorted { $0.order < $1.order } ?? []
+    }
+
+    init(
+        _ selectedMasters: Binding<[CategoryData: [ActivityData]]>,
+        _ masters: [CategoryData: [ActivityData]],
+        _ color: Color,
+        _ category: CategoryData
+    ) {
+        self._selectedMasters = selectedMasters
+        self.masters = masters
+        self.color = color
+        self.category = category
+    }
+
+    var body: some View {
+        HStack {
+            SearchTitleView(category.name)
+            TextTitle("全て", color: color, active: all)
+                .onTapGesture {
+                    selectedMasters[category] = []
+                    all = true
+                }
+            scrollView(category)
         }
+    }
 
-        var body: some View {
-            Text(title)
-                .titleProps(isSelected: $isSelected, color, fontSize: fontSize, 0.2, togglable, onTapGesture)
+    private func scrollView(
+        _ category: CategoryData,
+        active: Bool = false
+    ) -> some View {
+        ScrollView(.horizontal, showsIndicators: true) {
+            HStack(spacing: 20) {
+                ForEach(activities(at: category)) { activity in
+                    TogglableTextTitle(
+                        activity.name,
+                        color: activity.color,
+                        active: active,
+                        complition: {
+                            let i = selectedMasters[category]?.firstIndex {
+                                $0.id == activity.id
+                            }
+                            if !$0, $1, i == nil {
+                                if selectedMasters[category] == nil {
+                                    selectedMasters[category] = []
+                                }
+                                selectedMasters[category]!.append(activity)
+                            } else if $0, !$1 {
+                                guard let i = i else { return }
+                                selectedMasters[category]!.remove(at: i)
+                            }
+
+                            all = selectedMasters[category] == []
+                        }
+                    )
+                }
+            }
         }
     }
 }
 
 struct SearchRecordMasterView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchRecordView(
-            activities: .constant([]),
-            fetchRecords: { _, _, _, _, _, _ in }
-        )
+        SearchRecordMasterView(masters: [:])
     }
 }

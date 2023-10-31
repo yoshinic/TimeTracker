@@ -11,6 +11,7 @@ struct RecordMainView: View {
         Form {
             SearchRecordView(
                 activities: $activityViewModel.activities,
+                records: $recordViewModel.records,
                 fetchRecords: recordViewModel.fetch
             )
             if showListView {
