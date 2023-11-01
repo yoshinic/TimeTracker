@@ -5,7 +5,7 @@ class CategoryViewModel: ObservableObject {
     @Published var categories: [CategoryData] = []
 
     let defaultId: UUID = CategoryService.defaultId
-    private let service: CategoryService? = DatabaseServiceManager.shared.category
+    private var service: CategoryService? { DatabaseServiceManager.shared.category }
     var count: Int = 0
 
     @MainActor

@@ -1,57 +1,58 @@
 import SwiftUI
+import TimeTrackerAPI
 
 struct RecordView: View {
     @ObservedObject var categoryViewModel: CategoryViewModel
     @ObservedObject var activityViewModel: ActivityViewModel
     @ObservedObject var recordViewModel: RecordViewModel
 
-    @State private var selectedCategory: UUID?
-    @State private var selectedActivity: UUID?
+    @State private var selectedCategory: UUID = .init()
+    @State private var selectedActivity: UUID? = nil
+
+    @State private var categories: [CategoryData] = []
+    @State private var activities: [UUID: [ActivityData]] = [:]
 
     var body: some View {
-        VStack {
-            Form {
-                Section("") {
-                    ClockView()
-                }
-                Section(header: Text("レコード作成項目")) {
-                    Picker("カテゴリ", selection: $selectedCategory) {
-                        ForEach(categoryViewModel.categories) {
-                            Text($0.name)
-                                .tag($0.id as UUID?)
-                                .font(.system(size: 12))
-                        }
+        Form {
+            Section("") {
+                ClockView()
+            }
+            Section(header: Text("レコード作成項目")) {
+                Picker("カテゴリ", selection: $selectedCategory) {
+                    ForEach(categories) {
+                        Text($0.name)
+                            .tag($0.id as UUID?)
+                            .font(.system(size: 12))
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .font(.system(size: 16))
-                    .onChange(of: selectedCategory) { id in
+                }
+                .pickerStyle(MenuPickerStyle())
+                .font(.system(size: 16))
+                .onChange(of: selectedCategory) { categoryId in
+                    selectedActivity = activities[categoryId]?.first?.id
+                }
+
+                Picker("アクティビティ", selection: $selectedActivity) {
+                    ForEach(activities[selectedCategory] ?? []) {
+                        Text($0.name)
+                            .tag($0.id as UUID?)
+                    }
+                }
+                .font(.system(size: 16))
+            }
+
+            Section(header: Text("")) {
+                HStack {
+                    Spacer()
+                    Button {
                         Task {
-                            try await activityViewModel.fetch(categoryId: id)
-                            selectedActivity = activityViewModel.activities.first?.id
+                            try await recordViewModel.create(activityId: selectedActivity)
                         }
+                    } label: {
+                        Text("開始")
                     }
-
-                    Picker("アクティビティ", selection: $selectedActivity) {
-                        ForEach(activityViewModel.activities) {
-                            Text($0.name)
-                                .tag($0.id as UUID?)
-                        }
-                    }
-                    .font(.system(size: 16))
-                }
-
-                Section(header: Text("")) {
-                    HStack {
-                        Spacer()
-                        Button {
-                            Task { try await recordViewModel.create(activityId: selectedActivity) }
-                        } label: {
-                            Text("開始")
-                        }
-                        .foregroundColor(.red)
-                        .bold()
-                        Spacer()
-                    }
+                    .foregroundColor(.red)
+                    .bold()
+                    Spacer()
                 }
             }
         }
@@ -59,9 +60,11 @@ struct RecordView: View {
             Task {
                 try await categoryViewModel.fetch()
                 selectedCategory = categoryViewModel.defaultId
+                categories = categoryViewModel.categories
 
-                try await activityViewModel.fetch(categoryId: selectedCategory)
+                try await activityViewModel.fetch()
                 selectedActivity = nil
+                activities = activityViewModel.activities.toUUIDDic
             }
         }
     }
@@ -82,7 +85,6 @@ private struct ClockView: View {
                 }
                 .font(.system(size: 28))
                 .minimumScaleFactor(0.6)
-//                .bold()
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .padding()
@@ -93,7 +95,6 @@ private struct ClockView: View {
                 }
                 .font(.system(size: 28))
                 .minimumScaleFactor(0.6)
-//                .bold()
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .padding()

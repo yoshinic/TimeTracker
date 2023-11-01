@@ -8,28 +8,25 @@ struct SearchRecordView: View {
     @State private var selectedCategories: [CategoryData] = []
     @State private var selectedActivities: [ActivityData] = []
 
-    @State private var selectedStartDate: Date = .init()
-    @State private var selectedStartTime: Date = .init()
+    @State private var selectedStartDatetime: Date = .init()
+    @State private var selectedEndDatetime: Date = .init()
 
-    @State private var selectedEndDate: Date = .init()
-    @State private var selectedEndTime: Date = .init()
-
-    @Binding var activities: [ActivityData]
+    @Binding var categories: [CategoryData]
+    @Binding var activities: [UUID: [ActivityData]]
     @Binding var records: [RecordData]
-
-    let fetchRecords: (UUID?, Bool, Date?, Date?, [UUID], [UUID]) async throws -> Void
 
     var body: some View {
         Section("検索") {
-            SearchRecordMasterView(masters: activities.toDic)
+            SearchRecordMasterView(
+                categories: $categories,
+                activities: $activities
+            )
             SearchRecordDateView(
-                selectedDate: $selectedStartDate,
-                selectedTime: $selectedStartTime,
+                selectedDatetime: $selectedStartDatetime,
                 title: "開始"
             )
             SearchRecordDateView(
-                selectedDate: $selectedEndDate,
-                selectedTime: $selectedEndTime,
+                selectedDatetime: $selectedEndDatetime,
                 title: "終了"
             )
             SearchRecordSortView(records: $records)
@@ -37,23 +34,12 @@ struct SearchRecordView: View {
     }
 }
 
-private extension Array where Element == ActivityData {
-    var toDic: [CategoryData: [ActivityData]] {
-        self.reduce(into: [:]) { res, activity in
-            if res[activity.category] == nil {
-                res[activity.category] = []
-            }
-            res[activity.category]!.append(activity)
-        }
-    }
-}
-
 struct SearchRecordView_Previews: PreviewProvider {
     static var previews: some View {
         SearchRecordView(
-            activities: .constant([]),
-            records: .constant([]),
-            fetchRecords: { _, _, _, _, _, _ in }
+            categories: .constant([]),
+            activities: .constant([:]),
+            records: .constant([])
         )
     }
 }

@@ -5,7 +5,7 @@ class ActivityViewModel: ObservableObject {
     @Published var activities: [ActivityData] = []
 
     let defaultId: UUID = ActivityService.defaultId
-    private let service: ActivityService? = DatabaseServiceManager.shared.activity
+    private var service: ActivityService? { DatabaseServiceManager.shared.activity }
     var count: Int = 0
 
     @MainActor

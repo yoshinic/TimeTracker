@@ -1,19 +1,19 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var activityViewModel: ActivityViewModel
     @ObservedObject var categoryViewModel: CategoryViewModel
+    @ObservedObject var activityViewModel: ActivityViewModel
 
     var body: some View {
         #if os(macOS)
         _SettingsView(
-            activityViewModel: activityViewModel,
-            categoryViewModel: categoryViewModel
+            categoryViewModel: categoryViewModel,
+            activityViewModel: activityViewModel
         )
         #elseif os(iOS)
         _SettingsView(
-            activityViewModel: activityViewModel,
-            categoryViewModel: categoryViewModel
+            categoryViewModel: categoryViewModel,
+            activityViewModel: activityViewModel
         )
         .navigationBarTitle("設定", displayMode: .inline)
         #else
@@ -23,8 +23,8 @@ struct SettingsView: View {
 }
 
 struct _SettingsView: View {
-    @ObservedObject var activityViewModel: ActivityViewModel
     @ObservedObject var categoryViewModel: CategoryViewModel
+    @ObservedObject var activityViewModel: ActivityViewModel
 
     var body: some View {
         Form {
@@ -80,6 +80,9 @@ struct _SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(activityViewModel: .init(), categoryViewModel: .init())
+        SettingsView(
+            categoryViewModel: .init(),
+            activityViewModel: .init()
+        )
     }
 }

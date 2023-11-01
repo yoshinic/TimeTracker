@@ -4,7 +4,7 @@ import TimeTrackerAPI
 class RecordViewModel: ObservableObject {
     @Published var records: [RecordData] = []
 
-    private let service: RecordService? = DatabaseServiceManager.shared.record
+    private var service: RecordService?  { DatabaseServiceManager.shared.record }
     var count: Int = 0
 
     @MainActor
@@ -50,7 +50,7 @@ class RecordViewModel: ObservableObject {
     @MainActor
     func update(
         id: UUID,
-        activityId: UUID,
+        activityId: UUID?,
         startedAt: Date,
         endedAt: Date?,
         note: String
