@@ -57,37 +57,38 @@ struct _CategoryListView: View {
 
     private var DataList: some View {
         List {
-            ForEach(viewModel.categories) { category in
-                NavigationLink {
-                    CategoryFormView(viewModel: viewModel, category: category, mode: .edit)
-                } label: {
-                    HStack {
-                        Text(category.name)
-                        Spacer()
-                        Circle()
-                            .fill(Color(hex: category.color))
-                            .frame(width: 24, height: 24)
+            Section("") {
+                ForEach(viewModel.categories) { category in
+                    NavigationLink {
+                        CategoryFormView(viewModel: viewModel, category: category, mode: .edit)
+                    } label: {
+                        HStack {
+                            Text(category.name)
+                            Spacer()
+                            Circle()
+                                .fill(Color(hex: category.color))
+                                .frame(width: 24, height: 24)
+                        }
+                    }
+                    .contextMenu {
+                        Button {
+                            selectedCategory = category
+                            selectedMode = .edit
+                            isModalPresented = true
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        Button {
+                            Task { try await viewModel.delete(id: category.id) }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
                     }
                 }
-                .contextMenu {
-                    Button {
-                        selectedCategory = category
-                        selectedMode = .edit
-                        isModalPresented = true
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
-                    }
-                    Button {
-                        Task { try await viewModel.delete(id: category.id) }
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                    }
-                }
+                .onDelete { idx in Task { try await viewModel.delete(at: idx) } }
+                .onMove { idx, i in Task { try await viewModel.move(from: idx, to: i) } }
             }
-            .onDelete { idx in Task { try await viewModel.delete(at: idx) } }
-            .onMove { idx, i in Task { try await viewModel.move(from: idx, to: i) } }
         }
-        .listStyle(PlainListStyle())
     }
 
     private var addButton: some View {
@@ -96,12 +97,10 @@ struct _CategoryListView: View {
             selectedMode = .add
             isModalPresented = true
         } label: {
-            HStack {
-                Image(systemName: "plus.circle.fill")
-                Text("Add Category")
-            }
-            .padding()
-            .foregroundColor(.blue)
+            Image(systemName: "plus.circle")
+                .imageScale(.large)
+                .padding()
+                .foregroundColor(.blue)
         }
     }
 }

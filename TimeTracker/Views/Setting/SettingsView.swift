@@ -1,4 +1,5 @@
 import SwiftUI
+import TimeTrackerAPI
 
 struct SettingsView: View {
     @ObservedObject var categoryViewModel: CategoryViewModel
@@ -26,6 +27,9 @@ struct _SettingsView: View {
     @ObservedObject var categoryViewModel: CategoryViewModel
     @ObservedObject var activityViewModel: ActivityViewModel
 
+    @State private var categories: [CategoryData] = []
+    @State private var activities: [UUID: [ActivityData]] = [:]
+
     var body: some View {
         Form {
             Section(header: Text("")) {
@@ -36,7 +40,7 @@ struct _SettingsView: View {
                 }
             }
 
-            Section(header: Text("カテゴリー")) {
+            Section(header: Text("カテゴリ")) {
                 NavigationLink {
                     CategoryListView(viewModel: categoryViewModel)
                 } label: {
@@ -53,7 +57,8 @@ struct _SettingsView: View {
                 NavigationLink {
                     ActivityListView(
                         activityViewModel: activityViewModel,
-                        categories: categoryViewModel.categories,
+                        categories: $categories,
+                        activities: $activities,
                         defaultCategoryId: categoryViewModel.defaultId
                     )
                 } label: {
@@ -73,7 +78,13 @@ struct _SettingsView: View {
             }
         }
         .onAppear {
-            Task { try await categoryViewModel.fetch() }
+            Task {
+                try await categoryViewModel.fetch()
+                categories = categoryViewModel.categories
+
+                try await activityViewModel.fetch()
+                activities = activityViewModel.activities.toUUIDDic
+            }
         }
     }
 }
