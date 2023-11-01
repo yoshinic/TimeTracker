@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         #if os(macOS)
         if isReady {
-            _ContentView(filePath: filePath)
+            DatabaseView(filePath: filePath)
         } else {
             DatabasePathPicker {
                 switch $0 {
@@ -27,7 +27,7 @@ struct ContentView: View {
             }
         }
         #elseif os(iOS)
-        _ContentView(filePath: filePath)
+        DatabaseView(filePath: filePath)
         #else
         EmptyView()
         #endif
@@ -35,28 +35,34 @@ struct ContentView: View {
 }
 
 // データベース読込み
-struct _ContentView: View {
+private struct DatabaseView: View {
     @State private var isReady: Bool = false
 
     let filePath: String
 
     var body: some View {
-        TabView {
-            if isReady {
-                MainView()
-            } else {
-                EmptyView()
+        if isReady {
+            MainView()
+        } else {
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("準備中...")
+                    Spacer()
+                }
+                Spacer()
             }
-        }
-        .onAppear {
-            Task {
-                do {
-                    try await DatabaseServiceManager
-                        .shared
-                        .setDatabase(filePath: filePath)
-                    isReady = true
-                } catch {
-                    print(error.localizedDescription)
+            .onAppear {
+                Task {
+                    do {
+                        try await DatabaseServiceManager
+                            .shared
+                            .setDatabase(filePath: filePath)
+                        isReady = true
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
             }
         }

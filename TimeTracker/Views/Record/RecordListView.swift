@@ -2,14 +2,29 @@ import SwiftUI
 import TimeTrackerAPI
 
 struct RecordListView: View {
-    @Binding var records: [RecordData]
+    @ObservedObject var recordViewModel: RecordViewModel
+
+    @Binding var categories: [CategoryData]
+    @Binding var activities: [UUID: [ActivityData]]
+
+    let defaultCategoryId: UUID
 
     var body: some View {
         #if os(macOS)
-        RecordListDetailView(records: $records)
+        RecordListDetailView(
+            recordViewModel: $recordViewModel,
+            categories: $categories,
+            activities: $activities,
+            defaultCategoryId: defaultCategoryId
+        )
         #elseif os(iOS)
-        RecordListDetailView(records: $records)
-            .navigationBarTitle("記録一覧", displayMode: .inline)
+        RecordListDetailView(
+            recordViewModel: recordViewModel,
+            categories: $categories,
+            activities: $activities,
+            defaultCategoryId: defaultCategoryId
+        )
+        .navigationBarTitle("記録一覧", displayMode: .inline)
         #else
         EmptyView()
         #endif
@@ -17,11 +32,18 @@ struct RecordListView: View {
 }
 
 struct RecordListDetailView: View {
-    @Binding var records: [RecordData]
+    @ObservedObject var recordViewModel: RecordViewModel
+
+    @Binding var categories: [CategoryData]
+    @Binding var activities: [UUID: [ActivityData]]
+
+    @State private var selectedRecord: RecordData!
+
+    let defaultCategoryId: UUID
 
     var body: some View {
         Section(header: HeaderView()) {
-            ForEach(records) { record in
+            ForEach(recordViewModel.records) { record in
                 HStack {
                     VStack(alignment: .leading, spacing: 12) {
                         Text(record.activity?.category.name ?? "未登録")
@@ -36,7 +58,19 @@ struct RecordListDetailView: View {
                     DateView(date: record.startedAt)
                     DateView(date: record.endedAt)
                 }
+                .onTapGesture {
+                    selectedRecord = record
+                }
             }
+        }
+        .sheet(item: $selectedRecord) { record in
+            UpdateRecordView(
+                recordViewModel: recordViewModel,
+                categories: $categories,
+                activities: $activities,
+                defaultCategoryId: defaultCategoryId,
+                record: record
+            )
         }
     }
 }
@@ -109,11 +143,12 @@ private struct DateView: View {
 }
 
 struct RecordListView_Previews: PreviewProvider {
-    @State var records: [RecordData] = []
-    
     static var previews: some View {
         RecordListView(
-            records: .constant([])
+            recordViewModel: .init(),
+            categories: .constant([]),
+            activities: .constant([:]),
+            defaultCategoryId: UUID()
         )
     }
 }

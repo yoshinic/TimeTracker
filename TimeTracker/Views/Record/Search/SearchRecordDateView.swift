@@ -1,66 +1,61 @@
 import SwiftUI
 
 struct SearchRecordDateView: View {
-    @Binding var selectedDate: Date
-    @Binding var selectedTime: Date
+    @Binding var selectedDatetime: Date
 
     @State private var showDatePicker = false
     @State private var showTimePicker = false
 
     let title: String
 
+    let locale: Locale = .init(identifier: "ja_JP")
+    let timezone: TimeZone? = .init(identifier:  "Asia/Tokyo") ?? TimeZone.current
+
     var body: some View {
         HStack {
-            SearchTitleView(title: title)
-            RecordDateView(selectedDate, dateFormatter) { _ in
-                showDatePicker.toggle()
-                showTimePicker = false
-            }
-            RecordDateView(selectedTime, timeFormatter) { _ in
-                showTimePicker.toggle()
-                showDatePicker = false
-            }
+            SearchTitleView(title)
+            Text(selectedDatetime, formatter: dateFormatter)
+                .titleProps(opacity: 0.1)
+                .onTapGesture {
+                    withAnimation {
+                        showDatePicker.toggle()
+                        showTimePicker = false
+                    }
+                }
+            Text(selectedDatetime, formatter: timeFormatter)
+                .titleProps(opacity: 0.1)
+                .onTapGesture {
+                    withAnimation {
+                        showTimePicker.toggle()
+                        showDatePicker = false
+                    }
+                }
         }
         if showDatePicker {
-            DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                .datePickerStyle(GraphicalDatePickerStyle())
-                .labelsHidden()
+            DatePicker(
+                "",
+                selection: $selectedDatetime,
+                displayedComponents: .date
+            )
+            .datePickerStyle(GraphicalDatePickerStyle())
+            .labelsHidden()
         }
         if showTimePicker {
-            DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-        }
-    }
-
-    private struct RecordDateView: View {
-        let date: Date
-        let formatter: Formatter
-        let onTapGesture: ((Bool) -> Void)?
-
-        init(
-            _ date: Date,
-            _ formatter: Formatter,
-            _ onTapGesture: ((Bool) -> Void)?
-        ) {
-            self.date = date
-            self.formatter = formatter
-            self.onTapGesture = onTapGesture
-        }
-
-        var body: some View {
-            Text(date, formatter: formatter)
-                .titleProps(.gray, 0.1) { b in
-                    withAnimation { onTapGesture?(b) }
-                }
+            DatePicker(
+                "",
+                selection: $selectedDatetime,
+                displayedComponents: .hourAndMinute
+            )
+            .datePickerStyle(WheelDatePickerStyle())
+            .labelsHidden()
         }
     }
 
     private var templateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.locale = Locale(identifier: "ja_JP")
-        formatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+        formatter.locale = locale
+        formatter.timeZone = timezone
         return formatter
     }
 
@@ -69,7 +64,7 @@ struct SearchRecordDateView: View {
         formatter.dateFormat = DateFormatter.dateFormat(
             fromTemplate: "YYYY/MM/dd(E)",
             options: 0,
-            locale: Locale(identifier: "ja_JP")
+            locale: locale
         )
         return formatter
     }
@@ -79,7 +74,7 @@ struct SearchRecordDateView: View {
         formatter.dateFormat = DateFormatter.dateFormat(
             fromTemplate: "HHmm",
             options: 0,
-            locale: Locale(identifier: "ja_JP")
+            locale: locale
         )
         return formatter
     }
@@ -88,8 +83,7 @@ struct SearchRecordDateView: View {
 struct SearchRecordDateView_Previews: PreviewProvider {
     static var previews: some View {
         SearchRecordDateView(
-            selectedDate: .constant(Date()),
-            selectedTime: .constant(Date()),
+            selectedDatetime: .constant(Date()),
             title: "sample"
         )
     }

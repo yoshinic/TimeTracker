@@ -6,34 +6,39 @@ struct MainView: View {
     @StateObject private var activityViewModel: ActivityViewModel = .init()
     @StateObject private var recordViewModel: RecordViewModel = .init()
 
+    @State private var isReady: Bool = false
+
     var body: some View {
-        NavigationView {
-            RecordView(
-                categoryViewModel: categoryViewModel,
-                activityViewModel: activityViewModel,
-                recordViewModel: recordViewModel
-            )
-        }
-        .tabItem {
-            Label("記録", systemImage: "figure.run")
-        }
-        NavigationView {
-            RecordMainView(
-                activityViewModel: activityViewModel,
-                recordViewModel: recordViewModel
-            )
-        }
-        .tabItem {
-            Label("Record", systemImage: "chart.bar")
-        }
-        NavigationView {
-            SettingsView(
-                activityViewModel: activityViewModel,
-                categoryViewModel: categoryViewModel
-            )
-        }
-        .tabItem {
-            Label("Setting", systemImage: "gear")
+        TabView {
+            NavigationView {
+                RecordView(
+                    categoryViewModel: categoryViewModel,
+                    activityViewModel: activityViewModel,
+                    recordViewModel: recordViewModel
+                )
+            }
+            .tabItem {
+                Label("記録", systemImage: "figure.run")
+            }
+            NavigationView {
+                RecordMainView(
+                    categoryViewModel: categoryViewModel,
+                    activityViewModel: activityViewModel,
+                    recordViewModel: recordViewModel
+                )
+            }
+            .tabItem {
+                Label("Record", systemImage: "chart.bar")
+            }
+            NavigationView {
+                SettingsView(
+                    categoryViewModel: categoryViewModel,
+                    activityViewModel: activityViewModel
+                )
+            }
+            .tabItem {
+                Label("Setting", systemImage: "gear")
+            }
         }
     }
 }

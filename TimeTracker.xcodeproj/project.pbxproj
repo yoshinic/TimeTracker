@@ -20,6 +20,8 @@
 		928D8E922AEE1CC100F0C52B /* SearchRecordMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E912AEE1CC100F0C52B /* SearchRecordMasterView.swift */; };
 		928D8E942AEE1ED000F0C52B /* SearchRecordTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E932AEE1ED000F0C52B /* SearchRecordTitleView.swift */; };
 		928D8E962AEE27A800F0C52B /* CommonTextTitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */; };
+		92999D682AF0C4FF003B44A2 /* UpdateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */; };
+		92999D6A2AF0CC27003B44A2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92999D692AF0CC27003B44A2 /* Utilities.swift */; };
 		92A112A12ADB5FB800BFAD19 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A112A02ADB5FB800BFAD19 /* RecordView.swift */; };
 		92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */; };
 		92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */; };
@@ -74,6 +76,8 @@
 		928D8E912AEE1CC100F0C52B /* SearchRecordMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordMasterView.swift; sourceTree = "<group>"; };
 		928D8E932AEE1ED000F0C52B /* SearchRecordTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordTitleView.swift; sourceTree = "<group>"; };
 		928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextTitleModifier.swift; sourceTree = "<group>"; };
+		92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRecordView.swift; sourceTree = "<group>"; };
+		92999D692AF0CC27003B44A2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		92A112A02ADB5FB800BFAD19 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		92BFDA5A2A97B5E600AE95D8 /* TimeTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTrackerApp.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				92FABEF12AEB8D9700833B1A /* UTType */,
 				92C1D82F2A9B2281000061B6 /* Color */,
 				92C1D8292A9B200D000061B6 /* Theme */,
+				92999D692AF0CC27003B44A2 /* Utilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				92D2B3E62A9A78F600B8B76E /* RecordListView.swift */,
 				92C1D8262A9B0152000061B6 /* RecordGraphView.swift */,
 				928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */,
+				92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -450,8 +456,10 @@
 				92D2B3E32A9A78E800B8B76E /* RecordViewModel.swift in Sources */,
 				92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */,
 				925F93952AECC3EB0033EBB2 /* RecordMainView.swift in Sources */,
+				92999D682AF0C4FF003B44A2 /* UpdateRecordView.swift in Sources */,
 				925F93932AECC1950033EBB2 /* SearchRecordDateView.swift in Sources */,
 				92C1D8272A9B0152000061B6 /* RecordGraphView.swift in Sources */,
+				92999D6A2AF0CC27003B44A2 /* Utilities.swift in Sources */,
 				927006612AD4C8C40089884B /* CategoryListView.swift in Sources */,
 				92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */,
 				92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */,
