@@ -8,8 +8,6 @@ struct RecordMainView: View {
 
     @State private var isEditMode: Bool = false
     @State private var showListView: Bool = true
-    @State private var categories: [CategoryData] = []
-    @State private var activities: [ActivityData] = []
 
     @State private var selectedCategories: Set<CategoryData> = []
     @State private var selectedActivities: Set<ActivityData> = []

@@ -2,9 +2,6 @@ import SwiftUI
 import TimeTrackerAPI
 
 struct SearchRecordView: View {
-    @State private var showCategory = false
-    @State private var showActivity = false
-
     @Binding var categories: [CategoryData]
     @Binding var activities: [ActivityData]
 
