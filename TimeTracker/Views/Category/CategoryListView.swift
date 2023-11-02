@@ -33,7 +33,6 @@ struct CategoryListView: View {
                 addButton
             }
         )
-
         #else
         EmptyView()
         #endif
@@ -55,7 +54,6 @@ struct CategoryListView: View {
         } label: {
             Image(systemName: "plus")
                 .imageScale(.large)
-                .padding()
                 .foregroundColor(.blue)
         }
     }

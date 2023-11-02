@@ -4,10 +4,13 @@ import TimeTrackerAPI
 struct ActivityListView: View {
     @ObservedObject var activityViewModel: ActivityViewModel
 
+    @State private var isModalPresented: Bool = false
+    @State private var isEditMode: Bool = false
+    @State private var selectedActivity: ActivityData! = nil
+    @State private var selectedMode: ActivityFormMode = .add
+
     @Binding var categories: [CategoryData]
     @Binding var activities: [UUID: [ActivityData]]
-
-    @State private var isEditMode: Bool = false
 
     let defaultCategoryId: UUID
 
@@ -15,7 +18,10 @@ struct ActivityListView: View {
         #if os(macOS)
         _ActivityListView(
             activityViewModel: activityViewModel,
+            isModalPresented: $isModalPresented,
             isEditMode: $isEditMode,
+            selectedActivity: $selectedActivity,
+            selectedMode: $selectedMode,
             categories: $categories,
             activities: $activities,
             defaultCategoryId: defaultCategoryId
@@ -23,41 +29,64 @@ struct ActivityListView: View {
         #elseif os(iOS)
         _ActivityListView(
             activityViewModel: activityViewModel,
+            isModalPresented: $isModalPresented,
             isEditMode: $isEditMode,
+            selectedActivity: $selectedActivity,
+            selectedMode: $selectedMode,
             categories: $categories,
             activities: $activities,
             defaultCategoryId: defaultCategoryId
         )
         .navigationBarTitle("アクティビティ一覧", displayMode: .inline)
-        .navigationBarItems(trailing: Button {
-            isEditMode.toggle()
-        } label: {
-            Text(isEditMode ? "Done" : "Edit")
-        })
+        .navigationBarItems(trailing:
+            HStack {
+                editButton
+                addButton
+            }
+        )
         #else
         EmptyView()
         #endif
+    }
+
+    private var editButton: some View {
+        Button {
+            isEditMode.toggle()
+        } label: {
+            Text(isEditMode ? "Done" : "Edit")
+        }
+    }
+
+    private var addButton: some View {
+        Button {
+            selectedActivity = nil
+            selectedMode = .add
+            isModalPresented = true
+        } label: {
+            Image(systemName: "plus")
+                .imageScale(.large)
+                .foregroundColor(.blue)
+        }
     }
 }
 
 private struct _ActivityListView: View {
     @ObservedObject var activityViewModel: ActivityViewModel
 
+    @Binding var isModalPresented: Bool
     @Binding var isEditMode: Bool
+    @Binding var selectedActivity: ActivityData!
+    @Binding var selectedMode: ActivityFormMode
     @Binding var categories: [CategoryData]
     @Binding var activities: [UUID: [ActivityData]]
 
-    @State private var isModalPresented: Bool = false
     @State private var newActivityName: String = ""
     @State private var newActivityColor: Color = .white
-    @State private var selectedActivity: ActivityData! = nil
-    @State private var selectedMode: ActivityFormMode = .add
 
     let defaultCategoryId: UUID
 
     var body: some View {
         VStack {
-            addButton
             #if os(macOS)
             DataList
             #elseif os(iOS)
@@ -127,19 +156,6 @@ private struct _ActivityListView: View {
                     }
                 }
             }
-        }
-    }
-
-    private var addButton: some View {
-        Button {
-            selectedActivity = nil
-            selectedMode = .add
-            isModalPresented = true
-        } label: {
-            Image(systemName: "plus.circle")
-                .imageScale(.large)
-                .padding()
-                .foregroundColor(.blue)
         }
     }
 }
