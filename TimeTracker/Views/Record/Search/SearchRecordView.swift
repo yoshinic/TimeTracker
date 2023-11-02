@@ -13,7 +13,7 @@ struct SearchRecordView: View {
 
     @Binding var categories: [CategoryData]
     @Binding var activities: [UUID: [ActivityData]]
-    @Binding var records: [RecordData]
+    @Binding var sortType: RecordDataSortType
 
     var body: some View {
         Section("検索") {
@@ -29,7 +29,7 @@ struct SearchRecordView: View {
                 selectedDatetime: $selectedEndDatetime,
                 title: "終了"
             )
-            SearchRecordSortView(records: $records)
+            SearchRecordSortView(sortType: $sortType)
         }
     }
 }
@@ -39,7 +39,7 @@ struct SearchRecordView_Previews: PreviewProvider {
         SearchRecordView(
             categories: .constant([]),
             activities: .constant([:]),
-            records: .constant([])
+            sortType: .constant(.time)
         )
     }
 }

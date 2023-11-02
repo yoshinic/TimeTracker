@@ -4,6 +4,7 @@ import TimeTrackerAPI
 struct RecordListView: View {
     @ObservedObject var recordViewModel: RecordViewModel
 
+    @Binding var isEditMode: Bool
     @Binding var categories: [CategoryData]
     @Binding var activities: [UUID: [ActivityData]]
 
@@ -13,6 +14,7 @@ struct RecordListView: View {
         #if os(macOS)
         RecordListDetailView(
             recordViewModel: $recordViewModel,
+            isEditMode: $isEditMode,
             categories: $categories,
             activities: $activities,
             defaultCategoryId: defaultCategoryId
@@ -20,6 +22,7 @@ struct RecordListView: View {
         #elseif os(iOS)
         RecordListDetailView(
             recordViewModel: recordViewModel,
+            isEditMode: $isEditMode,
             categories: $categories,
             activities: $activities,
             defaultCategoryId: defaultCategoryId
@@ -31,9 +34,10 @@ struct RecordListView: View {
     }
 }
 
-struct RecordListDetailView: View {
+private struct RecordListDetailView: View {
     @ObservedObject var recordViewModel: RecordViewModel
 
+    @Binding var isEditMode: Bool
     @Binding var categories: [CategoryData]
     @Binding var activities: [UUID: [ActivityData]]
 
@@ -62,6 +66,7 @@ struct RecordListDetailView: View {
                     selectedRecord = record
                 }
             }
+            .onDelete { idx in Task { try await recordViewModel.delete(at: idx) }}
         }
         .sheet(item: $selectedRecord) { record in
             UpdateRecordView(
@@ -146,6 +151,7 @@ struct RecordListView_Previews: PreviewProvider {
     static var previews: some View {
         RecordListView(
             recordViewModel: .init(),
+            isEditMode: .constant(false),
             categories: .constant([]),
             activities: .constant([:]),
             defaultCategoryId: UUID()
