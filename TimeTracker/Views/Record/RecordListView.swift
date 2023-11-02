@@ -6,7 +6,7 @@ struct RecordListView: View {
 
     @Binding var isEditMode: Bool
     @Binding var categories: [CategoryData]
-    @Binding var activities: [UUID: [ActivityData]]
+    @Binding var activities: [ActivityData]
 
     let defaultCategoryId: UUID
 
@@ -39,7 +39,7 @@ private struct RecordListDetailView: View {
 
     @Binding var isEditMode: Bool
     @Binding var categories: [CategoryData]
-    @Binding var activities: [UUID: [ActivityData]]
+    @Binding var activities: [ActivityData]
 
     @State private var selectedRecord: RecordData!
 
@@ -153,7 +153,7 @@ struct RecordListView_Previews: PreviewProvider {
             recordViewModel: .init(),
             isEditMode: .constant(false),
             categories: .constant([]),
-            activities: .constant([:]),
+            activities: .constant([]),
             defaultCategoryId: UUID()
         )
     }

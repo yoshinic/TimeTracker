@@ -5,21 +5,24 @@ struct SearchRecordView: View {
     @State private var showCategory = false
     @State private var showActivity = false
 
-    @State private var selectedCategories: [CategoryData] = []
-    @State private var selectedActivities: [ActivityData] = []
-
-    @State private var selectedStartDatetime: Date = .init()
-    @State private var selectedEndDatetime: Date = .init()
-
     @Binding var categories: [CategoryData]
-    @Binding var activities: [UUID: [ActivityData]]
+    @Binding var activities: [ActivityData]
+
+    @Binding var selectedCategories: Set<CategoryData>
+    @Binding var selectedActivities: Set<ActivityData>
+    @Binding var selectedStartDatetime: Date
+    @Binding var selectedEndDatetime: Date
     @Binding var sortType: RecordDataSortType
 
     var body: some View {
         Section("検索") {
-            SearchRecordMasterView(
+            SearchRecordCategoryView(
                 categories: $categories,
-                activities: $activities
+                selectedCategories: $selectedCategories
+            )
+            SearchRecordActivityView(
+                activities: $activities,
+                selectedActivities: $selectedActivities
             )
             SearchRecordDateView(
                 selectedDatetime: $selectedStartDatetime,
@@ -38,7 +41,11 @@ struct SearchRecordView_Previews: PreviewProvider {
     static var previews: some View {
         SearchRecordView(
             categories: .constant([]),
-            activities: .constant([:]),
+            activities: .constant([]),
+            selectedCategories: .constant([]),
+            selectedActivities: .constant([]),
+            selectedStartDatetime: .constant(Date()),
+            selectedEndDatetime: .constant(Date()),
             sortType: .constant(.time)
         )
     }

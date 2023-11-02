@@ -8,10 +8,12 @@ struct UpdateRecordView: View {
     @State private var selectedEndDatetime: Date? = nil
     @State private var note: String = ""
 
+    @State private var dic: [UUID: [ActivityData]] = [:]
+
     @ObservedObject var recordViewModel: RecordViewModel
 
     @Binding var categories: [CategoryData]
-    @Binding var activities: [UUID: [ActivityData]]
+    @Binding var activities: [ActivityData]
 
     @Environment(\.dismiss) private var dismiss
 
@@ -31,7 +33,7 @@ struct UpdateRecordView: View {
                         }
                         .onChange(of: selectedCategory) { categoryId in
                             guard let categoryId = categoryId else { return }
-                            selectedActivity = activities[categoryId]?.first?.id
+                            selectedActivity = dic[categoryId]?.first?.id
                         }
                     }
 
@@ -42,7 +44,7 @@ struct UpdateRecordView: View {
                         HStack {
                             SearchTitleView("アクティビティ")
                             Picker("", selection: $selectedActivity) {
-                                ForEach(activities[selectedCategory] ?? []) {
+                                ForEach(dic[selectedCategory] ?? []) {
                                     CustomText($0.name).tag($0.id as UUID?)
                                 }
                             }
@@ -93,6 +95,8 @@ struct UpdateRecordView: View {
             selectedStartDatetime = record.startedAt
             selectedEndDatetime = record.endedAt
             note = record.note
+
+            dic = activities.toUUIDDic
         }
     }
 
@@ -159,7 +163,7 @@ struct UpdateRecordView_Previews: PreviewProvider {
         UpdateRecordView(
             recordViewModel: .init(),
             categories: .constant([]),
-            activities: .constant([:]),
+            activities: .constant([]),
             defaultCategoryId: UUID(),
             record: .init(
                 id: UUID(),

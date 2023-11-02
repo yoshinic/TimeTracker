@@ -9,14 +9,23 @@ struct RecordMainView: View {
     @State private var isEditMode: Bool = false
     @State private var showListView: Bool = true
     @State private var categories: [CategoryData] = []
-    @State private var activities: [UUID: [ActivityData]] = [:]
+    @State private var activities: [ActivityData] = []
+
+    @State private var selectedCategories: Set<CategoryData> = []
+    @State private var selectedActivities: Set<ActivityData> = []
+    @State private var selectedStartDatetime: Date = .init()
+    @State private var selectedEndDatetime: Date = .init()
     @State private var sortType: RecordDataSortType = .time
 
     var body: some View {
         Form {
             SearchRecordView(
-                categories: $categories,
-                activities: $activities,
+                categories: $categoryViewModel.categories,
+                activities: $activityViewModel.activities,
+                selectedCategories: $selectedCategories,
+                selectedActivities: $selectedActivities,
+                selectedStartDatetime: $selectedStartDatetime,
+                selectedEndDatetime: $selectedEndDatetime,
                 sortType: $sortType
             )
             .onChange(of: sortType) { new in
@@ -27,8 +36,8 @@ struct RecordMainView: View {
                 RecordListView(
                     recordViewModel: recordViewModel,
                     isEditMode: $isEditMode,
-                    categories: $categories,
-                    activities: $activities,
+                    categories: $categoryViewModel.categories,
+                    activities: $activityViewModel.activities,
                     defaultCategoryId: categoryViewModel.defaultId
                 )
             } else {
@@ -44,11 +53,7 @@ struct RecordMainView: View {
         .onAppear {
             Task {
                 try await categoryViewModel.fetch()
-                categories = categoryViewModel.categories
-
                 try await activityViewModel.fetch()
-                activities = activityViewModel.activities.toUUIDDic
-
                 try await recordViewModel.fetch()
             }
         }

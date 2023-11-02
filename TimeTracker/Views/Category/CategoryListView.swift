@@ -3,37 +3,77 @@ import TimeTrackerAPI
 
 struct CategoryListView: View {
     @ObservedObject var viewModel: CategoryViewModel
+
+    @State private var isModalPresented: Bool = false
     @State private var isEditMode: Bool = false
+    @State private var selectedCategory: CategoryData! = nil
+    @State private var selectedMode: CategoryFormMode = .add
 
     var body: some View {
         #if os(macOS)
-        _CategoryListView(viewModel: viewModel, isEditMode: $isEditMode)
+        _CategoryListView(
+            viewModel: viewModel,
+            isModalPresented: $isModalPresented,
+            isEditMode: $isEditMode,
+            selectedCategory: $selectedCategory,
+            selectedMode: $selectedMode
+        )
         #elseif os(iOS)
-        _CategoryListView(viewModel: viewModel, isEditMode: $isEditMode)
-            .navigationBarTitle("カテゴリ一覧", displayMode: .inline)
-            .navigationBarItems(trailing: Button {
-                isEditMode.toggle()
-            } label: {
-                Text(isEditMode ? "Done" : "Edit")
-            })
+        _CategoryListView(
+            viewModel: viewModel,
+            isModalPresented: $isModalPresented,
+            isEditMode: $isEditMode,
+            selectedCategory: $selectedCategory,
+            selectedMode: $selectedMode
+        )
+        .navigationBarTitle("カテゴリ一覧", displayMode: .inline)
+        .navigationBarItems(trailing:
+            HStack {
+                editButton
+                addButton
+            }
+        )
+
         #else
         EmptyView()
         #endif
+    }
+
+    private var editButton: some View {
+        Button {
+            isEditMode.toggle()
+        } label: {
+            Text(isEditMode ? "Done" : "Edit")
+        }
+    }
+
+    private var addButton: some View {
+        Button {
+            selectedCategory = nil
+            selectedMode = .add
+            isModalPresented = true
+        } label: {
+            Image(systemName: "plus")
+                .imageScale(.large)
+                .padding()
+                .foregroundColor(.blue)
+        }
     }
 }
 
 struct _CategoryListView: View {
     @ObservedObject var viewModel: CategoryViewModel
+
+    @Binding var isModalPresented: Bool
     @Binding var isEditMode: Bool
-    @State private var isModalPresented: Bool = false
+    @Binding var selectedCategory: CategoryData!
+    @Binding var selectedMode: CategoryFormMode
+
     @State private var newCategoryName: String = ""
     @State private var newCategoryColor: Color = .white
-    @State private var selectedCategory: CategoryData! = nil
-    @State private var selectedMode: CategoryFormMode = .add
 
     var body: some View {
         VStack {
-            addButton
             #if os(macOS)
             DataList
             #elseif os(iOS)
@@ -88,19 +128,6 @@ struct _CategoryListView: View {
                 .onDelete { idx in Task { try await viewModel.delete(at: idx) } }
                 .onMove { idx, i in Task { try await viewModel.move(from: idx, to: i) } }
             }
-        }
-    }
-
-    private var addButton: some View {
-        Button {
-            selectedCategory = nil
-            selectedMode = .add
-            isModalPresented = true
-        } label: {
-            Image(systemName: "plus.circle")
-                .imageScale(.large)
-                .padding()
-                .foregroundColor(.blue)
         }
     }
 }
