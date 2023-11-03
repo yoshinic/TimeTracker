@@ -5,8 +5,8 @@ struct SearchRecordView: View {
     @Binding var categories: [CategoryData]
     @Binding var activities: [ActivityData]
 
-    @Binding var selectedCategories: Set<CategoryData>
-    @Binding var selectedActivities: Set<ActivityData>
+    @Binding var selectedCategories: Set<UUID>
+    @Binding var selectedActivities: Set<UUID>
     @Binding var selectedStartDatetime: Date
     @Binding var selectedEndDatetime: Date
     @Binding var sortType: RecordDataSortType

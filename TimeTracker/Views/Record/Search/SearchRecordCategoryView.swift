@@ -3,7 +3,7 @@ import TimeTrackerAPI
 
 struct SearchRecordCategoryView: View {
     @Binding var categories: [CategoryData]
-    @Binding var selectedCategories: Set<CategoryData>
+    @Binding var selectedCategories: Set<UUID>
 
     var body: some View {
         NavigationLink {
@@ -12,7 +12,7 @@ struct SearchRecordCategoryView: View {
                     Section("") {
                         HStack {
                             Button("全て選択") {
-                                categories.forEach { selectedCategories.insert($0) }
+                                categories.forEach { selectedCategories.insert($0.id) }
                             }
                         }
                         HStack {
@@ -30,7 +30,7 @@ struct SearchRecordCategoryView: View {
                                     .fill(Color(hex: category.color))
                                     .frame(width: 24, height: 24)
                             }
-                            .tag(category)
+                            .tag(category.id)
                         }
                     }
                 }
@@ -51,7 +51,7 @@ struct SearchRecordCategoryView: View {
                     )
                 } else {
                     HStack(spacing: 10) {
-                        ForEach(categories.filter { selectedCategories.contains($0) }) {
+                        ForEach(categories.filter { selectedCategories.contains($0.id) }) {
                             TextTitle(
                                 $0.name,
                                 color: $0.color,

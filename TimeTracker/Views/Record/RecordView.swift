@@ -6,37 +6,42 @@ struct RecordView: View {
     @ObservedObject var activityViewModel: ActivityViewModel
     @ObservedObject var recordViewModel: RecordViewModel
 
-    @State private var selectedCategory: UUID = .init()
-    @State private var selectedActivity: UUID? = nil
-
     @State private var categories: [CategoryData] = []
-    @State private var activities: [UUID: [ActivityData]] = [:]
+    @State private var activities: [ActivityData] = []
+
+    @State private var selectedCategoryId: UUID = .init()
+    @State private var selectedActivityId: UUID = .init()
+
+    @State private var defaultCategoryId: UUID = .init()
+    @State private var defaultActivityId: UUID = .init()
 
     var body: some View {
         Form {
             Section("") {
                 ClockView()
             }
-            Section(header: Text("レコード作成項目")) {
-                Picker("カテゴリ", selection: $selectedCategory) {
+            Section("カテゴリの絞込み") {
+                Picker("カテゴリ", selection: $selectedCategoryId) {
                     ForEach(categories) {
-                        Text($0.name)
-                            .tag($0.id as UUID?)
-                            .font(.system(size: 12))
+                        Text($0.name).tag($0.id)
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
+                .pickerStyle(.menu)
                 .font(.system(size: 16))
-                .onChange(of: selectedCategory) { categoryId in
-                    selectedActivity = activities[categoryId]?.first?.id
-                }
-
-                Picker("アクティビティ", selection: $selectedActivity) {
-                    ForEach(activities[selectedCategory] ?? []) {
-                        Text($0.name)
-                            .tag($0.id as UUID?)
+                .onChange(of: selectedCategoryId) { id in
+                    if id != defaultCategoryId {
+                        selectedActivityId = filteredActivities(id).first?.id
+                            ?? defaultActivityId
                     }
                 }
+            }
+            Section("アクティビティの選択") {
+                Picker("アクティビティ", selection: $selectedActivityId) {
+                    ForEach(filteredActivities(selectedCategoryId)) {
+                        Text($0.name).tag($0.id)
+                    }
+                }
+                .pickerStyle(.menu)
                 .font(.system(size: 16))
             }
 
@@ -45,27 +50,56 @@ struct RecordView: View {
                     Spacer()
                     Button {
                         Task {
-                            try await recordViewModel.create(activityId: selectedActivity)
+                            try await recordViewModel.create(activityId: selectedActivityId)
                         }
                     } label: {
                         Text("開始")
                     }
-                    .foregroundColor(.red)
+                    .foregroundColor(
+                        selectedActivityId == defaultActivityId
+                            ? .gray : .red
+                    )
                     .bold()
+                    .disabled(selectedActivityId == defaultActivityId)
                     Spacer()
                 }
             }
         }
         .onAppear {
             Task {
+                defaultCategoryId = .init()
+                defaultActivityId = .init()
+                let defaultCategory: CategoryData = .init(
+                    id: defaultCategoryId,
+                    name: "未設定",
+                    color: "",
+                    order: -1
+                )
+
+                let defaultActivity: ActivityData = .init(
+                    id: defaultActivityId,
+                    category: defaultCategory,
+                    name: "未設定",
+                    color: "",
+                    order: -1
+                )
+
                 try await categoryViewModel.fetch()
-                selectedCategory = categoryViewModel.defaultId
-                categories = categoryViewModel.categories
+                categories = [defaultCategory] + categoryViewModel.categories
+                selectedCategoryId = defaultCategory.id
 
                 try await activityViewModel.fetch()
-                selectedActivity = nil
-                activities = activityViewModel.activities.toUUIDDic
+                activities = [defaultActivity] + activityViewModel.activities
+                selectedActivityId = defaultActivity.id
             }
+        }
+    }
+
+    private func filteredActivities(_ categoryId: UUID) -> [ActivityData] {
+        if categoryId == defaultCategoryId {
+            activities
+        } else {
+            activities.filter { $0.category.id == categoryId }
         }
     }
 }

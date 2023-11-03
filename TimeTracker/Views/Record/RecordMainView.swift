@@ -9,11 +9,29 @@ struct RecordMainView: View {
     @State private var isEditMode: Bool = false
     @State private var showListView: Bool = true
 
-    @State private var selectedCategories: Set<CategoryData> = []
-    @State private var selectedActivities: Set<ActivityData> = []
-    @State private var selectedStartDatetime: Date = .init()
-    @State private var selectedEndDatetime: Date = .init()
+    @State private var selectedCategories: Set<UUID> = []
+    @State private var selectedActivities: Set<UUID> = []
+    @State private var selectedStartDatetime: Date
+    @State private var selectedEndDatetime: Date
     @State private var sortType: RecordDataSortType = .time
+
+    init(
+        categoryViewModel: CategoryViewModel,
+        activityViewModel: ActivityViewModel,
+        recordViewModel: RecordViewModel
+    ) {
+        self.categoryViewModel = categoryViewModel
+        self.activityViewModel = activityViewModel
+        self.recordViewModel = recordViewModel
+
+        let startDate = Calendar.current.date(
+            byAdding: .day,
+            value: -7,
+            to: .init()
+        ) ?? .init()
+        self._selectedStartDatetime = .init(initialValue: startDate)
+        self._selectedEndDatetime = .init(initialValue: .init())
+    }
 
     var body: some View {
         Form {
@@ -26,10 +44,12 @@ struct RecordMainView: View {
                 selectedEndDatetime: $selectedEndDatetime,
                 sortType: $sortType
             )
-            .onChange(of: sortType) { new in
-                recordViewModel.sortType = new
-                recordViewModel.sort()
-            }
+            .onChange(of: selectedCategories) { _ in Task { try await fetch() }}
+            .onChange(of: selectedActivities) { _ in Task { try await fetch() }}
+            .onChange(of: selectedStartDatetime) { _ in Task { try await fetch() }}
+            .onChange(of: selectedEndDatetime) { _ in Task { try await fetch() }}
+            .onChange(of: sortType) { _ in recordViewModel.sort() }
+
             if showListView {
                 RecordListView(
                     recordViewModel: recordViewModel,
@@ -52,9 +72,19 @@ struct RecordMainView: View {
             Task {
                 try await categoryViewModel.fetch()
                 try await activityViewModel.fetch()
-                try await recordViewModel.fetch()
+                try await fetch()
             }
         }
+    }
+
+    private func fetch() async throws {
+        try await recordViewModel.fetch(
+            categories: selectedCategories,
+            activities: selectedActivities,
+            from: selectedStartDatetime,
+            to: selectedEndDatetime
+        )
+        recordViewModel.sort()
     }
 }
 

@@ -3,7 +3,7 @@ import TimeTrackerAPI
 
 struct SearchRecordActivityView: View {
     @Binding var activities: [ActivityData]
-    @Binding var selectedActivities: Set<ActivityData>
+    @Binding var selectedActivities: Set<UUID>
 
     @State private var dic: [CategoryData: [ActivityData]] = [:]
 
@@ -14,7 +14,7 @@ struct SearchRecordActivityView: View {
                     Section("") {
                         HStack {
                             Button("全て選択") {
-                                activities.forEach { selectedActivities.insert($0) }
+                                activities.forEach { selectedActivities.insert($0.id) }
                             }
                         }
 
@@ -34,7 +34,7 @@ struct SearchRecordActivityView: View {
                                         .fill(Color(hex: activity.color))
                                         .frame(width: 24, height: 24)
                                 }
-                                .tag(activity)
+                                .tag(activity.id)
                             }
                         }
                     }
@@ -55,7 +55,7 @@ struct SearchRecordActivityView: View {
                     )
                 } else {
                     HStack(spacing: 10) {
-                        ForEach(activities.filter { selectedActivities.contains($0) }) {
+                        ForEach(activities.filter { selectedActivities.contains($0.id) }) {
                             TextTitle(
                                 $0.name,
                                 color: $0.color,

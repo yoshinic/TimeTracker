@@ -10,21 +10,19 @@ class RecordViewModel: ObservableObject {
 
     @MainActor
     func fetch(
-        recordId: UUID? = nil,
-        nullEnd: Bool = false,
+        id: UUID? = nil,
+        categories: Set<UUID> = [],
+        activities: Set<UUID> = [],
         from: Date? = nil,
-        to: Date? = nil,
-        categoryIds: [UUID] = [],
-        activityIds: [UUID] = []
+        to: Date? = nil
     ) async throws {
         guard let service = service else { return }
         records = try await service.fetch(
-            recordId: recordId,
-            nullEnd: nullEnd,
+            id: id,
+            categories: categories,
+            activities: activities,
             from: from,
-            to: to,
-            categoryIds: categoryIds,
-            activityIds: activityIds
+            to: to
         )
         sort()
         count = records.count
@@ -47,7 +45,7 @@ class RecordViewModel: ObservableObject {
         )
         records.append(new)
         sort()
-        
+
         count += 1
     }
 
@@ -61,7 +59,7 @@ class RecordViewModel: ObservableObject {
     ) async throws {
         guard let service = service else { return  }
         let updated = try await service.update(
-            recordId: id,
+            id: id,
             activityId: activityId,
             startedAt: startedAt,
             endedAt: endedAt,
@@ -93,17 +91,33 @@ class RecordViewModel: ObservableObject {
     func sort() {
         switch sortType {
         case .kind:
-            return
+            records.sort(by: kindSort)
         case .time:
-            records.sort {
-                if $0.endedAt == nil, $1.endedAt == nil {
-                    $0.startedAt > $1.startedAt
-                } else if let d0 = $0.endedAt, let d1 = $1.endedAt {
-                    d0 == d1 ? $0.startedAt > $1.startedAt : d0 > d1
-                } else {
-                    $0.endedAt == nil
-                }
+            records.sort(by: timeSort)
+        }
+    }
+
+    private func kindSort(_ lhs: RecordData, _ rhs: RecordData) -> Bool {
+        if let a0 = lhs.activity, let a1 = rhs.activity {
+            if a0.category.id == a1.category.id {
+                a0.order < a1.order
+            } else {
+                a0.category.order < a1.category.order
             }
+        } else if lhs.activity == nil, rhs.activity == nil {
+            timeSort(lhs, rhs)
+        } else {
+            rhs.activity == nil
+        }
+    }
+
+    private func timeSort(_ lhs: RecordData, _ rhs: RecordData) -> Bool {
+        if lhs.endedAt == nil, rhs.endedAt == nil {
+            lhs.startedAt > rhs.startedAt
+        } else if let d0 = lhs.endedAt, let d1 = rhs.endedAt {
+            d0 == d1 ? lhs.startedAt > rhs.startedAt : d0 > d1
+        } else {
+            lhs.endedAt == nil
         }
     }
 }
