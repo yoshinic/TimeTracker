@@ -22,13 +22,13 @@ class SearchRecordDateViewState: ObservableObject {
 
         let locale: Locale = .init(identifier: "ja_JP")
 
-        let templateFormatter: DateFormatter = {
+        var templateFormatter: DateFormatter {
             let formatter: DateFormatter = .init()
             formatter.calendar = .init(identifier: .gregorian)
             formatter.locale = locale
             formatter.timeZone = .init(identifier:  "Asia/Tokyo") ?? TimeZone.current
             return formatter
-        }()
+        }
 
         self.dateFormatter = {
             let formatter = templateFormatter
