@@ -21,7 +21,8 @@ struct RecordMainView: View {
                 state.onTapCompleteButton()
             } label: {
                 Text(state.isEditMode ? "完了" : "編集")
-            })
+            }
+        )
     }
 }
 

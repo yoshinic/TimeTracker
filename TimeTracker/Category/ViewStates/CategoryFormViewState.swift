@@ -8,18 +8,18 @@ class CategoryFormViewState: ObservableObject {
     @Published var selectedColorHex: String
     @Published var selectedIcon: String
 
-    let selectedId: UUID!
+    let selectedCategory: CategoryData!
     let isAdd: Bool
 
     init(_ selectedCategory: CategoryData? = nil) {
         if let selectedCategory {
-            self.selectedId = selectedCategory.id
+            self.selectedCategory = selectedCategory
             self.selectedName = selectedCategory.name
             self.selectedColor = .init(hex: selectedCategory.color)
             self.selectedColorHex = selectedCategory.color
             self.selectedIcon = selectedCategory.icon ?? ""
         } else {
-            self.selectedId = nil
+            self.selectedCategory = nil
             self.selectedName = ""
             self.selectedColor = .white
             self.selectedColorHex = "#FFFFFF"
@@ -43,7 +43,7 @@ class CategoryFormViewState: ObservableObject {
                 )
             } else {
                 try await CategoryStore.shared.update(
-                    id: selectedId,
+                    selectedCategory,
                     name: selectedName,
                     color: selectedColorHex,
                     icon: selectedIcon

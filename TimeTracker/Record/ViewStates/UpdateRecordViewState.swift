@@ -4,8 +4,9 @@ import TimeTrackerAPI
 
 @MainActor
 class UpdateRecordViewState: ObservableObject {
-    @Published private(set) var categories: [CategoryData]
-    @Published private(set) var activities: [UUID: [ActivityData]]
+    @Published private(set) var categories: [CategoryData] = []
+    @Published private(set) var activities: [UUID: [ActivityData]] = [:]
+    @Published private(set) var filteredActivities: [ActivityData] = []
 
     @Published var selectedRecordId: UUID
     @Published var selectedCategoryId: UUID
@@ -14,35 +15,60 @@ class UpdateRecordViewState: ObservableObject {
     @Published var selectedEndDatetime: Date?
     @Published var selectedNote: String
 
+    @Published var selectedPickerEndDatetime: Date
+    @Published var isEmptyEndDate: Bool
+
     let defaultCategoryId: UUID = CategoryStore.shared.dummy.id
     let defaultActivityId: UUID = ActivityStore.shared.dummy.id
 
-    var filteredActivities: [ActivityData] {
-        if selectedCategoryId == defaultCategoryId {
-            activities.values.flatMap { $0 }
-        } else {
-            activities[selectedCategoryId] ?? []
-        }
-    }
+    private var cancellables: Set<AnyCancellable> = []
 
     init(_ selectedRecord: RecordData) {
-        self.categories = CategoryStore.shared.values
-        self.activities = ActivityStore.shared.values
-
         self.selectedRecordId = selectedRecord.id
         self.selectedCategoryId
             = selectedRecord.activity?.category?.id ?? defaultCategoryId
         self.selectedActivityId
             = selectedRecord.activity?.id ?? defaultActivityId
         self.selectedStartDatetime = selectedRecord.startedAt
-        self.selectedEndDatetime = selectedRecord.endedAt
         self.selectedNote = selectedRecord.note
+
+        let endedAt = selectedRecord.endedAt
+        self.selectedEndDatetime = endedAt
+        self.selectedPickerEndDatetime = endedAt ?? .init()
+        self.isEmptyEndDate = endedAt == nil
+
+        CategoryStore.shared.$values.assign(to: &$categories)
+        ActivityStore.shared.$values.assign(to: &$activities)
+
+        $selectedCategoryId
+            .map { [weak self] in
+                if $0 == self?.defaultCategoryId {
+                    self?.activities.values.flatMap { $0 } ?? []
+                } else {
+                    self?.activities[$0] ?? []
+                }
+            }
+            .assign(to: &$filteredActivities)
     }
 
-    func onChange(id: UUID) {
+    func onCategoryChanged(_ id: UUID) {
         guard id != defaultCategoryId else { return }
         selectedActivityId = filteredActivities.first?.id
             ?? defaultActivityId
+    }
+
+    func onStartDateChanged(date: Date) {
+        selectedStartDatetime = date
+    }
+
+    func onEndDateChanged(date: Date) {
+        selectedEndDatetime = date
+    }
+
+    func onTapSelectionOptionButton() {
+        isEmptyEndDate.toggle()
+        guard isEmptyEndDate else { return }
+        selectedEndDatetime = nil
     }
 
     func onTapUpdateButton() async {
@@ -57,28 +83,5 @@ class UpdateRecordViewState: ObservableObject {
         } catch {
             print(error)
         }
-    }
-}
-
-@MainActor
-class SearchRecordEndDateViewState: ObservableObject {
-    @Published var selectedEndDatetime: Date?
-    @Published var selectedPickerEndDatetime: Date
-    @Published var emptyEndDate: Bool
-
-    init(_ selectedEndDatetime: Date?) {
-        self.selectedEndDatetime = selectedEndDatetime
-        self.emptyEndDate = selectedEndDatetime == nil
-        self.selectedPickerEndDatetime = selectedEndDatetime ?? .init()
-    }
-
-    func onTapSelectionOptionButton() {
-        emptyEndDate.toggle()
-        guard emptyEndDate else { return }
-        selectedEndDatetime = nil
-    }
-
-    func onChange(_ new: Date) {
-        selectedEndDatetime = new
     }
 }

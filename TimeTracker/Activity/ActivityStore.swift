@@ -76,7 +76,8 @@ final class ActivityStore {
             id: original.id,
             categoryId: updatingCategoryId,
             name: name,
-            color: color
+            color: color,
+            order: original.order
         )
 
         try await fetch()
@@ -91,9 +92,9 @@ final class ActivityStore {
             try await service.delete(id: uuid)
         }
 
-        var a = values[categoryId]?.map { $0.id } ?? []
+        var a = values[categoryId]?.map { $0 } ?? []
         a.remove(atOffsets: offsets)
-        try await service.updateOrder(ids: a)
+        try await service.updateOrder(a)
         try await fetch()
     }
 
@@ -102,12 +103,12 @@ final class ActivityStore {
         to destination: Int,
         categoryId: UUID
     ) async throws {
-        var a = values[categoryId]?.map { $0.id } ?? []
+        var a = values[categoryId]?.map { $0 } ?? []
         a.move(
             fromOffsets: source,
             toOffset: destination
         )
-        try await service.updateOrder(ids: a)
+        try await service.updateOrder(a)
         try await fetch()
     }
 }

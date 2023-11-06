@@ -18,7 +18,7 @@ struct UpdateRecordView: View {
                         }
                         .pickerStyle(.menu)
                         .onChange(of: state.selectedCategoryId) {
-                            state.onChange(id: $0)
+                            state.onCategoryChanged($0)
                         }
                     }
 
@@ -31,11 +31,39 @@ struct UpdateRecordView: View {
                         }
                         .pickerStyle(.menu)
                     }
+
                     SearchRecordDateView(state: .init(
                         "開始",
-                        state.selectedStartDatetime
+                        state.selectedStartDatetime,
+                        state.onStartDateChanged
                     ))
-                    SearchRecordEndDateView(state: .init(state.selectedEndDatetime))
+
+                    HStack {
+                        SearchRecordTitleView("終了")
+                        if state.selectedEndDatetime == nil {
+                            TextTitle(
+                                "未選択",
+                                color: "#FF1111",
+                                fontSize: 14,
+                                opacity: 0.1,
+                                active: false
+                            )
+                        }
+                        Spacer()
+                        Button {
+                            state.onTapSelectionOptionButton()
+                        } label: {
+                            Text(state.isEmptyEndDate ? "選択する" : "未選択にする")
+                        }
+                    }
+                    if !state.isEmptyEndDate {
+                        SearchRecordDateView(state: .init(
+                            "",
+                            state.selectedPickerEndDatetime,
+                            state.onEndDateChanged
+                        ))
+                    }
+
                     HStack(alignment: .top) {
                         SearchRecordTitleView("メモ")
                         TextEditor(text: $state.selectedNote)
@@ -60,37 +88,15 @@ struct UpdateRecordView: View {
                     }
                 }
             }
-        }
-        .navigationBarTitle("記録一覧", displayMode: .inline)
-    }
-}
-
-private struct SearchRecordEndDateView: View {
-    @StateObject var state: SearchRecordEndDateViewState
-
-    var body: some View {
-        HStack {
-            SearchRecordTitleView("終了")
-            if state.selectedEndDatetime == nil {
-                TextTitle(
-                    "未選択",
-                    color: "#FF1111",
-                    fontSize: 14,
-                    opacity: 0.1,
-                    active: false
-                )
+            .navigationTitle("記録の編集")
+            .toolbar {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray.opacity(0.6))
+                }
             }
-            Spacer()
-            Button {
-                state.onTapSelectionOptionButton()
-            } label: {
-                Text(state.emptyEndDate ? "選択する" : "未選択にする")
-            }
-        }
-
-        if !state.emptyEndDate {
-            SearchRecordDateView(state: .init("", state.selectedPickerEndDatetime))
-                .onChange(of: state.selectedPickerEndDatetime) { state.onChange($0) }
         }
     }
 }

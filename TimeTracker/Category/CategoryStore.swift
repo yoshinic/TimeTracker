@@ -40,19 +40,20 @@ final class CategoryStore {
     }
 
     func update(
-        id: UUID,
+        _ original: CategoryData,
         name: String,
         color: String,
         icon: String?
     ) async throws {
         let updated = try await service.update(
-            id: id,
+            id: original.id,
             name: name,
             color: color,
-            icon: icon
+            icon: icon,
+            order: original.order
         )
 
-        guard let i = values.firstIndex(where: { $0.id == id }) else { return }
+        guard let i = values.firstIndex(where: { $0.id == original.id }) else { return }
         values[i] = updated
     }
 
@@ -68,14 +69,14 @@ final class CategoryStore {
             try await service.delete(id: uuid)
         }
         values.remove(atOffsets: offsets)
-        try await service.updateOrder(ids: values.map { $0.id })
+        try await service.updateOrder(values)
         try await fetch()
     }
 
     func move(from source: IndexSet, to destination: Int) async throws {
         var values = values
         values.move(fromOffsets: source, toOffset: destination)
-        try await service.updateOrder(ids: values.map { $0.id })
+        try await service.updateOrder(values)
         try await fetch()
     }
 }

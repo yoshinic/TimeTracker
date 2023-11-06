@@ -71,9 +71,8 @@ final class RecordStore {
             try await service.delete(id: uuid)
         }
         values.remove(atOffsets: offsets)
-        try await fetch()
     }
-    
+
     func sort(by sortType: RecordDataSortType) {
         switch sortType {
         case .kind:
