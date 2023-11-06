@@ -9,7 +9,6 @@ final class CategoryStore {
     @Published private(set) var values: [CategoryData] = []
 
     private var service: CategoryService = DatabaseServiceManager.shared.category
-    var count: Int = 0
 
     let dummy: CategoryData = .init(
         id: .init(),
@@ -21,7 +20,6 @@ final class CategoryStore {
 
     func fetch() async throws {
         values = try await service.fetch()
-        count = values.count
     }
 
     func create(
@@ -39,7 +37,6 @@ final class CategoryStore {
             )
         else { return }
         values.append(new)
-        count += 1
     }
 
     func update(

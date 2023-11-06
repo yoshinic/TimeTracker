@@ -9,9 +9,24 @@ struct ActivityListView: View {
             ForEach(state.categories) { category in
                 Section(category.name) {
                     if let a = state.activities[category.id], a.first != nil {
-                        ActivityListDetailView(
-                            state: .init(activities: a, categoryId: category.id)
-                        )
+                        ForEach(a) { activity in
+                            NavigationLink {
+                                ActivityFormView(state: .init(activity))
+                            } label: {
+                                HStack {
+                                    Circle()
+                                        .fill(Color(hex: activity.color))
+                                        .frame(width: 24, height: 24)
+                                    Text(activity.name)
+                                }
+                            }
+                        }
+                        .onDelete { idx in
+                            Task { await state.onDelete(at: idx, category.id) }
+                        }
+                        .onMove { idx, i in
+                            Task { await state.onMove(from: idx, to: i, category.id) }
+                        }
                     } else {
                         Text("(設定なし)")
                     }
@@ -42,28 +57,6 @@ struct ActivityListView: View {
                 }
             }
         )
-    }
-}
-
-struct ActivityListDetailView: View {
-    @StateObject var state: ActivityListDetailViewState
-
-    var body: some View {
-        ForEach(state.activities) { activity in
-            NavigationLink {
-                ActivityFormView(state: .init(activity))
-            } label: {
-                HStack {
-                    Text(activity.name)
-                    Spacer()
-                    Circle()
-                        .fill(Color(hex: activity.color))
-                        .frame(width: 24, height: 24)
-                }
-            }
-        }
-        .onDelete { idx in Task { await state.onDelete(at: idx) }}
-        .onMove { idx, i in Task { await state.onMove(from: idx, to: i) }}
     }
 }
 

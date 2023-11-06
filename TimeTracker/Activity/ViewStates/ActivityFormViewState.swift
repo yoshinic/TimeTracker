@@ -3,35 +3,35 @@ import TimeTrackerAPI
 
 @MainActor
 class ActivityFormViewState: ObservableObject {
-    @Published private(set) var categories: [CategoryData]
+    @Published private(set) var categories: [CategoryData] = []
 
     @Published var selectedCategoryId: UUID?
     @Published var selectedName: String
     @Published var selectedColor: Color
     @Published var selectedColorHex: String
 
-    let selectedId: UUID!
+    let selectedActivity: ActivityData!
     let isAdd: Bool
 
     init(_ selectedActivity: ActivityData? = nil) {
-        self.categories = CategoryStore.shared.values
-
         if let selectedActivity {
-            self.selectedId = selectedActivity.id
+            self.selectedActivity = selectedActivity
             self.selectedCategoryId = selectedActivity.category?.id
             self.selectedName = selectedActivity.name
             self.selectedColor = .init(hex: selectedActivity.color)
             self.selectedColorHex = selectedActivity.color
 
         } else {
-            self.selectedId = nil
-            self.selectedCategoryId = nil
+            self.selectedActivity = nil
+            self.selectedCategoryId = CategoryStore.shared.values.first?.id
             self.selectedName = ""
             self.selectedColor = .white
             self.selectedColorHex = "#FFFFFF"
         }
 
         self.isAdd = selectedActivity == nil
+
+        CategoryStore.shared.$values.assign(to: &$categories)
     }
 
     func onChangeSelectedColor(new: Color) {
@@ -48,13 +48,12 @@ class ActivityFormViewState: ObservableObject {
                 )
             } else {
                 try await ActivityStore.shared.update(
-                    id: selectedId,
+                    original: selectedActivity,
                     categoryId: selectedCategoryId,
                     name: selectedName,
                     color: selectedColorHex
                 )
             }
-
         } catch {
             print(error)
         }

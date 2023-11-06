@@ -23,28 +23,26 @@ final class ActivityStore {
         categoryId: UUID? = nil,
         name: String? = nil
     ) async throws {
-        var fetchedValues = try await service.fetch(
+        var data = try await service.fetch(
             id: id,
             categoryId: categoryId,
             name: name
         )
 
-        values = ([CategoryStore.shared.dummy] + CategoryStore.shared.values)
+        var dic: [UUID: [ActivityData]] = CategoryStore
+            .shared
+            .values
             .reduce(into: [:]) { res, c in
-                let a: [ActivityData]
-                if c.id == CategoryStore.shared.dummy.id {
-                    a = fetchedValues.filter { $0.category?.id == nil }
-                } else {
-                    a = fetchedValues.filter { $0.category?.id == c.id }
-                }
-                res[c.id] = a
+                let a = data.filter { $0.category?.id == c.id }
+                res[c.id] = a.sorted { $0.order < $1.order }
                 a.forEach {
-                    guard
-                        let i = fetchedValues.firstIndex(of: $0)
-                    else { return }
-                    fetchedValues.remove(at: i)
+                    guard let i = data.firstIndex(of: $0) else { return }
+                    data.remove(at: i)
                 }
             }
+
+        dic[CategoryStore.shared.dummy.id] = data.sorted { $0.order < $1.order }
+        values = dic
     }
 
     func create(
@@ -53,36 +51,35 @@ final class ActivityStore {
         name: String,
         color: String
     ) async throws {
-        let new = try await service.create(
+        try await service.create(
             id: id,
             categoryId: categoryId,
             name: name,
             color: color
         )
-
-        let id = categoryId ?? CategoryStore.shared.dummy.id
-        values[id]?.append(new)
+        try await fetch()
     }
 
     func update(
-        id: UUID,
+        original: ActivityData,
         categoryId: UUID?,
         name: String,
         color: String
     ) async throws {
-        let updated = try await service.update(
-            id: id,
-            categoryId: categoryId,
+        let updatingCategoryId: UUID? = {
+            guard let cid = categoryId else { return nil }
+            guard cid == CategoryStore.shared.dummy.id else { return categoryId }
+            return nil
+        }()
+
+        try await service.update(
+            id: original.id,
+            categoryId: updatingCategoryId,
             name: name,
             color: color
         )
 
-        let cid = categoryId ?? CategoryStore.shared.dummy.id
-        guard
-            let i = values[cid]?.firstIndex(where: { $0.id == id }),
-            values[cid] != nil
-        else { throw AppError.notFound }
-        values[cid]![i] = updated
+        try await fetch()
     }
 
     func delete(
