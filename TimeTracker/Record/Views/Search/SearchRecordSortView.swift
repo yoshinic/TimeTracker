@@ -33,6 +33,6 @@ struct RadioTextTitleView: View {
 
 struct RadioTextTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchRecordSortView(state: .init(.time))
+        SearchRecordSortView(state: .init(.time) { _ in })
     }
 }

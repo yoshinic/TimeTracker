@@ -1,32 +1,37 @@
+import Foundation
 import Combine
 import TimeTrackerAPI
 
 @MainActor
 class SearchRecordCategoryViewState: ObservableObject {
-    @Published private(set) var categories: [CategoryData]
+    @Published private(set) var categories: [CategoryData] = []
     @Published var selectedCategories: Set<CategoryData>
+    @Published private(set) var filteredCategories: [CategoryData] = []
 
-    var filteredCategories: [CategoryData] {
-        categories.filter { selectedCategories.contains($0) }
-    }
+    let onCategoriesChanged: (@MainActor (Set<CategoryData>) -> Void)?
 
-    init(_ selectedCategories: Set<CategoryData>) {
-        self.categories = CategoryStore.shared.values
-        self.selectedCategories = selectedCategories
-    }
-}
-
-@MainActor
-class SearchRecordCategorySelectionViewState: ObservableObject {
-    @Published private(set) var categories: [CategoryData]
-    @Published var selectedCategories: Set<CategoryData>
+    private var cancellables: Set<AnyCancellable> = []
 
     init(
-        _ categories: [CategoryData],
-        _ selectedCategories: Set<CategoryData>
+        _ selectedCategories: Set<CategoryData> = [],
+        _ onCategoriesChanged: (@MainActor (Set<CategoryData>) -> Void)? = nil
     ) {
-        self.categories = categories
         self.selectedCategories = selectedCategories
+        self.onCategoriesChanged = onCategoriesChanged
+
+        CategoryStore.shared.$values.assign(to: &$categories)
+        $selectedCategories
+            .map { selected in
+                self.categories.filter { selected.contains($0) }
+            }
+            .assign(to: &$filteredCategories)
+
+        if let onCategoriesChanged {
+            $selectedCategories
+                .receive(on: DispatchQueue.main)
+                .sink { onCategoriesChanged($0) }
+                .store(in: &cancellables)
+        }
     }
 
     func onTapAllSelected() {

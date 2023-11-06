@@ -32,7 +32,10 @@ struct UpdateRecordView: View {
                         }
                         .pickerStyle(.menu)
                     }
-                    SearchRecordDateView(state: .init("開始", state.selectedStartDatetime))
+                    SearchRecordDateView(state: .init(
+                        "開始",
+                        state.selectedStartDatetime
+                    ))
                     SearchRecordEndDateView(state: .init(state.selectedEndDatetime))
                     HStack(alignment: .top) {
                         SearchRecordTitleView("メモ")

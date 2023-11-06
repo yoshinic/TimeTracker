@@ -6,37 +6,13 @@ struct RecordMainView: View {
 
     var body: some View {
         Form {
-            SearchRecordView(
-                state: .init(
-                    selectedCategories: state.selectedCategories,
-                    selectedActivities: state.selectedActivities,
-                    selectedStartDatetime: state.selectedStartDatetime,
-                    selectedEndDatetime: state.selectedEndDatetime,
-                    selectedSortType: state.selectedSortType
-                )
-            )
-            .onChange(of: state.selectedCategories) { _ in
-                Task { await state.onChangeParameter() }
-            }
-            .onChange(of: state.selectedActivities) { _ in
-                Task { await state.onChangeParameter() }
-            }
-            .onChange(of: state.selectedStartDatetime) { _ in
-                Task { await state.onChangeParameter() }
-            }
-            .onChange(of: state.selectedEndDatetime) { _ in
-                Task { await state.onChangeParameter() }
-            }
-            .onChange(of: state.selectedSortType) { _ in
-                state.onChangeSort()
-            }
+            SearchRecordView(state: .init())
             if state.showListView {
-                RecordListView(state: .init(state.records))
+                RecordListView(state: .init())
             } else {
                 RecordGraphView(state: .init(state.records))
             }
         }
-        .task { await state.task() }
         .environment(
             \.editMode,
             state.isEditMode ? .constant(.active) : .constant(.inactive)

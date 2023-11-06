@@ -4,11 +4,11 @@ import TimeTrackerAPI
 
 @MainActor
 class RecordListViewState: ObservableObject {
-    @Published var records: [RecordData]
+    @Published var records: [RecordData] = []
     @Published var selectedRecord: RecordData!
 
-    init(_ records: [RecordData]) {
-        self.records = records
+    init() {
+        RecordStore.shared.$values.assign(to: &$records)
     }
 
     func onTapRecordRow(_ record: RecordData) {

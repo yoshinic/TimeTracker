@@ -6,7 +6,23 @@ struct SearchRecordActivityView: View {
 
     var body: some View {
         NavigationLink {
-            SearchRecordActivitySelectionView(state: .init(state.selectedActivities))
+            List(selection: $state.selectedActivities) {
+                ForEach(state.categories) { category in
+                    Section(category.name) {
+                        ForEach(state.activities[category.id] ?? []) { activity in
+                            HStack {
+                                Circle()
+                                    .fill(Color(hex: activity.color))
+                                    .frame(width: 24, height: 24)
+                                Text(activity.name)
+                            }
+                            .tag(activity)
+                        }
+                    }
+                }
+            }
+            .environment(\.editMode, .constant(.active))
+            .navigationBarTitle("アクティビティの絞込み", displayMode: .inline)
         } label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text("アクティビティ")
@@ -36,34 +52,8 @@ struct SearchRecordActivityView: View {
     }
 }
 
-private struct SearchRecordActivitySelectionView: View {
-    @StateObject var state: SearchRecordActivitySelectionViewState
-
-    var body: some View {
-        NavigationView {
-            List(selection: $state.selectedActivities) {
-                ForEach(state.categories) { category in
-                    Section(category.name) {
-                        ForEach(state.activities[category.id] ?? []) { activity in
-                            HStack {
-                                Circle()
-                                    .fill(Color(hex: activity.color))
-                                    .frame(width: 24, height: 24)
-                                Text(activity.name)
-                            }
-                            .tag(activity.id)
-                        }
-                    }
-                }
-            }
-            .environment(\.editMode, .constant(.active))
-            .navigationBarTitle("アクティビティの絞込み", displayMode: .inline)
-        }
-    }
-}
-
 struct SearchRecordActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchRecordActivityView(state: .init([]))
+        SearchRecordActivityView(state: .init { _ in })
     }
 }

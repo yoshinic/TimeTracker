@@ -73,6 +73,15 @@ final class RecordStore {
         values.remove(atOffsets: offsets)
         try await fetch()
     }
+    
+    func sort(by sortType: RecordDataSortType) {
+        switch sortType {
+        case .kind:
+            values.sort(by: kindSort)
+        case .time:
+            values.sort(by: timeSort)
+        }
+    }
 
     func sort(
         _ records: inout [RecordData],

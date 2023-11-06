@@ -6,24 +6,35 @@ struct SearchRecordView: View {
 
     var body: some View {
         Section("検索") {
-            SearchRecordCategoryView(state: .init(state.selectedCategories))
-            SearchRecordActivityView(state: .init(state.selectedActivities))
-            SearchRecordDateView(state: .init("開始", state.selectedStartDatetime))
-            SearchRecordDateView(state: .init("終了", state.selectedEndDatetime))
-            SearchRecordSortView(state: .init(.time))
+            SearchRecordCategoryView(state: .init(
+                state.selectedCategories,
+                state.onCategoriesChanged
+            ))
+            SearchRecordActivityView(state: .init(
+                state.selectedActivities,
+                state.onActivitiesChanged
+            ))
+            SearchRecordDateView(state: .init(
+                "開始",
+                state.selectedStartDatetime,
+                state.onStartDateChanged
+            ))
+
+            SearchRecordDateView(state: .init(
+                "終了",
+                state.selectedEndDatetime,
+                state.onEndDateChanged
+            ))
+            SearchRecordSortView(state: .init(
+                state.selectedSortType,
+                state.onSortTypeChanged
+            ))
         }
     }
 }
 
 struct SearchRecordView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchRecordView(
-            state: .init(
-                selectedCategories: [],
-                selectedActivities: [],
-                selectedStartDatetime: .init(),
-                selectedSortType: .time
-            )
-        )
+        SearchRecordView(state: .init())
     }
 }

@@ -1,3 +1,4 @@
+import Foundation
 import Combine
 import TimeTrackerAPI
 
@@ -5,8 +6,23 @@ import TimeTrackerAPI
 class SearchRecordSortViewState: ObservableObject {
     @Published private(set) var selectedSortType: RecordDataSortType
 
-    init(_ selectedSortType: RecordDataSortType) {
+    let onSortTypeChanged: (@MainActor (RecordDataSortType) -> Void)?
+
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(
+        _ selectedSortType: RecordDataSortType = .time,
+        _ onSortTypeChanged: (@MainActor (RecordDataSortType) -> Void)? = nil
+    ) {
         self.selectedSortType = selectedSortType
+        self.onSortTypeChanged = onSortTypeChanged
+
+        if let onSortTypeChanged {
+            $selectedSortType
+                .receive(on: DispatchQueue.main)
+                .sink { onSortTypeChanged($0) }
+                .store(in: &cancellables)
+        }
     }
 }
 

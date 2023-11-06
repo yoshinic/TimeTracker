@@ -36,6 +36,6 @@ struct SearchRecordDateView: View {
 
 struct SearchRecordDateView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchRecordDateView(state: .init("開始", .init()))
+        SearchRecordDateView(state: .init("開始", .init()) { _ in })
     }
 }

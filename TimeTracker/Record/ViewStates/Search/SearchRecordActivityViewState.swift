@@ -4,31 +4,38 @@ import TimeTrackerAPI
 
 @MainActor
 class SearchRecordActivityViewState: ObservableObject {
-    @Published private(set) var activities: [UUID: [ActivityData]]
+    @Published private(set) var categories: [CategoryData] = []
+    @Published private(set) var activities: [UUID: [ActivityData]] = [:]
     @Published var selectedActivities: Set<ActivityData>
+    @Published private(set) var filteredActivities: [ActivityData] = []
 
     let flattedActivities: [ActivityData]
+    let onActivitiesChanged: (@MainActor (Set<ActivityData>) -> Void)?
 
-    var filteredActivities: [ActivityData] {
-        flattedActivities.filter { selectedActivities.contains($0) }
-    }
+    private var cancellables: Set<AnyCancellable> = []
 
-    init(_ selectedActivities: Set<ActivityData>) {
-        self.activities = ActivityStore.shared.values
+    init(
+        _ selectedActivities: Set<ActivityData> = [],
+        _ onActivitiesChanged: (@MainActor (Set<ActivityData>) -> Void)? = nil
+    ) {
         self.selectedActivities = selectedActivities
-        flattedActivities = ActivityStore.shared.values.values.flatMap { $0 }
-    }
-}
+        self.onActivitiesChanged = onActivitiesChanged
+        self.flattedActivities = ActivityStore.shared.values.values.flatMap { $0 }
 
-@MainActor
-class SearchRecordActivitySelectionViewState: ObservableObject {
-    @Published private(set) var categories: [CategoryData]
-    @Published private(set) var activities: [UUID: [ActivityData]]
-    @Published var selectedActivities: Set<ActivityData>
+        CategoryStore.shared.$values.assign(to: &$categories)
+        ActivityStore.shared.$values.assign(to: &$activities)
 
-    init(_ selectedActivities: Set<ActivityData>) {
-        self.categories = CategoryStore.shared.values
-        self.activities = ActivityStore.shared.values
-        self.selectedActivities = selectedActivities
+        $selectedActivities
+            .map { selected in
+                self.flattedActivities.filter { selected.contains($0) }
+            }
+            .assign(to: &$filteredActivities)
+
+        if let onActivitiesChanged {
+            $selectedActivities
+                .receive(on: DispatchQueue.main)
+                .sink { onActivitiesChanged($0) }
+                .store(in: &cancellables)
+        }
     }
 }

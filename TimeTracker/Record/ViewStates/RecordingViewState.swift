@@ -21,6 +21,9 @@ class RecordingViewState: ObservableObject {
         self.selectedActivityId = ActivityStore.shared.dummy.id
         self.dummyCategoryId = CategoryStore.shared.dummy.id
         self.dummyActivityId = ActivityStore.shared.dummy.id
+        
+        CategoryStore.shared.$values.assign(to: &$categories)
+        ActivityStore.shared.$values.assign(to: &$activities)
     }
 
     func onChange(id: UUID) {

@@ -6,9 +6,26 @@ struct SearchRecordCategoryView: View {
 
     var body: some View {
         NavigationLink {
-            SearchRecordCategorySelectionView(
-                state: .init(state.categories, state.selectedCategories)
-            )
+            List(selection: $state.selectedCategories) {
+                Section("") {
+                    Button("全て選択") { state.onTapAllSelected() }
+                    Button("全て解除") { state.onTapAllRemoved() }
+                }
+                Section("選択可能なカテゴリ") {
+                    ForEach(state.categories) { category in
+                        HStack {
+                            Image(systemName: category.icon ?? "")
+                            Circle()
+                                .fill(Color(hex: category.color))
+                                .frame(width: 24, height: 24)
+                            Text(category.name)
+                        }
+                        .tag(category)
+                    }
+                }
+            }
+            .environment(\.editMode, .constant(.active))
+            .navigationBarTitle("カテゴリの絞込み", displayMode: .inline)
         } label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text("カテゴリ")
@@ -38,37 +55,8 @@ struct SearchRecordCategoryView: View {
     }
 }
 
-private struct SearchRecordCategorySelectionView: View {
-    @StateObject var state: SearchRecordCategorySelectionViewState
-
-    var body: some View {
-        NavigationView {
-            List(selection: $state.selectedCategories) {
-                Section("") {
-                    Button("全て選択") { state.onTapAllSelected() }
-                    Button("全て解除") { state.onTapAllRemoved() }
-                }
-                Section("選択可能なカテゴリ") {
-                    ForEach(state.categories) { category in
-                        HStack {
-                            Image(systemName: category.icon ?? "")
-                            Circle()
-                                .fill(Color(hex: category.color))
-                                .frame(width: 24, height: 24)
-                            Text(category.name)
-                        }
-                        .tag(category.id)
-                    }
-                }
-            }
-            .environment(\.editMode, .constant(.active))
-            .navigationBarTitle("カテゴリの絞込み", displayMode: .inline)
-        }
-    }
-}
-
 struct SearchRecordCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchRecordCategoryView(state: .init([]))
+        SearchRecordCategoryView(state: .init { _ in })
     }
 }

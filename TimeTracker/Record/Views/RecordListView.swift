@@ -66,6 +66,6 @@ private struct RecordListDateView: View {
 
 struct RecordListView_Previews: PreviewProvider {
     static var previews: some View {
-        RecordListView(state: .init([]))
+        RecordListView(state: .init())
     }
 }
