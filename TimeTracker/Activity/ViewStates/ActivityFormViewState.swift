@@ -10,8 +10,6 @@ class ActivityFormViewState: ObservableObject {
     @Published var selectedColor: Color
     @Published var selectedColorHex: String
 
-    @Environment(\.dismiss) private var dismiss
-
     let selectedId: UUID!
     let isAdd: Bool
 
@@ -56,13 +54,9 @@ class ActivityFormViewState: ObservableObject {
                     color: selectedColorHex
                 )
             }
-            dismiss()
+
         } catch {
             print(error)
         }
-    }
-
-    func onTapBackButton() {
-        dismiss()
     }
 }

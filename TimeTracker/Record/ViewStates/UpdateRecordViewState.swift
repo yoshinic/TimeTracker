@@ -13,8 +13,6 @@ class UpdateRecordViewState: ObservableObject {
     @Published var selectedEndDatetime: Date?
     @Published var selectedNote: String
 
-    @Environment(\.dismiss) private var dismiss
-
     let defaultCategoryId: UUID = CategoryStore.shared.dummy.id
     let defaultActivityId: UUID = ActivityStore.shared.dummy.id
 
@@ -55,14 +53,9 @@ class UpdateRecordViewState: ObservableObject {
                 endedAt: selectedEndDatetime,
                 note: selectedNote
             )
-            dismiss()
         } catch {
             print(error)
         }
-    }
-
-    func onTapBackButton() {
-        dismiss()
     }
 }
 

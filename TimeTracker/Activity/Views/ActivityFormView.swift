@@ -4,13 +4,13 @@ import TimeTrackerAPI
 struct ActivityFormView: View {
     @StateObject var state: ActivityFormViewState
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         Form {
             Section("アクティビティ作成項目") {
                 Picker("カテゴリー名", selection: $state.selectedCategoryId) {
-                    ForEach(state.categories) {
-                        Text($0.name).tag($0.id)
-                    }
+                    ForEach(state.categories) { Text($0.name).tag($0.id as UUID?) }
                 }
                 TextField("アクティビティ名", text: $state.selectedName)
                 ColorPicker("カラー選択", selection: $state.selectedColor)
@@ -20,12 +20,15 @@ struct ActivityFormView: View {
                 HStack(alignment: .center, spacing: 30) {
                     Spacer()
                     Button {
-                        Task { await state.onTapAddOrEditButton() }
+                        Task {
+                            await state.onTapAddOrEditButton()
+                            dismiss()
+                        }
                     } label: {
                         Text(state.isAdd ? "追加" : "更新")
                     }
                     Button {
-                        state.onTapBackButton()
+                        dismiss()
                     } label: {
                         Text("戻る")
                     }

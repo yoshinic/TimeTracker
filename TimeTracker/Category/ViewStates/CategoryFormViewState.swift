@@ -8,8 +8,6 @@ class CategoryFormViewState: ObservableObject {
     @Published var selectedColorHex: String
     @Published var selectedIcon: String
 
-    @Environment(\.dismiss) private var dismiss
-
     let selectedId: UUID!
     let isAdd: Bool
 
@@ -51,13 +49,9 @@ class CategoryFormViewState: ObservableObject {
                     icon: selectedIcon
                 )
             }
-            dismiss()
+
         } catch {
             print(error)
         }
-    }
-
-    func onTapBackButton() {
-        dismiss()
     }
 }

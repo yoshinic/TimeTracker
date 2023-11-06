@@ -4,6 +4,8 @@ import TimeTrackerAPI
 struct UpdateRecordView: View {
     @StateObject var state: UpdateRecordViewState
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         NavigationView {
             Form {
@@ -43,10 +45,13 @@ struct UpdateRecordView: View {
                     HStack(spacing: 50) {
                         Spacer()
                         Button {
-                            Task { await state.onTapUpdateButton() }
+                            Task {
+                                await state.onTapUpdateButton()
+                                dismiss()
+                            }
                         } label: { Text("更新") }
                         Button {
-                            state.onTapBackButton()
+                            dismiss()
                         } label: {
                             Text("戻る")
                         }
