@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct CategoryFormView: View {
     @StateObject var state: CategoryFormViewState

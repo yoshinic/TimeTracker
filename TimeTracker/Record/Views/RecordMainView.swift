@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct RecordMainView: View {
     @StateObject var state: RecordMainViewState
@@ -10,7 +9,7 @@ struct RecordMainView: View {
             if state.showListView {
                 RecordListView(state: .init())
             } else {
-                RecordGraphView(state: .init(state.records))
+                RecordGraphView(state: .init())
             }
         }
         .environment(

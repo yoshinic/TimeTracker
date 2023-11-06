@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct RecordingView: View {
     @StateObject var state: RecordingViewState

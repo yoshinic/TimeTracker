@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct RecordGraphView: View {
     @StateObject var state: RecordGraphViewState

@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct SearchRecordActivityView: View {
     @StateObject var state: SearchRecordActivityViewState

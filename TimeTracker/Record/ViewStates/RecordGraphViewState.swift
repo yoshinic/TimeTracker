@@ -3,9 +3,9 @@ import TimeTrackerAPI
 
 @MainActor
 class RecordGraphViewState: ObservableObject {
-    @Published var records: [RecordData]
+    @Published var records: [RecordData] = []
 
-    init(_ records: [RecordData]) {
-        self.records = records
+    init() {
+        RecordStore.shared.$values.assign(to: &$records)
     }
 }

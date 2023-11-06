@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct PrepareDatabaseView: View {
     @StateObject var state: PrepareDatabaseViewState

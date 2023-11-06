@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct MainView: View {
     var body: some View {

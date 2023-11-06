@@ -1,5 +1,4 @@
 import SwiftUI
-import TimeTrackerAPI
 
 struct ActivityListView: View {
     @StateObject var state: ActivityListViewState
