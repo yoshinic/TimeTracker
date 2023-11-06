@@ -9,7 +9,7 @@ struct CategoryListView: View {
             Section("") {
                 ForEach(state.categories) { category in
                     NavigationLink {
-                        CategoryFormView(selectedCategory: category)
+                        CategoryFormView(state: .init(category))
                     } label: {
                         HStack {
                             Image(systemName: category.icon ?? "")
@@ -31,7 +31,9 @@ struct CategoryListView: View {
             \.editMode,
             state.isEditMode ? .constant(.active) : .constant(.inactive)
         )
-        .sheet(isPresented: $state.isModalPresented) { CategoryFormView() }
+        .sheet(isPresented: $state.isModalPresented) {
+            CategoryFormView(state: .init())
+        }
         .navigationBarTitle("カテゴリ一覧", displayMode: .inline)
         .navigationBarItems(trailing:
             HStack {

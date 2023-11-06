@@ -2,13 +2,9 @@ import SwiftUI
 import TimeTrackerAPI
 
 struct CategoryFormView: View {
-    @Environment(\.dismiss) private var dismiss
-
     @StateObject var state: CategoryFormViewState
 
-    init(selectedCategory: CategoryData? = nil) {
-        self._state = .init(wrappedValue: .init(selectedCategory))
-    }
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         Form {
@@ -50,12 +46,14 @@ struct CategoryFormView: View {
 struct CategoryFormView_Previews: PreviewProvider {
     static var previews: some View {
         CategoryFormView(
-            selectedCategory: .init(
-                id: UUID(),
-                name: "サンプル",
-                color: "#FF0000",
-                icon: "",
-                order: 1
+            state: .init(
+                .init(
+                    id: UUID(),
+                    name: "サンプル",
+                    color: "#FF0000",
+                    icon: "",
+                    order: 1
+                )
             )
         )
     }

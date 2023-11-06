@@ -7,7 +7,6 @@ final class CategoryStore {
     static let shared: CategoryStore = .init()
 
     @Published private(set) var values: [CategoryData] = []
-    @Published private(set) var dic: [UUID: CategoryData] = [:]
 
     private var service: CategoryService = DatabaseServiceManager.shared.category
     var count: Int = 0
@@ -22,7 +21,6 @@ final class CategoryStore {
 
     func fetch() async throws {
         values = try await service.fetch()
-        dic = values.reduce(into: [:]) { $0[$1.id] = $1 }
         count = values.count
     }
 
@@ -41,7 +39,6 @@ final class CategoryStore {
             )
         else { return }
         values.append(new)
-        dic[new.id] = new
         count += 1
     }
 
@@ -60,7 +57,6 @@ final class CategoryStore {
 
         guard let i = values.firstIndex(where: { $0.id == id }) else { return }
         values[i] = updated
-        dic[id] = updated
     }
 
     func delete(id: UUID) async throws {
@@ -69,6 +65,7 @@ final class CategoryStore {
     }
 
     func delete(at offsets: IndexSet) async throws {
+        var values = values
         for i in offsets {
             let uuid = values[i].id
             try await service.delete(id: uuid)
@@ -79,6 +76,7 @@ final class CategoryStore {
     }
 
     func move(from source: IndexSet, to destination: Int) async throws {
+        var values = values
         values.move(fromOffsets: source, toOffset: destination)
         try await service.updateOrder(ids: values.map { $0.id })
         try await fetch()

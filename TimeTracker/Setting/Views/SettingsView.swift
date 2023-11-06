@@ -21,7 +21,7 @@ struct SettingsView: View {
                     Text("一覧")
                 }
                 NavigationLink {
-                    CategoryFormView()
+                    CategoryFormView(state: .init())
                 } label: {
                     Text("作成")
                 }
