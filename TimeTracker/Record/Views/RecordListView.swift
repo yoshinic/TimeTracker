@@ -17,8 +17,8 @@ struct RecordListView: View {
                     .lineLimit(1)
                     .truncationMode(.tail)
                     Spacer()
-                    RecordListDateView(state: .init(record.startedAt))
-                    RecordListDateView(state: .init(record.endedAt))
+                    RecordDateTimeView(date: record.startedAt, state: state)
+                    RecordDateTimeView(date: record.endedAt, state: state)
                 }
                 .onTapGesture { state.onTapRecordRow(record) }
             }
@@ -48,13 +48,14 @@ private struct RecordHeaderView: View {
     }
 }
 
-private struct RecordListDateView: View {
-    @StateObject var state: RecordListDateViewState
+private struct RecordDateTimeView: View {
+    let date: Date?
+    @ObservedObject var state: RecordListViewState
 
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
-            Text(verbatim: state.formatedDateString)
-            Text(verbatim: state.formatedTimeString)
+            Text(verbatim: state.formatedDateString(date))
+            Text(verbatim: state.formatedTimeString(date))
         }
         .frame(width: 80)
         .font(.system(size: 16))

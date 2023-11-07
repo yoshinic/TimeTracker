@@ -4,10 +4,41 @@ import TimeTrackerAPI
 
 @MainActor
 class RecordListViewState: ObservableObject {
-    @Published var records: [RecordData] = []
+    @Published private(set) var records: [RecordData] = []
     @Published var selectedRecord: RecordData!
 
+    private let yyyymmddFormatter: DateFormatter
+    private let HHmmssFormatter: DateFormatter
+
     init() {
+        let createTemplateFormatter = {
+            let formatter = DateFormatter()
+            formatter.calendar = Calendar(identifier: .gregorian)
+            formatter.locale = Locale(identifier: "ja_JP")
+            formatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+            return formatter
+        }
+
+        self.yyyymmddFormatter = {
+            let formatter = createTemplateFormatter()
+            formatter.dateFormat = DateFormatter.dateFormat(
+                fromTemplate: "MM/dd(E)",
+                options: 0,
+                locale: Locale(identifier: "ja_JP")
+            )
+            return formatter
+        }()
+
+        self.HHmmssFormatter = {
+            let formatter = createTemplateFormatter()
+            formatter.dateFormat = DateFormatter.dateFormat(
+                fromTemplate: "HHmmss",
+                options: 0,
+                locale: Locale(identifier: "ja_JP")
+            )
+            return formatter
+        }()
+
         RecordStore.shared.$values.assign(to: &$records)
     }
 
@@ -22,45 +53,12 @@ class RecordListViewState: ObservableObject {
             print(error)
         }
     }
-}
 
-@MainActor
-class RecordListDateViewState: ObservableObject {
-    let formatedDateString: String
-    let formatedTimeString: String
+    func formatedDateString(_ date: Date?) -> String {
+        date == nil ? "" : yyyymmddFormatter.string(from: date!)
+    }
 
-    init(_ date: Date? = nil) {
-        let createTemplateFormatter = {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "ja_JP")
-            formatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
-            return formatter
-        }
-
-        let yyyymmddFormatter: DateFormatter = {
-            let formatter = createTemplateFormatter()
-            formatter.dateFormat = DateFormatter.dateFormat(
-                fromTemplate: "MM/dd(E)",
-                options: 0,
-                locale: Locale(identifier: "ja_JP")
-            )
-            return formatter
-        }()
-
-        let HHmmssFormatter: DateFormatter = {
-            let formatter = createTemplateFormatter()
-            formatter.dateFormat = DateFormatter.dateFormat(
-                fromTemplate: "HHmmss",
-                options: 0,
-                locale: Locale(identifier: "ja_JP")
-            )
-            return formatter
-        }()
-
-        self.formatedDateString
-            = date == nil ? "" : yyyymmddFormatter.string(from: date!)
-        self.formatedTimeString
-            = date == nil ? "" : HHmmssFormatter.string(from: date!)
+    func formatedTimeString(_ date: Date?) -> String {
+        date == nil ? "" : HHmmssFormatter.string(from: date!)
     }
 }
