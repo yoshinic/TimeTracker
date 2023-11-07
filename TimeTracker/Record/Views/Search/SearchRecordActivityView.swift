@@ -21,7 +21,8 @@ struct SearchRecordActivityView: View {
                 }
             }
             .environment(\.editMode, .constant(.active))
-            .navigationBarTitle("アクティビティの絞込み", displayMode: .inline)
+            .navigationTitle("アクティビティの絞込み")
+            .navigationBarTitleDisplayMode(.inline)
         } label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text("アクティビティ")

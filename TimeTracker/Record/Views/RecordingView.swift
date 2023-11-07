@@ -4,46 +4,48 @@ struct RecordingView: View {
     @StateObject var state: RecordingViewState
 
     var body: some View {
-        Form {
-            Section("") { ClockView() }
-            Section("カテゴリの絞込み") {
-                Picker("カテゴリ", selection: $state.selectedCategoryId) {
-                    ForEach(state.categories) {
-                        Text($0.name).tag($0.id)
+        NavigationView {
+            Form {
+                Section("") { ClockView() }
+                Section("カテゴリの絞込み") {
+                    Picker("カテゴリ", selection: $state.selectedCategoryId) {
+                        ForEach(state.categories) {
+                            Text($0.name).tag($0.id)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .font(.system(size: 16))
+                    .onChange(of: state.selectedCategoryId) { id in
+                        state.onChange(id: id)
                     }
                 }
-                .pickerStyle(.menu)
-                .font(.system(size: 16))
-                .onChange(of: state.selectedCategoryId) { id in
-                    state.onChange(id: id)
-                }
-            }
 
-            Section("アクティビティの選択") {
-                Picker("アクティビティ", selection: $state.selectedActivityId) {
-                    ForEach(state.activities[state.selectedCategoryId] ?? []) {
-                        Text($0.name).tag($0.id)
+                Section("アクティビティの選択") {
+                    Picker("アクティビティ", selection: $state.selectedActivityId) {
+                        ForEach(state.activities[state.selectedCategoryId] ?? []) {
+                            Text($0.name).tag($0.id)
+                        }
                     }
+                    .pickerStyle(.menu)
+                    .font(.system(size: 16))
                 }
-                .pickerStyle(.menu)
-                .font(.system(size: 16))
-            }
 
-            Section("") {
-                HStack {
-                    Spacer()
-                    Button {
-                        Task { await state.onTapStart() }
-                    } label: {
-                        Text("開始")
+                Section("") {
+                    HStack {
+                        Spacer()
+                        Button {
+                            Task { await state.onTapStart() }
+                        } label: {
+                            Text("開始")
+                        }
+                        .foregroundColor(
+                            state.selectedActivityId == state.dummyActivityId
+                                ? .gray : .red
+                        )
+                        .bold()
+                        .disabled(state.selectedActivityId == state.dummyActivityId)
+                        Spacer()
                     }
-                    .foregroundColor(
-                        state.selectedActivityId == state.dummyActivityId
-                            ? .gray : .red
-                    )
-                    .bold()
-                    .disabled(state.selectedActivityId == state.dummyActivityId)
-                    Spacer()
                 }
             }
         }

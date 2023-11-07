@@ -24,7 +24,8 @@ struct SearchRecordCategoryView: View {
                 }
             }
             .environment(\.editMode, .constant(.active))
-            .navigationBarTitle("カテゴリの絞込み", displayMode: .inline)
+            .navigationTitle("カテゴリの絞込み")
+            .navigationBarTitleDisplayMode(.inline)
         } label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text("カテゴリ")

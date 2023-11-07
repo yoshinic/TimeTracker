@@ -33,8 +33,9 @@ struct CategoryListView: View {
         .sheet(isPresented: $state.isModalPresented) {
             CategoryFormView(state: .init())
         }
-        .navigationBarTitle("カテゴリ一覧", displayMode: .inline)
-        .navigationBarItems(trailing:
+        .navigationTitle("カテゴリ一覧")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
             HStack {
                 Button {
                     state.onTapEditButton()
@@ -49,7 +50,7 @@ struct CategoryListView: View {
                         .foregroundColor(.blue)
                 }
             }
-        )
+        }
     }
 }
 

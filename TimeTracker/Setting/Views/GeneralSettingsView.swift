@@ -12,7 +12,8 @@ struct GeneralSettingsView: View {
                 }
             }
         }
-        .navigationBarTitle("一般", displayMode: .inline)
+        .navigationTitle("一般")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

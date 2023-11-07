@@ -27,7 +27,6 @@ struct RecordListView: View {
         .sheet(item: $state.selectedRecord) {
             UpdateRecordView(state: .init($0))
         }
-        .navigationBarTitle("記録一覧", displayMode: .inline)
     }
 }
 

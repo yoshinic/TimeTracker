@@ -37,9 +37,7 @@ struct ActivityFormView: View {
         .onChange(of: state.selectedColor) {
             state.onChangeSelectedColor(new: $0)
         }
-        .navigationBarTitle(
-            "アクティビティ\(state.isAdd ? "作成" : "更新")",
-            displayMode: .inline
-        )
+        .navigationTitle("アクティビティ\(state.isAdd ? "作成" : "更新")")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -39,8 +39,9 @@ struct ActivityListView: View {
         .sheet(isPresented: $state.isModalPresented) {
             ActivityFormView(state: .init())
         }
-        .navigationBarTitle("アクティビティ一覧", displayMode: .inline)
-        .navigationBarItems(trailing:
+        .navigationTitle("アクティビティ一覧")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
             HStack {
                 Button {
                     state.onTapEditButton()
@@ -55,7 +56,7 @@ struct ActivityListView: View {
                         .foregroundColor(.blue)
                 }
             }
-        )
+        }
     }
 }
 
