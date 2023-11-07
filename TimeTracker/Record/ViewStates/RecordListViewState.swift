@@ -32,7 +32,7 @@ class RecordListViewState: ObservableObject {
         self.HHmmssFormatter = {
             let formatter = createTemplateFormatter()
             formatter.dateFormat = DateFormatter.dateFormat(
-                fromTemplate: "HHmmss",
+                fromTemplate: "HHmm",
                 options: 0,
                 locale: Locale(identifier: "ja_JP")
             )
