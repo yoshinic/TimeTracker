@@ -10,7 +10,18 @@ struct CategoryFormView: View {
             Section("カテゴリ作成項目") {
                 TextField("カテゴリ名", text: $state.selectedName)
                 ColorPicker("カラー選択", selection: $state.selectedColor)
-                TextField("アイコン", text: $state.selectedIcon)
+                    .onChange(of: state.selectedColor) { _ in
+                        state.onChangeSelectedColor()
+                    }
+                HStack {
+                    TextField("アイコン", text: $state.selectedIcon)
+                    Spacer()
+                    if state.selectedIcon.isEmpty {
+                        BindingCircle(state: state.circleState)
+                    } else {
+                        BindingSystemImage(state: state.imageState)
+                    }
+                }
             }
 
             Section("") {
@@ -31,9 +42,6 @@ struct CategoryFormView: View {
                     }
                 }
             }
-        }
-        .onChange(of: state.selectedColor) {
-            state.onChangeSelectedColor(new: $0)
         }
         .navigationTitle("カテゴリ\(state.isAdd ? "作成" : "更新")")
         .navigationBarTitleDisplayMode(.inline)

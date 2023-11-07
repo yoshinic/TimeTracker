@@ -14,7 +14,7 @@ final class CategoryStore {
         id: .init(),
         name: "未設定",
         color: "#FFFFFF",
-        icon: nil,
+        icon: "",
         order: -1
     )
 
@@ -26,7 +26,7 @@ final class CategoryStore {
         id: UUID? = nil,
         name: String,
         color: String,
-        icon: String?
+        icon: String
     ) async throws {
         guard
             let new = try await service.create(
@@ -43,7 +43,7 @@ final class CategoryStore {
         _ original: CategoryData,
         name: String,
         color: String,
-        icon: String?
+        icon: String
     ) async throws {
         let updated = try await service.update(
             id: original.id,

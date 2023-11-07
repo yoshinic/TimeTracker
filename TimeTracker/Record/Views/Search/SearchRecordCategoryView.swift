@@ -13,10 +13,11 @@ struct SearchRecordCategoryView: View {
                 Section("選択可能なカテゴリ") {
                     ForEach(state.categories) { category in
                         HStack {
-                            Image(systemName: category.icon ?? "")
-                            Circle()
-                                .fill(Color(hex: category.color))
-                                .frame(width: 24, height: 24)
+                            if category.icon.isEmpty {
+                                CustomCircle(color: category.color)
+                            } else {
+                                CustomSystemImage(category.icon, color: category.color)
+                            }
                             Text(category.name)
                         }
                         .tag(category)

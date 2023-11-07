@@ -3,6 +3,9 @@ import TimeTrackerAPI
 
 @MainActor
 class CategoryFormViewState: ObservableObject {
+    @Published var circleState: CustomCircleState = .init()
+    @Published var imageState: CustomSystemImageState = .init("")
+
     @Published var selectedName: String
     @Published var selectedColor: Color
     @Published var selectedColorHex: String
@@ -17,7 +20,7 @@ class CategoryFormViewState: ObservableObject {
             self.selectedName = selectedCategory.name
             self.selectedColor = .init(hex: selectedCategory.color)
             self.selectedColorHex = selectedCategory.color
-            self.selectedIcon = selectedCategory.icon ?? ""
+            self.selectedIcon = selectedCategory.icon
         } else {
             self.selectedCategory = nil
             self.selectedName = ""
@@ -27,10 +30,10 @@ class CategoryFormViewState: ObservableObject {
         }
 
         self.isAdd = selectedCategory == nil
-    }
 
-    func onChangeSelectedColor(new: Color) {
-        selectedColorHex = new.toHex()
+        $selectedIcon.assign(to: &imageState.$systemName)
+
+        self.circleState.color = selectedColorHex
     }
 
     func onTapAddOrEditButton() async {
@@ -49,9 +52,15 @@ class CategoryFormViewState: ObservableObject {
                     icon: selectedIcon
                 )
             }
-
         } catch {
             print(error)
         }
+    }
+
+    func onChangeSelectedColor() {
+        let hex = selectedColor.toHex()
+        selectedColorHex = hex
+        imageState.color = hex
+        circleState.color = hex
     }
 }

@@ -9,10 +9,22 @@ struct ActivityFormView: View {
         Form {
             Section("アクティビティ作成項目") {
                 Picker("カテゴリー名", selection: $state.selectedCategoryId) {
-                    ForEach(state.categories) { Text($0.name).tag($0.id as UUID?) }
+                    ForEach(state.categories) { Text($0.name).tag($0) }
                 }
                 TextField("アクティビティ名", text: $state.selectedName)
                 ColorPicker("カラー選択", selection: $state.selectedColor)
+                    .onChange(of: state.selectedColor) { _ in
+                        state.onChangeSelectedColor()
+                    }
+                HStack {
+                    TextField("アイコン", text: $state.selectedIcon)
+                    Spacer()
+                    if state.selectedIcon.isEmpty {
+                        BindingCircle(state: state.circleState)
+                    } else {
+                        BindingSystemImage(state: state.imageState)
+                    }
+                }
             }
 
             Section("") {
@@ -33,9 +45,6 @@ struct ActivityFormView: View {
                     }
                 }
             }
-        }
-        .onChange(of: state.selectedColor) {
-            state.onChangeSelectedColor(new: $0)
         }
         .navigationTitle("アクティビティ\(state.isAdd ? "作成" : "更新")")
         .navigationBarTitleDisplayMode(.inline)

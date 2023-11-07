@@ -13,9 +13,11 @@ struct ActivityListView: View {
                                 ActivityFormView(state: .init(activity))
                             } label: {
                                 HStack {
-                                    Circle()
-                                        .fill(Color(hex: activity.color))
-                                        .frame(width: 24, height: 24)
+                                    if activity.icon.isEmpty {
+                                        CustomCircle(color: activity.color)
+                                    } else {
+                                        CustomSystemImage(activity.icon, color: activity.color)
+                                    }
                                     Text(activity.name)
                                 }
                             }

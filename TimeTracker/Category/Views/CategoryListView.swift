@@ -11,14 +11,12 @@ struct CategoryListView: View {
                         CategoryFormView(state: .init(category))
                     } label: {
                         HStack {
-                            Image(systemName: category.icon ?? "")
-                                .renderingMode(.original)
-                                .foregroundColor(.blue)
+                            if category.icon.isEmpty {
+                                CustomCircle(color: category.color)
+                            } else {
+                                CustomSystemImage(category.icon, color: category.color)
+                            }
                             Text(category.name)
-                            Spacer()
-                            Circle()
-                                .fill(Color(hex: category.color))
-                                .frame(width: 24, height: 24)
                         }
                     }
                 }

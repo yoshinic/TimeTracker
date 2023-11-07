@@ -10,9 +10,11 @@ struct SearchRecordActivityView: View {
                     Section(category.name) {
                         ForEach(state.activities[category.id] ?? []) { activity in
                             HStack {
-                                Circle()
-                                    .fill(Color(hex: activity.color))
-                                    .frame(width: 24, height: 24)
+                                if activity.icon.isEmpty {
+                                    CustomCircle(color: activity.color)
+                                } else {
+                                    CustomSystemImage(activity.icon, color: activity.color)
+                                }
                                 Text(activity.name)
                             }
                             .tag(activity)

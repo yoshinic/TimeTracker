@@ -15,6 +15,7 @@ final class ActivityStore {
         category: CategoryStore.shared.dummy,
         name: "未設定",
         color: "#FFFFFF",
+        icon: "",
         order: -1
     )
 
@@ -49,13 +50,15 @@ final class ActivityStore {
         id: UUID? = nil,
         categoryId: UUID?,
         name: String,
-        color: String
+        color: String,
+        icon: String
     ) async throws {
         try await service.create(
             id: id,
             categoryId: categoryId,
             name: name,
-            color: color
+            color: color,
+            icon: icon
         )
         try await fetch()
     }
@@ -64,7 +67,8 @@ final class ActivityStore {
         original: ActivityData,
         categoryId: UUID?,
         name: String,
-        color: String
+        color: String,
+        icon: String
     ) async throws {
         let updatingCategoryId: UUID? = {
             guard let cid = categoryId else { return nil }
@@ -77,6 +81,7 @@ final class ActivityStore {
             categoryId: updatingCategoryId,
             name: name,
             color: color,
+            icon: icon,
             order: original.order
         )
 
