@@ -21,13 +21,19 @@ struct RecordingView: View {
                 }
 
                 Section("アクティビティの選択") {
-                    Picker("アクティビティ", selection: $state.selectedActivityId) {
-                        ForEach(state.activities[state.selectedCategoryId] ?? []) {
-                            Text($0.name).tag($0.id)
+                    if state.filteredActivities.isEmpty {
+                        SearchRecordTitleView("アクティビティ")
+                    } else {
+                        Picker(selection: $state.selectedActivityId) {
+                            ForEach(state.filteredActivities) {
+                                Text($0.name).tag($0.id)
+                            }
+                        } label: {
+                            SearchRecordTitleView("アクティビティ")
                         }
+                        .pickerStyle(.menu)
+                        .font(.system(size: 16))
                     }
-                    .pickerStyle(.menu)
-                    .font(.system(size: 16))
                 }
 
                 Section("") {
