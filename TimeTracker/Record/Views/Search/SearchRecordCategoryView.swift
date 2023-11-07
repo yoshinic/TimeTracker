@@ -44,6 +44,8 @@ struct SearchRecordCategoryView: View {
                                 color: $0.color,
                                 fontSize: 10,
                                 opacity: 0.2,
+                                paddingH: 10,
+                                paddingV: 3,
                                 active: false
                             )
                         }

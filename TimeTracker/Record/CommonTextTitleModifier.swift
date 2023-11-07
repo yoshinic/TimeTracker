@@ -4,17 +4,26 @@ struct CommonTextTitleModifier: ViewModifier {
     let color: Color
     let fontSize: CGFloat?
     let opacity: Double
+    let paddingH: CGFloat
+    let paddingV: CGFloat
+    let lineLimit: Int?
     let active: Bool
 
     init(
         color: Color = .gray,
         fontSize: CGFloat? = nil,
         opacity: Double = 0.4,
+        paddingH: CGFloat = 14,
+        paddingV: CGFloat = 5,
+        lineLimit: Int? = 1,
         active: Bool = true
     ) {
         self.color = color
         self.fontSize = fontSize
         self.opacity = opacity
+        self.paddingH = paddingH
+        self.paddingV = paddingV
+        self.lineLimit = lineLimit
         self.active = active
     }
 
@@ -37,9 +46,9 @@ struct CommonTextTitleModifier: ViewModifier {
 
     private func view(_ content: Content) -> some View {
         content
-            .padding([.horizontal], 14)
-            .padding([.vertical], 5)
-            .lineLimit(1)
+            .padding([.horizontal], paddingH)
+            .padding([.vertical], paddingV)
+            .lineLimit(lineLimit)
             .minimumScaleFactor(0.6)
             .truncationMode(.tail)
     }
@@ -60,12 +69,18 @@ extension View {
         color: Color = .gray,
         fontSize: CGFloat? = nil,
         opacity: Double = 0.4,
+        paddingH: CGFloat = 14,
+        paddingV: CGFloat = 5,
+        lineLimit: Int? = 1,
         active: Bool = true
     ) -> some View {
         modifier(CommonTextTitleModifier(
             color: color,
             fontSize: fontSize,
             opacity: opacity,
+            paddingH: paddingH,
+            paddingV: paddingV,
+            lineLimit: lineLimit,
             active: active
         ))
     }
@@ -76,6 +91,9 @@ struct TextTitle: View {
     let color: Color
     let fontSize: CGFloat?
     let opacity: Double
+    let paddingH: CGFloat
+    let paddingV: CGFloat
+    let lineLimit: Int?
     let active: Bool
 
     init(
@@ -83,12 +101,18 @@ struct TextTitle: View {
         color: Color = .gray,
         fontSize: CGFloat? = nil,
         opacity: Double = 0.4,
+        paddingH: CGFloat = 14,
+        paddingV: CGFloat = 5,
+        lineLimit: Int? = 1,
         active: Bool = true
     ) {
         self.title = title
         self.color = color
         self.fontSize = fontSize
         self.opacity = opacity
+        self.paddingH = paddingH
+        self.paddingV = paddingV
+        self.lineLimit = lineLimit
         self.active = active
     }
 
@@ -97,6 +121,9 @@ struct TextTitle: View {
         color: String = "",
         fontSize: CGFloat? = nil,
         opacity: Double = 0.4,
+        paddingH: CGFloat = 14,
+        paddingV: CGFloat = 5,
+        lineLimit: Int? = 1,
         active: Bool = true
     ) {
         self.init(
@@ -104,6 +131,9 @@ struct TextTitle: View {
             color: Color(hex: color),
             fontSize: fontSize,
             opacity: opacity,
+            paddingH: paddingH,
+            paddingV: paddingV,
+            lineLimit: lineLimit,
             active: active
         )
     }
@@ -114,6 +144,9 @@ struct TextTitle: View {
                 color: color,
                 fontSize: fontSize,
                 opacity: opacity,
+                paddingH: paddingH,
+                paddingV: paddingV,
+                lineLimit: lineLimit,
                 active: active
             )
     }
@@ -126,6 +159,9 @@ struct TogglableTextTitle: View {
     let color: Color
     let fontSize: CGFloat?
     let opacity: Double
+    let paddingH: CGFloat
+    let paddingV: CGFloat
+    let lineLimit: Int?
     let active: Bool
     let toggleIf: ((Bool) -> Bool)?
     let complition: ((Bool, Bool) -> Void)?
@@ -135,6 +171,9 @@ struct TogglableTextTitle: View {
         color: Color = .gray,
         fontSize: CGFloat? = nil,
         opacity: Double = 0.4,
+        paddingH: CGFloat = 14,
+        paddingV: CGFloat = 5,
+        lineLimit: Int? = 1,
         active: Bool = true,
         toggleIf: ((Bool) -> Bool)? = nil,
         complition: ((Bool, Bool) -> Void)? = nil
@@ -143,6 +182,9 @@ struct TogglableTextTitle: View {
         self.color = color
         self.fontSize = fontSize
         self.opacity = opacity
+        self.paddingH = paddingH
+        self.paddingV = paddingV
+        self.lineLimit = lineLimit
         self.active = active
         self.toggleIf = toggleIf
         self.complition = complition
@@ -155,6 +197,9 @@ struct TogglableTextTitle: View {
         color: String = "",
         fontSize: CGFloat? = nil,
         opacity: Double = 0.4,
+        paddingH: CGFloat = 14,
+        paddingV: CGFloat = 5,
+        lineLimit: Int? = 1,
         active: Bool = true,
         toggleIf: ((Bool) -> Bool)? = nil,
         complition: ((Bool, Bool) -> Void)? = nil
@@ -164,6 +209,9 @@ struct TogglableTextTitle: View {
             color: Color(hex: color),
             fontSize: fontSize,
             opacity: opacity,
+            paddingH: paddingH,
+            paddingV: paddingV,
+            lineLimit: lineLimit,
             active: active,
             toggleIf: toggleIf,
             complition: complition
@@ -176,6 +224,9 @@ struct TogglableTextTitle: View {
                 color: color,
                 fontSize: fontSize,
                 opacity: opacity,
+                paddingH: paddingH,
+                paddingV: paddingV,
+                lineLimit: lineLimit,
                 active: isSelected
             )
             .onTapGesture {
