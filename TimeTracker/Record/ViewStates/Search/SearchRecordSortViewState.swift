@@ -7,6 +7,7 @@ class SearchRecordSortViewState: ObservableObject {
     @Published private(set) var selectedSortType: RecordDataSortType
 
     let onSortTypeChanged: (@MainActor (RecordDataSortType) -> Void)?
+    let titles: [String] = ["種別", "時間"]
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -24,21 +25,13 @@ class SearchRecordSortViewState: ObservableObject {
                 .store(in: &cancellables)
         }
     }
-}
 
-@MainActor
-class RadioTextTitleViewState: ObservableObject {
-    @Published private(set) var selectedSortType: RecordDataSortType
-
-    init(_ selectedSortType: RecordDataSortType) {
-        self.selectedSortType = selectedSortType
-    }
-
-    func onTapKindSortButton() {
-        selectedSortType = .kind
-    }
-
-    func onTapTimeSortButton() {
-        selectedSortType = .time
+    func onTapRadioButton(old: Int, new: Int) {
+        guard old != new else { return }
+        switch new {
+        case 0: selectedSortType = .kind
+        case 1: selectedSortType = .time
+        default: return
+        }
     }
 }

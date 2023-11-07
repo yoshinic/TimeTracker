@@ -22,6 +22,8 @@
 		928D8E962AEE27A800F0C52B /* CommonTextTitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */; };
 		92999D682AF0C4FF003B44A2 /* UpdateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */; };
 		92999D6A2AF0CC27003B44A2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92999D692AF0CC27003B44A2 /* Utilities.swift */; };
+		929E5EEE2AF9DB2A009DCFE1 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E5EED2AF9DB2A009DCFE1 /* RadioButton.swift */; };
+		929E5EF02AF9DB67009DCFE1 /* RadioButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E5EEF2AF9DB67009DCFE1 /* RadioButtonState.swift */; };
 		92A112A12ADB5FB800BFAD19 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A112A02ADB5FB800BFAD19 /* RecordingView.swift */; };
 		92BFDA5E2A97B5E600AE95D8 /* TimeTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */; };
 		92BFDA602A97B5E600AE95D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BFDA5F2A97B5E600AE95D8 /* ContentView.swift */; };
@@ -97,6 +99,8 @@
 		928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextTitleModifier.swift; sourceTree = "<group>"; };
 		92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRecordView.swift; sourceTree = "<group>"; };
 		92999D692AF0CC27003B44A2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		929E5EED2AF9DB2A009DCFE1 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		929E5EEF2AF9DB67009DCFE1 /* RadioButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonState.swift; sourceTree = "<group>"; };
 		92A112A02ADB5FB800BFAD19 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		92BFDA5A2A97B5E600AE95D8 /* TimeTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BFDA5D2A97B5E600AE95D8 /* TimeTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTrackerApp.swift; sourceTree = "<group>"; };
@@ -177,6 +181,39 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		929E5EE32AF9D8FD009DCFE1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				929E5EEA2AF9DB05009DCFE1 /* Radio */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		929E5EEA2AF9DB05009DCFE1 /* Radio */ = {
+			isa = PBXGroup;
+			children = (
+				929E5EEB2AF9DB0F009DCFE1 /* Views */,
+				929E5EEC2AF9DB17009DCFE1 /* ViewStates */,
+			);
+			path = Radio;
+			sourceTree = "<group>";
+		};
+		929E5EEB2AF9DB0F009DCFE1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				929E5EED2AF9DB2A009DCFE1 /* RadioButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		929E5EEC2AF9DB17009DCFE1 /* ViewStates */ = {
+			isa = PBXGroup;
+			children = (
+				929E5EEF2AF9DB67009DCFE1 /* RadioButtonState.swift */,
+			);
+			path = ViewStates;
+			sourceTree = "<group>";
+		};
 		92BFDA512A97B5E600AE95D8 = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +242,7 @@
 				92D2B3E72A9A78F600B8B76E /* Activity */,
 				92D2B3E52A9A78F600B8B76E /* Record */,
 				92C1D82C2A9B2047000061B6 /* Setting */,
+				929E5EE32AF9D8FD009DCFE1 /* Components */,
 				92C28B1F2ADF2366009E23E1 /* Database */,
 				92C1D8282A9B1FF9000061B6 /* Utilities */,
 				92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */,
@@ -584,6 +622,7 @@
 				925F93912AECBF1A0033EBB2 /* SearchRecordView.swift in Sources */,
 				92F71D362AF75E46002E1846 /* RecordListViewState.swift in Sources */,
 				92C1D82E2A9B2070000061B6 /* SettingsView.swift in Sources */,
+				929E5EF02AF9DB67009DCFE1 /* RadioButtonState.swift in Sources */,
 				92F71D172AF63C4E002E1846 /* ActivityStore.swift in Sources */,
 				92F71D302AF740F3002E1846 /* SearchRecordActivityViewState.swift in Sources */,
 				92F71D2E2AF73D30002E1846 /* SearchRecordCategoryViewState.swift in Sources */,
@@ -610,6 +649,7 @@
 				92F71D202AF73361002E1846 /* AppError.swift in Sources */,
 				926FAB532AF39EAB005AED1D /* SearchRecordActivityView.swift in Sources */,
 				927006602AD4C8C40089884B /* CategoryFormView.swift in Sources */,
+				929E5EEE2AF9DB2A009DCFE1 /* RadioButton.swift in Sources */,
 				928D8E902AEE1CB200F0C52B /* SearchRecordSortView.swift in Sources */,
 				9232FFB92AD646E40097C954 /* GeneralSettingsView.swift in Sources */,
 				92F71D1B2AF63DE1002E1846 /* ActivityFormViewState.swift in Sources */,
