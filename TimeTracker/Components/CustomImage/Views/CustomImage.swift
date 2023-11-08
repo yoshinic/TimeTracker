@@ -9,7 +9,7 @@ struct CustomSystemImage: View {
     init(
         _ systemName: String,
         width: CGFloat? = 23,
-        height: CGFloat? = nil,
+        height: CGFloat? = 23,
         color: String = "0000DD"
     ) {
         self.systemName = systemName

@@ -5,7 +5,7 @@ struct MainView: View {
         TabView {
             RecordingView(state: .init())
                 .tabItem {
-                    Label("開始", systemImage: "figure.run")
+                    Label("開始", systemImage: "video")
                 }
             RecordMainView(state: .init())
                 .tabItem {
