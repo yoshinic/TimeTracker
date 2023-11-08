@@ -9,6 +9,7 @@ struct SearchRecordSortView: View {
             RadioButton(state: .init(
                 selectedIdx: state.selectedSortType == .kind ? 0 : 1,
                 titles: state.titles,
+                color: "#008800",
                 onTapItem: state.onTapRadioButton
             ))
         }

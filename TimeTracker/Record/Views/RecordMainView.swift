@@ -14,6 +14,7 @@ struct RecordMainView: View {
                         RadioButton(state: .init(
                             selectedIdx: state.showListView ? 0 : 1,
                             titles: state.titles,
+                            color: "#008800",
                             onTapItem: state.onTapRadioButton
                         ))
                     }
