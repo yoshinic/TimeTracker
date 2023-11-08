@@ -6,19 +6,31 @@ struct RecordListView: View {
     var body: some View {
         Section(header: RecordHeaderView()) {
             ForEach(state.records) { record in
-                HStack {
-                    VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    VStack(alignment: .leading, spacing: 8) {
                         Text(record.activity?.category?.name ?? "未登録")
                         Text(record.activity?.name ?? "未登録")
                     }
-                    .font(.system(size: 18))
+
+                    .frame(width: 120, alignment: .leading)
+                    .font(.system(size: 16))
                     .minimumScaleFactor(0.6)
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    Spacer()
-                    RecordDateTimeView(date: record.startedAt, state: state)
-                    RecordDateTimeView(date: record.endedAt, state: state)
+
+                    VStack(alignment: .center, spacing: 8) {
+                        RecordDateTimeView(state: state, date: record.startedAt)
+                        RecordDateTimeView(state: state, date: record.endedAt)
+                    }
+                    .frame(alignment: .center)
+
+                    RecordProgressView(
+                        state: state,
+                        startDate: record.startedAt,
+                        endDate: record.endedAt
+                    )
+                    .frame(width: 60, alignment: .center)
                 }
                 .onTapGesture { state.onTapRecordRow(record) }
             }
@@ -38,9 +50,13 @@ private struct RecordHeaderView: View {
                 Text("アクティビティ")
             }
             Spacer()
-            Text("開始")
+            VStack(spacing: 5) {
+                Text("開始時間")
+                Text("終了時間")
+            }
             Spacer()
-            Text("終了")
+
+            Text("経過時間")
         }
         .frame(alignment: .center)
         .font(.system(size: 14))
@@ -49,17 +65,34 @@ private struct RecordHeaderView: View {
 }
 
 private struct RecordDateTimeView: View {
-    let date: Date?
     @ObservedObject var state: RecordListViewState
 
+    let date: Date?
+
     var body: some View {
-        VStack(alignment: .center, spacing: 12) {
-            Text(verbatim: state.formatedDateString(date))
-            Text(verbatim: state.formatedTimeString(date))
-        }
-        .frame(width: 80)
-        .font(.system(size: 16))
-        .bold()
+        Text(verbatim: date == nil ? "(未設定)" : state.formatedDateString(date))
+            .font(.system(size: 16))
+            .bold()
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            .truncationMode(.tail)
+    }
+}
+
+private struct RecordProgressView: View {
+    @ObservedObject var state: RecordListViewState
+
+    let startDate: Date
+    let endDate: Date?
+
+    var body: some View {
+        Text(verbatim: state.calcProgressString(startDate, endDate))
+            .frame(width: 60)
+            .font(.system(size: 16))
+            .bold()
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            .truncationMode(.tail)
     }
 }
 
