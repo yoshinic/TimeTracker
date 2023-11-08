@@ -6,7 +6,7 @@ struct UpdateRecordView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("設定項目") {
                     HStack {

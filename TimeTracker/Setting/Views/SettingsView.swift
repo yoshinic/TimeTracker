@@ -4,7 +4,7 @@ struct SettingsView: View {
     @StateObject var state: SettingsViewState
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("")) {
                     NavigationLink {

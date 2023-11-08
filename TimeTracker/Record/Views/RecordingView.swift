@@ -4,7 +4,7 @@ struct RecordingView: View {
     @StateObject var state: RecordingViewState
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("") { ClockView() }
                 Section("カテゴリの絞込み") {

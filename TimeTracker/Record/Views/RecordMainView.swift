@@ -4,12 +4,13 @@ struct RecordMainView: View {
     @StateObject var state: RecordMainViewState
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 SearchRecordView(state: .init())
                 Section("") {
                     HStack {
-                        TextTitle("表示切替", width: 80)
+                        TextTitle("表示", width: 60)
+                        Spacer()
                         RadioButton(state: .init(
                             selectedIdx: state.showListView ? 0 : 1,
                             titles: state.titles,

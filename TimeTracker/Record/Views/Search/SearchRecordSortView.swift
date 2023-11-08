@@ -5,11 +5,12 @@ struct SearchRecordSortView: View {
 
     var body: some View {
         HStack {
-            TextTitle("ソート", width: 80)
+            TextTitle(state.viewTitle, width: state.viewTitleWidth)
+            Spacer()
             RadioButton(state: .init(
-                selectedIdx: state.selectedSortType == .kind ? 0 : 1,
-                titles: state.titles,
-                color: "#008800",
+                selectedIdx: state.selectedIdx,
+                titles: state.sortNames,
+                color: state.radioColor,
                 onTapItem: state.onTapRadioButton
             ))
         }

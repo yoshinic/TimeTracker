@@ -63,11 +63,11 @@ class SearchRecordDateViewState: ObservableObject {
                 .store(in: &cancellables)
         }
     }
-    
+
     func formatedDateString(_ date: Date?) -> String {
         date == nil ? "" : dateFormatter.string(from: date!)
     }
-    
+
     func formatedTimeString(_ date: Date?) -> String {
         date == nil ? "" : timeFormatter.string(from: date!)
     }

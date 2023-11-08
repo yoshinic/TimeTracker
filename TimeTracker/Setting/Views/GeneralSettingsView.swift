@@ -4,7 +4,7 @@ struct GeneralSettingsView: View {
     @StateObject var state: GeneralSettingsViewState
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Picker("Theme", selection: $state.selectedTheme) {
                     Text("Light").tag("Light")

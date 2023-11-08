@@ -5,7 +5,8 @@ struct SearchRecordDateView: View {
 
     var body: some View {
         HStack {
-            TextTitle(state.title, width: 80)
+            TextTitle(state.title, width: 60)
+            Spacer()
             Text(verbatim: state.formatedDateString(state.selectedDatetime))
                 .titleProps(opacity: 0.1)
                 .onTapGesture { withAnimation { state.onTapDatePicker() }}
