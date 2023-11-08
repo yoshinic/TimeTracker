@@ -22,14 +22,14 @@ struct RecordingView: View {
 
                 Section("アクティビティの選択") {
                     if state.filteredActivities.isEmpty {
-                        SearchRecordTitleView("アクティビティ")
+                        TextTitle("アクティビティ")
                     } else {
                         Picker(selection: $state.selectedActivityId) {
                             ForEach(state.filteredActivities) {
                                 Text($0.name).tag($0.id)
                             }
                         } label: {
-                            SearchRecordTitleView("アクティビティ")
+                            TextTitle("アクティビティ")
                         }
                         .pickerStyle(.menu)
                         .font(.system(size: 16))

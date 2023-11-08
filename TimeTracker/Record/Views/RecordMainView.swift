@@ -9,8 +9,7 @@ struct RecordMainView: View {
                 SearchRecordView(state: .init())
                 Section("") {
                     HStack {
-                        SearchRecordTitleView("表示切替")
-                        Spacer()
+                        TextTitle("表示切替", width: 80)
                         RadioButton(state: .init(
                             selectedIdx: state.showListView ? 0 : 1,
                             titles: state.titles,

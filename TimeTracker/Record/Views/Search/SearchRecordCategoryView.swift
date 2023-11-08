@@ -31,7 +31,7 @@ struct SearchRecordCategoryView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("カテゴリ")
                 if state.categories.count == state.selectedCategories.count {
-                    TextTitle(
+                    TextBorderedTitle(
                         "全て",
                         color: .gray,
                         fontSize: 10,
@@ -41,7 +41,7 @@ struct SearchRecordCategoryView: View {
                 } else {
                     HStack(spacing: 10) {
                         ForEach(state.filteredCategories) {
-                            TextTitle(
+                            TextBorderedTitle(
                                 $0.name,
                                 color: $0.color,
                                 fontSize: 10,

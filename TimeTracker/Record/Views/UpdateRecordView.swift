@@ -10,7 +10,7 @@ struct UpdateRecordView: View {
             Form {
                 Section("設定項目") {
                     HStack {
-                        SearchRecordTitleView("カテゴリ")
+                        TextTitle("カテゴリ", width: 80)
                         Picker("", selection: $state.selectedCategoryId) {
                             ForEach(state.categories) {
                                 Text($0.name).tag($0.id)
@@ -23,7 +23,7 @@ struct UpdateRecordView: View {
                     }
 
                     HStack {
-                        SearchRecordTitleView("アクティビティ")
+                        TextTitle("アクティビティ", width: 80)
                         Picker("", selection: $state.selectedActivityId) {
                             ForEach(state.filteredActivities) {
                                 Text($0.name).tag($0.id)
@@ -39,9 +39,9 @@ struct UpdateRecordView: View {
                     ))
 
                     HStack {
-                        SearchRecordTitleView("終了")
+                        TextTitle("終了", width: 80)
                         if state.selectedEndDatetime == nil {
-                            TextTitle(
+                            TextBorderedTitle(
                                 "未選択",
                                 color: "#FF1111",
                                 fontSize: 14,
@@ -65,7 +65,7 @@ struct UpdateRecordView: View {
                     }
 
                     HStack(alignment: .top) {
-                        SearchRecordTitleView("メモ")
+                        TextTitle("メモ", width: 80)
                         TextEditor(text: $state.selectedNote)
                             .frame(height: 200)
                     }

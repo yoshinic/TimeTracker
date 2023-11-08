@@ -29,7 +29,7 @@ struct SearchRecordActivityView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("アクティビティ")
                 if state.activities.count == state.selectedActivities.count {
-                    TextTitle(
+                    TextBorderedTitle(
                         "全て",
                         color: .gray,
                         fontSize: 10,
@@ -39,7 +39,7 @@ struct SearchRecordActivityView: View {
                 } else {
                     HStack(spacing: 10) {
                         ForEach(state.filteredActivities) {
-                            TextTitle(
+                            TextBorderedTitle(
                                 $0.name,
                                 color: $0.color,
                                 fontSize: 10,

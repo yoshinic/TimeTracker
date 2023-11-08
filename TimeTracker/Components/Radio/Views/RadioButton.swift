@@ -6,7 +6,7 @@ struct RadioButton: View {
     var body: some View {
         HStack(spacing: 20) {
             ForEach(state.titles.indices, id: \.self) { i in
-                TextTitle(
+                TextBorderedTitle(
                     state.titles[i],
                     color: .init(hex: state.color),
                     opacity: 0.2,

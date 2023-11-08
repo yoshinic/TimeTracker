@@ -5,7 +5,7 @@ struct SearchRecordSortView: View {
 
     var body: some View {
         HStack {
-            SearchRecordTitleView("ソート")
+            TextTitle("ソート", width: 80)
             RadioButton(state: .init(
                 selectedIdx: state.selectedSortType == .kind ? 0 : 1,
                 titles: state.titles,

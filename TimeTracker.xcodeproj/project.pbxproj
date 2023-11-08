@@ -18,7 +18,7 @@
 		927006642AD4C8EA0089884B /* CategoryListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927006622AD4C8EA0089884B /* CategoryListViewState.swift */; };
 		928D8E902AEE1CB200F0C52B /* SearchRecordSortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E8F2AEE1CB200F0C52B /* SearchRecordSortView.swift */; };
 		928D8E922AEE1CC100F0C52B /* SearchRecordCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E912AEE1CC100F0C52B /* SearchRecordCategoryView.swift */; };
-		928D8E942AEE1ED000F0C52B /* SearchRecordTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E932AEE1ED000F0C52B /* SearchRecordTitleView.swift */; };
+		928D8E942AEE1ED000F0C52B /* TextTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E932AEE1ED000F0C52B /* TextTitle.swift */; };
 		928D8E962AEE27A800F0C52B /* CommonTextTitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */; };
 		92999D682AF0C4FF003B44A2 /* UpdateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */; };
 		92999D6A2AF0CC27003B44A2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92999D692AF0CC27003B44A2 /* Utilities.swift */; };
@@ -46,6 +46,7 @@
 		92CACFE72AEB92AF00F00F2F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CACFE62AEB92AF00F00F2F /* MainView.swift */; };
 		92D2B3E92A9A78F600B8B76E /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E62A9A78F600B8B76E /* RecordListView.swift */; };
 		92D2B3EA2A9A78F600B8B76E /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */; };
+		92E88ACE2AFB573D00CAC206 /* TextBorderedTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E88ACD2AFB573D00CAC206 /* TextBorderedTitle.swift */; };
 		92F71D0D2AF6014C002E1846 /* CategoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F71D0C2AF6014C002E1846 /* CategoryStore.swift */; };
 		92F71D102AF60684002E1846 /* CategoryFormViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F71D0F2AF60684002E1846 /* CategoryFormViewState.swift */; };
 		92F71D172AF63C4E002E1846 /* ActivityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F71D162AF63C4E002E1846 /* ActivityStore.swift */; };
@@ -99,7 +100,7 @@
 		927006622AD4C8EA0089884B /* CategoryListViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryListViewState.swift; sourceTree = "<group>"; };
 		928D8E8F2AEE1CB200F0C52B /* SearchRecordSortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordSortView.swift; sourceTree = "<group>"; };
 		928D8E912AEE1CC100F0C52B /* SearchRecordCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordCategoryView.swift; sourceTree = "<group>"; };
-		928D8E932AEE1ED000F0C52B /* SearchRecordTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecordTitleView.swift; sourceTree = "<group>"; };
+		928D8E932AEE1ED000F0C52B /* TextTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTitle.swift; sourceTree = "<group>"; };
 		928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextTitleModifier.swift; sourceTree = "<group>"; };
 		92999D672AF0C4FF003B44A2 /* UpdateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRecordView.swift; sourceTree = "<group>"; };
 		92999D692AF0CC27003B44A2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		92CACFE62AEB92AF00F00F2F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		92D2B3E62A9A78F600B8B76E /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
 		92D2B3E82A9A78F600B8B76E /* ActivityListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListView.swift; sourceTree = "<group>"; };
+		92E88ACD2AFB573D00CAC206 /* TextBorderedTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBorderedTitle.swift; sourceTree = "<group>"; };
 		92F71D0C2AF6014C002E1846 /* CategoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryStore.swift; sourceTree = "<group>"; };
 		92F71D0F2AF60684002E1846 /* CategoryFormViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFormViewState.swift; sourceTree = "<group>"; };
 		92F71D162AF63C4E002E1846 /* ActivityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStore.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		929E5EE32AF9D8FD009DCFE1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				92E88AC92AFB55A300CAC206 /* Text */,
 				929E5EF82AFA16F3009DCFE1 /* CustomCircle */,
 				929E5EF12AF9F946009DCFE1 /* CustomImage */,
 				929E5EEA2AF9DB05009DCFE1 /* Radio */,
@@ -303,6 +306,7 @@
 				92D2B3E52A9A78F600B8B76E /* Record */,
 				92C1D82C2A9B2047000061B6 /* Setting */,
 				929E5EE32AF9D8FD009DCFE1 /* Components */,
+				92E88ACF2AFB577A00CAC206 /* Modifiers */,
 				92C28B1F2ADF2366009E23E1 /* Database */,
 				92C1D8282A9B1FF9000061B6 /* Utilities */,
 				92C28B202ADF2380009E23E1 /* DatabasePathPicker.swift */,
@@ -390,7 +394,6 @@
 		92C7BA242AF8082100E9F25A /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				928D8E932AEE1ED000F0C52B /* SearchRecordTitleView.swift */,
 				925F93902AECBF1A0033EBB2 /* SearchRecordView.swift */,
 				928D8E912AEE1CC100F0C52B /* SearchRecordCategoryView.swift */,
 				926FAB522AF39EAB005AED1D /* SearchRecordActivityView.swift */,
@@ -418,7 +421,6 @@
 				92F71D212AF733B7002E1846 /* RecordStore.swift */,
 				92F71D232AF73453002E1846 /* Views */,
 				92F71D242AF7345D002E1846 /* ViewStates */,
-				928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -431,6 +433,39 @@
 				92F71D1C2AF731D1002E1846 /* ViewStates */,
 			);
 			path = Activity;
+			sourceTree = "<group>";
+		};
+		92E88AC92AFB55A300CAC206 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				92E88ACA2AFB55B600CAC206 /* Views */,
+				92E88ACB2AFB55BE00CAC206 /* ViewStates */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		92E88ACA2AFB55B600CAC206 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				928D8E932AEE1ED000F0C52B /* TextTitle.swift */,
+				92E88ACD2AFB573D00CAC206 /* TextBorderedTitle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92E88ACB2AFB55BE00CAC206 /* ViewStates */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewStates;
+			sourceTree = "<group>";
+		};
+		92E88ACF2AFB577A00CAC206 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				928D8E952AEE27A800F0C52B /* CommonTextTitleModifier.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		92F71D142AF621A4002E1846 /* Views */ = {
@@ -675,6 +710,7 @@
 				92C7BA272AF814BD00E9F25A /* PrepareDatabaseView.swift in Sources */,
 				929E5EFE2AFA1745009DCFE1 /* CustomCircleState.swift in Sources */,
 				92F71D222AF733B7002E1846 /* RecordStore.swift in Sources */,
+				92E88ACE2AFB573D00CAC206 /* TextBorderedTitle.swift in Sources */,
 				92C7BA292AF814CD00E9F25A /* PrepareDatabaseViewState.swift in Sources */,
 				92F71D102AF60684002E1846 /* CategoryFormViewState.swift in Sources */,
 				92FABEF32AEB8DB600833B1A /* CustomUTType.swift in Sources */,
@@ -705,7 +741,7 @@
 				92F71D282AF73C48002E1846 /* RecordMainViewState.swift in Sources */,
 				92CACFE72AEB92AF00F00F2F /* MainView.swift in Sources */,
 				92F71D3A2AF76EB8002E1846 /* RecordGraphViewState.swift in Sources */,
-				928D8E942AEE1ED000F0C52B /* SearchRecordTitleView.swift in Sources */,
+				928D8E942AEE1ED000F0C52B /* TextTitle.swift in Sources */,
 				92F71D3E2AF76FFE002E1846 /* SettingsViewState.swift in Sources */,
 				92C1D8312A9B22A8000061B6 /* ColorUtilities.swift in Sources */,
 				920C49BD2A9BAF930083FF7A /* ActivityFormView.swift in Sources */,
