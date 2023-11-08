@@ -9,8 +9,8 @@ class SearchRecordDateViewState: ObservableObject {
     @Published private(set) var showTimePicker = false
 
     let title: String
-    let dateFormatter: DateFormatter
-    let timeFormatter: DateFormatter
+    private let dateFormatter: DateFormatter
+    private let timeFormatter: DateFormatter
 
     let onDateChanged: (@MainActor (Date) -> Void)?
 
@@ -26,12 +26,13 @@ class SearchRecordDateViewState: ObservableObject {
         self.onDateChanged = onDateChanged
 
         let locale: Locale = .init(identifier: "ja_JP")
+        let timezone: TimeZone = .init(identifier:  "Asia/Tokyo") ?? .current
 
         var templateFormatter: DateFormatter {
             let formatter: DateFormatter = .init()
             formatter.calendar = .init(identifier: .gregorian)
             formatter.locale = locale
-            formatter.timeZone = .init(identifier:  "Asia/Tokyo") ?? TimeZone.current
+            formatter.timeZone = timezone
             return formatter
         }
 
@@ -61,6 +62,14 @@ class SearchRecordDateViewState: ObservableObject {
                 .sink { onDateChanged($0) }
                 .store(in: &cancellables)
         }
+    }
+    
+    func formatedDateString(_ date: Date?) -> String {
+        date == nil ? "" : dateFormatter.string(from: date!)
+    }
+    
+    func formatedTimeString(_ date: Date?) -> String {
+        date == nil ? "" : timeFormatter.string(from: date!)
     }
 
     func onTapDatePicker() {

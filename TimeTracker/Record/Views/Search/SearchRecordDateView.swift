@@ -6,10 +6,10 @@ struct SearchRecordDateView: View {
     var body: some View {
         HStack {
             SearchRecordTitleView(state.title)
-            Text(state.selectedDatetime, formatter: state.dateFormatter)
+            Text(verbatim: state.formatedDateString(state.selectedDatetime))
                 .titleProps(opacity: 0.1)
                 .onTapGesture { withAnimation { state.onTapDatePicker() }}
-            Text(state.selectedDatetime, formatter: state.timeFormatter)
+            Text(verbatim: state.formatedTimeString(state.selectedDatetime))
                 .titleProps(opacity: 0.1)
                 .onTapGesture { withAnimation { state.onTapTimePicker() }}
         }
